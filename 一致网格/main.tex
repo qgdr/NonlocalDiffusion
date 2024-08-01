@@ -1,0 +1,261 @@
+\documentclass{ctexart}
+\usepackage{amsmath}
+\usepackage{graphicx}
+
+\usepackage{setspace}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage[CJKbookmarks=true]{hyperref}	% 添加pdf标签
+\usepackage{float}
+\usepackage{amsfonts}
+\usepackage{mathrsfs}
+
+
+\begin{document}
+
+\section{问题}
+
+对于 \(\Omega=(0,1)\), \(1<\alpha<2\),
+
+\begin{equation}
+    \begin{cases}
+        (-\Delta)^{\frac{\alpha}{2}} u(x) = f(x),    & x \in \Omega  \\
+        u(x) = 0,   & x \in \mathbb{R} \setminus \Omega
+    \end{cases}
+\end{equation}
+
+其中
+
+\begin{equation}
+    (-\Delta)^{\frac{\alpha}{2}} u(x) = -\frac{\partial^\alpha u}{\partial |x|^\alpha} 
+    = C_R \frac{d^2}{dx^2} \int_\Omega \frac{u(y)}{|x-y|^{\alpha-1}} dy
+\end{equation}
+
+
+\section{数值格式}
+
+用线性插值代替原函数，中心差分代替二阶导数，记 \(u_h(x)\) 为 \(u(x)\) 在网格点上的线性插值。
+
+我们解这样的数值解
+
+\begin{equation}
+    \begin{aligned}
+        C_R ( & \frac{2}{h_{i+1} (h_i + h_{i+1})}\int_\Omega \frac{u_h(x)}{ |x_{i+1}-y|^{\alpha-1} } dy \\
+                & -\frac{2}{h_i h_{i+1}}\int_\Omega \frac{u_h(x)}{ |x_i-y|^{\alpha-1} } dy \\
+                & + \frac{2}{h_i (h_i+ h_{i+1})}\int_\Omega \frac{u_h(x)}{ |x_{i-1}-y|^{\alpha-1} } dy
+            ) \\
+        = F_i
+    \end{aligned}
+\end{equation}
+
+
+矩阵 \(A\) 是 \(M\) 矩阵，主队角正，其他负，严格对角占优。
+
+
+\section{一致网格}
+
+当 \(r=1\) , 网格成为一致网格, \(x_i = ih, h=\frac{1}{2N}, i=0, ..., 2N\).
+
+\(A\) 等于
+
+\begin{equation}
+    \begin{aligned}
+    a_{ij} &= \frac{C_R}{(2-\alpha)(3-\alpha)} h^{-\alpha} \\
+        & \left( |i-j-2|^{3-\alpha} - 4 |i-j-1|^{3-\alpha} + 6 |i-j|^{3-\alpha} - 4 |i-j+1|^{3-\alpha} +  |i-j+2|^{3-\alpha} \right)
+    \end{aligned}
+\end{equation}
+
+矩阵行和
+
+\begin{equation}
+    \begin{aligned}
+        S_i = \sum_{j=1}^{2N-1} a_{ij} & = \frac{C_R}{(2-\alpha)(3-\alpha)} h^{-\alpha} 
+            ( |i+1|^{3-\alpha} - 3 |i|^{3-\alpha} + 3 |i-1|^{3-\alpha} - |i-2|^{3-\alpha}  + ... 2N )
+    \end{aligned}
+\end{equation}
+
+
+我们得到
+
+\begin{equation}
+    S_i \ge  C (x_i^{-\alpha} + (1-x_i)^{-\alpha})
+\end{equation}
+
+
+下面估计截断误差 \(R_i\).
+目标是
+
+\begin{equation}
+    R_i \le C h^{\alpha/2} S_i
+\end{equation}
+
+这样我们就有
+
+\begin{equation}
+    \epsilon \le \max_i \frac{R_i}{S_i} \le Ch^{\alpha/2}
+\end{equation}
+
+考虑 \(R_1\)
+
+\begin{equation}
+    R_1 = \int_\Omega (u(y) - u_h(y)) \frac{ |y|^{1-\alpha} - 2|y-h|^{1-\alpha} + |y-2h|^{1-\alpha} }{h^2} dy
+\end{equation}
+
+
+我们有
+
+\begin{equation}
+    \begin{aligned}
+        R_1 = \int_0^{3h} + \int_{3h}^{1}
+    \end{aligned}
+\end{equation}
+
+当 \(y>3h\), 
+
+\begin{equation}
+    \frac{ |y|^{1-\alpha} - 2|y-h|^{1-\alpha} + |y-2h|^{1-\alpha} }{h^2} \le C |y|^{-1-\alpha}
+\end{equation}
+
+那么
+
+\begin{equation}
+    \begin{aligned}
+            I_2 &\le  C \int_{3h}^{1} |y|^{-1-\alpha} u''(\eta) h^2 dy   \\
+            & \le  C \int_{3h}^{1} |y|^{-1-\alpha} h^{\alpha/2-2} h^2 dy    \\
+            & \le C h^{\alpha/2}  \int_{3h}^{1} y^{-1-\alpha} dy  \\
+            & \le C h^{\alpha/2} h^{-\alpha} = C h^{-\alpha/2}   \\
+            & \le C h^{\alpha/2} x_1^{-\alpha} \le C h^{\alpha/2} S_1
+    \end{aligned}
+\end{equation}
+
+在考虑
+
+\begin{equation}
+    \begin{aligned}
+        I_1 &= \int_0^{3h}  \frac{ u(y) - u_h(y) }{h^2} (|y|^{1-\alpha} - 2|y-h|^{1-\alpha} + |y-2h|^{1-\alpha}) dy \\
+        &= \int_0^h + \int_h^{3h} = J_1 + J_2
+    \end{aligned}
+\end{equation}
+
+\begin{equation}
+    J_2 \le C u''(\eta) h^{2-\alpha} \le C h^{\alpha/2-2} h^{2-\alpha} \le C h^{-\alpha/2}
+\end{equation}
+
+因为
+
+\begin{equation}
+    \begin{aligned}
+        |u(x) - u_h(x)| &\le \int_0^h |u'(y)| dy    \\
+        &\le C \int_0^h y^{\alpha/2-1} dy   \\
+        &\le C h^{\alpha/2}    \quad , x\in (0, h)
+    \end{aligned}
+\end{equation}
+
+
+\begin{equation}
+    \begin{aligned}
+        J_1 & = \int_0^h \frac{ u(y) - u_h(y) }{h^2} (|y|^{1-\alpha} - 2|y-h|^{1-\alpha} + |y-2h|^{1-\alpha}) dy \\
+        &\le C h^{\alpha/2-2} h^{2-\alpha} = C h^{-\alpha/2}
+    \end{aligned}
+\end{equation}
+
+所以有
+
+\begin{equation}
+    R_1 \le C h^{-\alpha/2} \le C h^{\alpha/2} h^{-\alpha} \le C h^{\alpha/2} S_1, \quad (S_1\ge C x_1^{-\alpha})
+\end{equation}
+
+
+\(R_1, R_2, R_3\) 全部类似。
+
+\subsection{猜想}
+
+\begin{equation}
+    R_i \le C h^{\alpha/2+1} (x_i^{-\alpha-1} + (1-x_i)^{-\alpha-1}) \quad (then \le C h^{\alpha/2} S_i)
+\end{equation}
+
+为了简便，我们记 \(D(y) := u(y) - u_h(y)\).
+
+当 \(3<i\le N\) 时，
+
+\begin{equation}
+    \begin{aligned}
+        R_i = &\int_0^1 D(y) \frac{ |y-x_{i-1}|^{1-\alpha} - 2|y-x_i |^{1-\alpha} + |y-x_{i+1}|^{1-\alpha} }{h^2} dy    \\
+        = &\int_0^{x_1} D(y) \frac{ |y-x_{i-1}|^{1-\alpha} - 2|y-x_i |^{1-\alpha} + |y-x_{i+1}|^{1-\alpha} }{h^2} dy \\
+        & + \int_{x_1}^{x_{\lceil \frac{i}{2}\rceil}} D(y) \frac{ |y-x_{i-1}|^{1-\alpha} - 2|y-x_i |^{1-\alpha} + |y-x_{i+1}|^{1-\alpha} }{h^2} dy \\
+        &+ \int_{x_{\lceil \frac{i}{2}\rceil }}^{x_{\lceil \frac{i}{2}\rceil +1 }} \frac{  D(y+h) - D(y) }{h^2} |y-x_i|^{1-\alpha}  + D(y)\frac{ |y-x_{i+1}|^{1-\alpha} - |y-x_{i}|^{1-\alpha} }{h^2} dy\\
+        & + \int_{x_{\lceil \frac{i}{2}\rceil +1}}^{x_{i}} \frac{  D(y-h) -2D(y) +  D(y+h) }{h^2} |y-x_i|^{1-\alpha} dy  \\
+        & + \cdots (2N-i)     \\
+        = & I_1 + I_2 + I_3 + I_4 + \cdots
+    \end{aligned}
+\end{equation}
+
+1. 
+
+\begin{equation}
+    \begin{aligned}
+        I_1 &= \int_0^{x_1} (u(y) - u_h(y)) \frac{ |y-x_{i-1}|^{1-\alpha} - 2|y-x_i |^{1-\alpha} + |y-x_{i+1}|^{1-\alpha} }{h^2} dy     \\
+        &\le C h^{\alpha/2} \int_0^{h} |y-x_i|^{-1-\alpha} dy   \\
+        &\le C h^{\alpha/2 + 1} x_{i}^{-1-\alpha}       \\
+    \end{aligned}
+\end{equation}
+
+% 显然
+% \begin{equation}
+%     I_1 \le C h^{\alpha/2+1} h^{-1} x_i^{-\alpha} \le  C h^{\alpha/2} S_i
+% \end{equation}
+
+% 且当 \(i\) 与 \(N\) 相当时，有 \(h^{\alpha/2+1}\).
+% \newline
+
+
+2.
+
+\begin{equation}
+    \begin{aligned}
+        I_2 &= \int_{x_1}^{x_{\lceil \frac{i}{2}\rceil}} D(y) \frac{ |y-x_{i-1}|^{1-\alpha} - 2|y-x_i |^{1-\alpha} + |y-x_{i+1}|^{1-\alpha} }{h^2} dy       \\
+        &\le C \int_{x_1}^{x_{\lceil \frac{i}{2}\rceil}} y^{\alpha/2 -2} h^2 |x_i - y |^{-1-\alpha} dy  \\
+        &\le C h^{\alpha/2-1} h^2 x_i^{-1-\alpha} \le C h^{\alpha/2+1} x_i^{-1-\alpha}
+    \end{aligned}
+\end{equation}
+
+
+3. 
+
+
+\begin{equation}
+    \begin{aligned}
+        I_3 & = \int_{x_{\lceil \frac{i}{2}\rceil }}^{x_{\lceil \frac{i}{2}\rceil +1 }} \frac{  D(y+h) - D(y) }{h^2} |y-x_i|^{1-\alpha} + D(y)\frac{ |y-x_{i+1}|^{1-\alpha} - |y-x_{i}|^{1-\alpha} }{h^2} dy \\
+        &\le \int_{x_{\lceil \frac{i}{2}\rceil }}^{x_{\lceil \frac{i}{2}\rceil +1 }} u'''(\eta_1) h |x_i-y|^{1-\alpha} + u''(\eta_2) h |x_i-y|^{-\alpha}  dy      \\
+        &\le C h^2 x_i^{-2-\alpha/2} \le C h^{1+\alpha/2} x_i^{-1-\alpha}
+    \end{aligned}
+\end{equation}
+
+
+
+
+
+4.
+
+\begin{equation}
+    \begin{aligned}
+        I_4 &= \int_{x_{\lceil \frac{i}{2}\rceil +1}}^{x_{i}} \frac{  D(y-h) -2D(y) +  D(y+h) }{h^2} |y-x_i|^{1-\alpha} dy      \\
+        &\le \int_{x_{\lceil \frac{i}{2}\rceil +1}}^{x_{i}} u''''(\eta) h^2 |x_i - y|^{1-\alpha} dy \\
+        &\le C x_{i}^{\alpha/2 -4} h^2 x_i^{2-\alpha}       \\
+        &\le C h^2 x_i^{-2-\alpha/2} \le C h^{1+\alpha/2} x_i^{-1-\alpha}
+    \end{aligned}
+\end{equation}
+
+
+猜想证毕，一致网格证完。
+
+
+\section{非一致}
+
+\(r > 1\)
+
+
+
+
+
+\end{document}
