@@ -145,9 +145,9 @@
 
 \begin{equation}
     \begin{aligned}
-        |u(x) - u_h(x)| &\le \int_0^h |u'(y)| dy    \\
-        &\le C \int_0^h y^{\alpha/2-1} dy   \\
-        &\le C h^{\alpha/2}    \quad , x\in (0, h)
+        |u(x) - u_h(x)| &\le \int_0^{x_1} |u'(y)| dy    \\
+        &\le C \int_0^{x_1} y^{\alpha/2-1} dy   \\
+        &\le C x_1^{\alpha/2}    \quad , x\in (0, h)
     \end{aligned}
 \end{equation}
 
@@ -252,8 +252,112 @@
 
 \section{非一致}
 
-\(r > 1\)
+\(r > 1\), 
 
+\begin{equation}
+    \begin{cases}
+        x_i = \frac{1}{2} \left(\frac{i}{N}\right)^r   , & 0 \le i \le N  \\
+        x_i = 1 - \frac{1}{2} \left(\frac{2N-i}{N}\right)^r, &  N \le i \le 2N
+    \end{cases}
+\end{equation}
+
+令 \(h=\frac{1}{2N}\) , 那么
+
+当 \(i > N, x_i > \frac{1}{2}\) 时
+
+\begin{equation}
+    h_i = \frac{1}{2} \left(\left(\frac{i}{N}\right)^r - \left(\frac{i-1}{N}\right)^r\right) 
+        \le C(r) \left(\frac{i}{N}\right)^{r-1} \frac{1}{N} = C h x_i^{(r-1)/r} 
+\end{equation}
+
+当 \(i \ge N, x_i \ge \frac{1}{2}\) 时
+
+\begin{equation}
+    h_i = \frac{1}{2} \left(\left(\frac{2N-i+1}{N}\right)^r - \left(\frac{2N-i}{N}\right)^r\right) 
+        \le C(r) \left(\frac{2N-i+1}{N}\right)^{r-1} \frac{1}{N} = C h (1-x_{i-1})^{(r-1)/r} 
+\end{equation}
+
+
+我们声明
+
+\begin{equation}
+    \begin{aligned}
+        S_i =\sum_{j=1}^{2N-1}a_{ij} = & \frac{C_R}{(2-\alpha)(3-\alpha)} \frac{2}{h_i + h_{i+1}} \\
+        & ( \frac{1}{h_{i+1}} \frac{|x_{i+1}-x_0|^{3-\alpha} - |x_{i+1}-x_1|^{3-\alpha}}{x_1 - x_0} \\ 
+        &- (\frac{1}{h_{i}}+\frac{1}{h_{i+1}})\frac{|x_{i}-x_0|^{3-\alpha} - |x_{i}-x_1|^{3-\alpha}}{x_1 - x_0}     \\ 
+        &+  \frac{1}{h_{i}} \frac{|x_{i-1}-x_0|^{3-\alpha} - |x_{i-1}-x_1|^{3-\alpha}}{x_1 - x_0} )\\
+        \ge & C (x_i^{-\alpha} + (1-x_i)^{-\alpha})
+    \end{aligned}
+\end{equation}
+
+
+\begin{equation}
+    R_i = \int_0^1 D(y) \frac{2}{h_i + h_{i+1}} 
+    ( \frac{1}{h_{i+1}} |x_{i+1}-y|^{1-\alpha} 
+    - (\frac{1}{h_{i}}+\frac{1}{h_{i+1}}) |x_{i}-y|^{1-\alpha}
+    +  \frac{1}{h_{i}}|x_{i-1}-y|^{1-\alpha} )  dy 
+\end{equation}
+
+
+
+下面讨论 \(R_1\)
+
+\begin{equation}
+    \begin{aligned}
+        R_1 =& \int_0^{x_1} + \int_{x_1}^{x_3} + \int_{x_3}^{1/2} + \int_{1/2}^{1}  \\
+        & D(y) \frac{2}{h_1 + h_{2}} 
+        ( \frac{1}{h_{2}} |x_{2}-y|^{1-\alpha} 
+        - (\frac{1}{h_{1}}+\frac{1}{h_{2}}) |x_{1}-y|^{1-\alpha}
+        +  \frac{1}{h_{1}}|y|^{1-\alpha} )  dy \\
+        := & I_1 + I_2 + I_3 + I_4
+    \end{aligned}
+\end{equation}
+
+与一致网格时相似，
+
+1. 
+
+\begin{equation}
+    \begin{aligned}
+        |u(x) - u_h(x)| &\le \int_0^{x_1} |u'(y)| dy    \\
+        &\le C \int_0^{x_1} y^{\alpha/2-1} dy   \\
+        &\le C x_1^{\alpha/2}    \quad , x\in (0, h)
+    \end{aligned}
+\end{equation}
+
+因为 \(1-\alpha > -1\)
+
+\begin{equation}
+    \begin{aligned}
+        I_1 & \le C \int_0^{x_1} \frac{D(y)}{h_1^2} 
+        ( |x_{2}-y|^{1-\alpha} 
+        +2 |x_{1}-y|^{1-\alpha}
+        +|y|^{1-\alpha} )  dy       \\
+        &\le C  x_1^{\alpha/2-2} x_1^{2-\alpha} = C x_1^{-\alpha/2} = C h^{-r\alpha/2}
+    \end{aligned}
+\end{equation}
+
+2.
+
+\begin{equation}
+    \begin{aligned}
+        I_2 \le C u''(\eta) x_3^{2-\alpha} \le C x_1^{\alpha/2-2} x_3^{2-\alpha} \le C h^{-r\alpha/2}
+    \end{aligned}
+\end{equation}
+
+3.
+
+\begin{equation}
+    \begin{aligned}
+        I_3 &= \int_{x_3}^{1/2}D(y) \frac{2}{h_1 + h_{2}} 
+        ( \frac{1}{h_{2}} |x_{2}-y|^{1-\alpha} 
+        - (\frac{1}{h_{1}}+\frac{1}{h_{2}}) |x_{1}-y|^{1-\alpha}
+        +  \frac{1}{h_{1}}|y|^{1-\alpha} )  dy      \\
+        &\le C \int_{x_3}^{1/2} y^{\alpha/2-2} (h y^{(r-1)/r})^2 y^{-1-\alpha} dy \\
+        &\le C h^2 \int_{x_3}^{1/2} y^{\alpha/2 - 2/r -1 - \alpha} dy       \\
+        &\le C h^2 (h^r)^{-2/r-\alpha/2} = C h^{-r\alpha/2}
+    \end{aligned}
+\end{equation}
 
 
 

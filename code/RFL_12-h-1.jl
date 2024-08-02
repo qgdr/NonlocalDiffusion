@@ -40,7 +40,7 @@ end
 
 
 
-r = 1
+r = 12//10
 Ω = (0, 1)
 
 
@@ -49,7 +49,7 @@ r = 1
 
 @show 1 < α < 2
 
-N = 300
+N = 50
 
 
 # function num_err(Ω, r, α, N)
@@ -63,13 +63,13 @@ h = x |> parent |> diff      # [h1, ...h2N], h_j = x_j - x_{j-1}
 
 CR = 1 / (2 * cos(π * α / 2) * gamma(2 - α))
 
-## D_{ij} = |x_i-x_j|^{3-α}
+## K_{ij} = |x_i-x_j|^{3-α}
 
-D = zeros(BigFloat, 2N + 1, 2N + 1)
-D = OffsetArray(D, 0:2N, 0:2N)
+K = zeros(BigFloat, 2N + 1, 2N + 1)
+K = OffsetArray(K, 0:2N, 0:2N)
 
 for i = 0:2N, j = 0:2N
-    D[i, j] = abs(x[i] - x[j])^(3 - α)
+    K[i, j] = abs(x[i] - x[j])^(3 - α)
 end
 
 ## ̃a_{ij} = Cₐ (|x_{j+1} - x_i|^{3-α} / h_{j+1} - (h_j+h_{j+1})/(h_j*h_{j+1}) * |x_j - x_i|^{3-α} +  |x_{j-1} - x_i|^{3-α}/h_j)
@@ -78,7 +78,7 @@ A_1 = OffsetArray(zeros(BigFloat, 2N + 1, 2N - 1), 0:2N, 1:2N-1)
 
 C_a = 1 / (2 - α) / (3 - α)
 for j = 1:2N-1
-    A_1[:, j] = C_a * (D[:, j+1] / h[j+1] - (h[j] + h[j+1]) / (h[j] * h[j+1]) * D[:, j] + D[:, j-1] / h[j])
+    A_1[:, j] = C_a * (K[:, j+1] / h[j+1] - (h[j] + h[j+1]) / (h[j] * h[j+1]) * K[:, j] + K[:, j-1] / h[j])
 end
 
 ## a_{ij} = 2 Cᵣ ( ̃a_{i+1,j}/ h_{i+1} - (h_i+h_{i+1})/(h_i*h_{i+1}) ̃a_{ij} +  a_{i-1,j}/ h_{i})
@@ -123,13 +123,14 @@ S = maximum( abs.(Si[1:N] .* x[1:N] .* α) )
 
 
 # plot(trunc_err)
-# plot(Si ./ (x[1:2N-1] .^ (-α) .+ (1 .- x[1:2N-1]) .^ (-α)) )
 # plot(F)
 ## tunc_err
 R = F .- 1
 tar_odr = R ./ Si
 
-plot(tar_odr)
+plot(x[1:2N-1], Si ./ (x[1:2N-1] .^ (-α) .+ (1 .- x[1:2N-1]) .^ (-α)) )
+# plot(tar_odr)
+# plot(x[1:2N-1], F)
 
-
+# plot(x[1:2N-1], R ./ (x[1:2N-1] .^ (-α-1) .+ (1 .- x[1:2N-1]) .^ (-α-1)) )
 

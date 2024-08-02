@@ -40,7 +40,7 @@ end
 
 
 
-r = 1
+r = 13//10
 Ω = (0, 1)
 
 
@@ -142,4 +142,6 @@ push!(RN, R[N])
 
 end
 
+plot(log.(1:10), abs.(RN) .|> log)
+#  diff( abs.(RN) .|> log)./diff(log.(1:10))
 

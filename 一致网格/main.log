@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.9.7)  2 AUG 2024 03:13
+This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.9.7)  3 AUG 2024 00:20
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -579,7 +579,22 @@ Overfull \hbox (17.56004pt too wide) detected at line 232
 [][][][][]
  []
 
-[5] (./main.aux)
+[5]
+Overfull \hbox (73.6552pt too wide) detected at line 278
+[][][]\OML/cmm/m/it/10.53937 h[] \OT1/cmr/m/n/10.53937 = [] [] \OMS/cmsy/m/n/10.53937 ^^T \OML/cmm/m/it/10.53937 C\OT1/cmr/m/n/10.53937 (\OML/cmm/m/it/10.53937 r\OT1/cmr/m/n/10.53937 ) [][] [] = \OML/cmm/m/it/10.53937 Ch\OT1/cmr/m/n/10.53937 (1 \OMS/cmsy/m/n/10.53937 ^^@ \OML/cmm/m/it/10.53937 x[]\OT1/cmr/m/n/10.53937 )[]
+ []
+
+
+Overfull \hbox (38.62921pt too wide) detected at line 299
+[][][]\OML/cmm/m/it/10.53937 R[] \OT1/cmr/m/n/10.53937 = [][] \OML/cmm/m/it/10.53937 D\OT1/cmr/m/n/10.53937 (\OML/cmm/m/it/10.53937 y\OT1/cmr/m/n/10.53937 )[]([]\OMS/cmsy/m/n/10.53937 j\OML/cmm/m/it/10.53937 x[] \OMS/cmsy/m/n/10.53937 ^^@ \OML/cmm/m/it/10.53937 y\OMS/cmsy/m/n/10.53937 j[] ^^@ \OT1/cmr/m/n/10.53937 ([] + [])\OMS/cmsy/m/n/10.53937 j\OML/cmm/m/it/10.53937 x[] \OMS/cmsy/m/n/10.53937 ^^@ \OML/cmm/m/it/10.53937 y\OMS/cmsy/m/n/10.53937 j[] \OT1/cmr/m/n/10.53937 + []\OMS/cmsy/m/n/10.53937 j\OML/cmm/m/it/10.53937 x[] \OMS/cmsy/m/n/10.53937 ^^@ \OML/cmm/m/it/10.53937 y\OMS/cmsy/m/n/10.53937 j[]\OT1/cmr/m/n/10.53937 )\OML/cmm/m/it/10.53937 dy
+ []
+
+[6]
+Overfull \hbox (8.77753pt too wide) detected at line 360
+[][][][][]
+ []
+
+[7] (./main.aux)
 
 LaTeX Font Warning: Size substitutions with differences
 (Font)              up to 0.41063pt have occurred.
@@ -596,4 +611,4 @@ Here is how much of TeX's memory you used:
  1348 hyphenation exceptions out of 8191
  89i,9n,97p,359b,348s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on main.pdf (5 pages).
+Output written on main.pdf (7 pages).
