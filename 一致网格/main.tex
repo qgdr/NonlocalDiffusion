@@ -195,9 +195,12 @@
         R_i = &\int_0^1 D(y) \frac{ |y-x_{i-1}|^{1-\alpha} - 2|y-x_i |^{1-\alpha} + |y-x_{i+1}|^{1-\alpha} }{h^2} dy    \\
         = &\int_0^{x_1} D(y) \frac{ |y-x_{i-1}|^{1-\alpha} - 2|y-x_i |^{1-\alpha} + |y-x_{i+1}|^{1-\alpha} }{h^2} dy \\
         & + \int_{x_1}^{x_{\lceil \frac{i}{2}\rceil}} D(y) \frac{ |y-x_{i-1}|^{1-\alpha} - 2|y-x_i |^{1-\alpha} + |y-x_{i+1}|^{1-\alpha} }{h^2} dy \\
-        &+ \int_{x_{\lceil \frac{i}{2}\rceil }}^{x_{\lceil \frac{i}{2}\rceil +1 }} \frac{  D(y+h) - D(y) }{h^2} |y-x_i|^{1-\alpha}  + D(y)\frac{ |y-x_{i+1}|^{1-\alpha} - |y-x_{i}|^{1-\alpha} }{h^2} dy\\
+        &+ \int_{x_{\lceil \frac{i}{2}\rceil }}^{x_{\lceil \frac{i}{2}\rceil +1 }} \frac{  D(y+h) - D(y) }{h^2} |y-x_i|^{1-\alpha}  + D(y)\frac{ |y-x_{i+1}|^{1-\alpha} - |y-x_{i}|^{1-\alpha} }{h^2} dy    \\
         & + \int_{x_{\lceil \frac{i}{2}\rceil +1}}^{x_{i}} \frac{  D(y-h) -2D(y) +  D(y+h) }{h^2} |y-x_i|^{1-\alpha} dy  \\
-        & + \cdots (2N-i)     \\
+        % & + \cdots (2N-i)     \\
+        & + \int_{x_{i}}^{x_{N + \lfloor \frac{i}{2}\rfloor -1}} \frac{  D(y-h) -2D(y) +  D(y+h) }{h^2} |y-x_i|^{1-\alpha} dy     \\
+        & + \int_{x_{N + \lfloor \frac{i}{2}\rfloor -1}}^{x_{N + \lfloor \frac{i}{2}\rfloor}} \frac{  D(y-h) - D(y) }{h^2} |y-x_i|^{1-\alpha}  + D(y)\frac{ |y-x_{i-1}|^{1-\alpha} - |y-x_{i}|^{1-\alpha} }{h^2} dy   \\
+        & +  \int_{x_{N + \lfloor \frac{i}{2}\rfloor}}^{x_{2N-1}} + \int_{x_{2N-1}}^1 D(y) \frac{ |y-x_{i-1}|^{1-\alpha} - 2|y-x_i |^{1-\alpha} + |y-x_{i+1}|^{1-\alpha} }{h^2} dy     \\
         = & I_1 + I_2 + I_3 + I_4 + \cdots
     \end{aligned}
 \end{equation}
