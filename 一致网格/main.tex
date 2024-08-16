@@ -411,16 +411,48 @@
 
 
 
-
+\subsection{一般的 i}
 
 
 
 \(R_i, 3<i\le N\) 比较困难。
 
 
+我们记
+
+\begin{equation}
+    T_{ij} = \int_{x_{j-1}}^{x_{j}} D(y) |x_i - y|^{1-\alpha} dy
+\end{equation}
+
+那么
+
 \begin{equation}
     \begin{aligned}
-        R_i =& \int_0^{x_1} +\int_{x_1}^{x_{\lceil \frac{i}{2}\rceil}} + ...               \\ 
+        R_i =& \sum_{j=1}^{2N} T_{ij}    \\
+        =& \sum_{j=1}^{2N} \frac{2}{h_i + h_{i+1}} 
+        \left( \frac{1}{h_{i+1}} T_{i+1, j} 
+        - (\frac{1}{h_{i}}+\frac{1}{h_{i+1}}) T_{i,j}
+        +  \frac{1}{h_{i}} T_{i-1, j} \right)   \\
+        = & \sum_{j=1}^{i/2} \frac{2}{h_i + h_{i+1}} 
+        \left( \frac{1}{h_{i+1}} T_{i+1, j} 
+        - (\frac{1}{h_{i}}+\frac{1}{h_{i+1}}) T_{i,j}
+        +  \frac{1}{h_{i}} T_{i-1, j} \right)   \\
+          & + \frac{2}{h_i + h_{i+1}} 
+          \left( \frac{1}{h_{i+1}} (T_{i+1, i/2+1} +  T_{i+1, i/2+2})
+          - (\frac{1}{h_{i}}+\frac{1}{h_{i+1}}) (T_{i,i/2+1}) \right)   \\
+          & + \sum_{j=i/2+2}^{i} \frac{2}{h_i + h_{i+1}} 
+          \left( \frac{1}{h_{i+1}} T_{i+1, j+1} 
+          - (\frac{1}{h_{i}}+\frac{1}{h_{i+1}}) T_{i,j}
+          +  \frac{1}{h_{i}} T_{i-1, j-1} \right)   \\
+          & + ...       \\
+        = & I_1 + I_2 + I_3 + ...
+    \end{aligned}
+\end{equation}
+
+
+\begin{equation}
+    \begin{aligned}
+        I_1 =& \int_0^{x_1} +\int_{x_1}^{x_{\lceil \frac{i}{2}\rceil}}               \\ 
         & D(y) \frac{2}{h_i + h_{i+1}} 
         ( \frac{1}{h_{i+1}} |x_{i+1}-y|^{1-\alpha} 
         - (\frac{1}{h_{i}}+\frac{1}{h_{i+1}}) |x_{i}-y|^{1-\alpha}
@@ -433,7 +465,7 @@
 
 \begin{equation}
     \begin{aligned}
-        I_1 \le C x_1^{\alpha/2+1} x_i^{-1-\alpha} \le C h^{r\alpha/2 +r} x_i^{-1-\alpha}
+        J_1 \le C x_1^{\alpha/2+1} x_i^{-1-\alpha} \le C h^{r\alpha/2 +r} x_i^{-1-\alpha}
     \end{aligned}
 \end{equation}
 
@@ -442,16 +474,92 @@
 
 \begin{equation}
     \begin{aligned}
-        I_2 &\le C \int_{x_1}^{x_{\lceil \frac{i}{2}\rceil}} y^{\alpha/2-2} (h y^{(r-1)/r})^2 |x_i - y|^{-1-\alpha} dy      \\
+        J_2 &\le C \int_{x_1}^{x_{\lceil \frac{i}{2}\rceil}} y^{\alpha/2-2} (h y^{(r-1)/r})^2 |x_i - y|^{-1-\alpha} dy      \\
         &\le C h^2 x_i^{-1-\alpha} \int_{x_1}^{x_{\lceil \frac{i}{2}\rceil}} y^{\alpha/2-2/r} dy    \\
         &\le C h^2 x_i^{-1-\alpha} (h^{r\alpha/2-2+r} + x_i^{\alpha/2-2/r+1})       \\
     \end{aligned}
 \end{equation}
+\\
+
+我们先研究 \(I_3\)，考虑
+
+\begin{equation}
+    \frac{2}{h_i + h_{i+1}} 
+    \left( \frac{1}{h_{i+1}} T_{i+1, j+1} 
+    - (\frac{1}{h_{i}}+\frac{1}{h_{i+1}}) T_{i,j}
+    +  \frac{1}{h_{i}} T_{i-1, j-1} \right)
+\end{equation}
+
+在此之前我们做一些准备工作。    \\
+对于 \(y\in [x_{j-1}, x_j]\)， 我们记 \(y_j^\theta = \theta x_{j-1} + (1-\theta) x_j\)
+
+\begin{equation}
+    \begin{aligned}
+        D(y_j^\theta) =& \frac{\theta (1-\theta)}{2} h_j^2 u''(y_j^\theta) + \frac{\theta (1-\theta)(1-2\theta)}{3!} h_j^3 u'''(y_j^\theta) \\
+        &+ \frac{\theta (1-\theta)}{4!} h_j^4 (\theta^3 u'''(\eta_1) + (1-\theta)^3 u'''(\eta_2))
+    \end{aligned}
+\end{equation}
+
+那么
 
 
 
+\begin{equation}
+    \begin{aligned}
+        T_{ij} &= \int_{x_{j-1}}^{x_{j}} D(y) |x_i - y|^{1-\alpha} dy   \\
+        & = \int_0^1 \frac{\theta (1-\theta)}{2} h_j^{3} u''(y_j^\theta) |x_i - y_j^\theta|^{1-\alpha} d\theta + ...
+    \end{aligned}
+\end{equation}
 
+现在回到原来的问题，我们要研究
 
+\begin{equation}
+    \begin{aligned}
+        \frac{2}{h_i + h_{i+1}} 
+        & ( \frac{1}{h_{i+1}}  h_{j+1}^{3} u''(y_{j+1}^\theta) |x_{i+1} - y_{j+1}^\theta|^{1-\alpha} \\
+        - (\frac{1}{h_{i}} +& \frac{1}{h_{i+1}}) h_j^{3} \; u''(y_j^\theta) |x_i - y_j^\theta|^{1-\alpha}    \\
+        &+  \frac{1}{h_{i}} h_{j-1}^{3} u''(y_{j-1}^\theta) |x_{i-1} - y_{j-1}^\theta|^{1-\alpha} )
+    \end{aligned}
+\end{equation}
+
+我们希望把他看成一个函数的二阶导，注意到当 \(j\le i\le N\) 时
+
+\begin{equation}
+    x_i^{1/r} - x_j^{1/r} = x_{i+1}^{1/r} - x_{j+1}^{1/r} = 2^{-1/r}\frac{i-j}{N}
+\end{equation}
+
+那么我们将其他的相都表示成 \(x_i\) 的函数。
+
+\begin{equation}
+        y_L = (x^{1/r} - z_1)^r , \quad y_R =  (x^{1/r} - z)^r
+\end{equation}
+
+其中 \(z = 2^{-1/r}\frac{i-j}{N}, z_1 = 2^{-1/r}\frac{i-j+1}{N}\)
+
+\begin{gather}
+    y_\theta = \theta y_L + (1-\theta) y_R      \\
+    h_J = y_R - y_L
+\end{gather}
+
+那么我么要研究的就是函数
+
+\begin{equation}
+    h_J^3 |x - y_\theta|^{1-\alpha} u''(y^\theta)
+\end{equation}
+
+在网格 \(x_{i-1}, x_i , x_{i+1}\) 的数值二阶差商。\\
+
+由 Leibniz 公式 
+\begin{equation}
+    (uvw)'' = u''vw + uv''w + uvw'' + 2u'v'w + 2uv'w' + 2u'vw'
+\end{equation} 
+
+由 \(y_R^{1/r} = x^{1/r} - z\), 我们得到
+
+\begin{gather}
+    \frac{d y_R}{dx} = x^{1/r-1} y_R^{1-1/r}    \\
+    \frac{d^2 y_R}{dx^2} = \frac{r-1}{r} x^{1/r-2} y_R^{1-2/r}z    \\
+\end{gather}
 
 
 
