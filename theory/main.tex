@@ -301,6 +301,7 @@
         & ( \frac{1}{h_{i+1}} \frac{|x_{i+1}-x_0|^{3-\alpha} - |x_{i+1}-x_1|^{3-\alpha}}{x_1 - x_0} \\ 
         &- (\frac{1}{h_{i}}+\frac{1}{h_{i+1}})\frac{|x_{i}-x_0|^{3-\alpha} - |x_{i}-x_1|^{3-\alpha}}{x_1 - x_0}     \\ 
         &+  \frac{1}{h_{i}} \frac{|x_{i-1}-x_0|^{3-\alpha} - |x_{i-1}-x_1|^{3-\alpha}}{x_1 - x_0} )\\
+        & + ... \\
         \ge & C (x_i^{-\alpha} + (1-x_i)^{-\alpha})
     \end{aligned}
 \end{equation}
@@ -444,18 +445,18 @@
           \left( \frac{1}{h_{i+1}} T_{i+1, j+1} 
           - (\frac{1}{h_{i}}+\frac{1}{h_{i+1}}) T_{i,j}
           +  \frac{1}{h_{i}} T_{i-1, j-1} \right)   \\
-          & + \sum_{j=i+1}^{N-1} \frac{2}{h_i + h_{i+1}} 
+          & + \sum_{j=i+1}^{N-1} + \sum_{j=N}^{N+1} + \sum_{N+2}^{N+i/2-1}\frac{2}{h_i + h_{i+1}} 
           \left( \frac{1}{h_{i+1}} T_{i+1, j+1} 
           - (\frac{1}{h_{i}}+\frac{1}{h_{i+1}}) T_{i,j}
           +  \frac{1}{h_{i}} T_{i-1, j-1} \right)   \\
-          & + \frac{2}{h_i + h_{i+1}} 
-          \left( \frac{1}{h_{i+1}} T_{i+1, N+1} 
-          - (\frac{1}{h_{i}}+\frac{1}{h_{i+1}}) T_{i,N}
-          +  \frac{1}{h_{i}} T_{i-1, N-1} \right)   \\
-          & + \sum_{j=N+1}^{N+i/2-1} \frac{2}{h_i + h_{i+1}} 
-          \left( \frac{1}{h_{i+1}} T_{i+1, j+1} 
-          - (\frac{1}{h_{i}}+\frac{1}{h_{i+1}}) T_{i,j}
-          +  \frac{1}{h_{i}} T_{i-1, j-1} \right)   \\
+        %   & + \frac{2}{h_i + h_{i+1}} 
+        %   \left( \frac{1}{h_{i+1}} T_{i+1, N+1} 
+        %   - (\frac{1}{h_{i}}+\frac{1}{h_{i+1}}) T_{i,N}
+        %   +  \frac{1}{h_{i}} T_{i-1, N-1} \right)   \\
+        %   & + \sum_{j=N+1}^{N+i/2-1} \frac{2}{h_i + h_{i+1}} 
+        %   \left( \frac{1}{h_{i+1}} T_{i+1, j+1} 
+        %   - (\frac{1}{h_{i}}+\frac{1}{h_{i+1}}) T_{i,j}
+        %   +  \frac{1}{h_{i}} T_{i-1, j-1} \right)   \\
           & + \frac{2}{h_i + h_{i+1}} 
           \left( \frac{1}{h_{i-1}} (T_{i-1, N+i/2} +  T_{i-1, N+i/2-1})
           - (\frac{1}{h_{i}}+\frac{1}{h_{i+1}}) (T_{i,N+i/2}) \right)   \\
@@ -463,7 +464,7 @@
         \left( \frac{1}{h_{i+1}} T_{i+1, j} 
         - (\frac{1}{h_{i}}+\frac{1}{h_{i+1}}) T_{i,j}
         +  \frac{1}{h_{i}} T_{i-1, j} \right)   \\
-        = & I_1 + I_2 + I_3 + ...
+        = & I_1 + I_2 + I_3 + I_4 + I_5 + I_6 + I_7 + I_8
     \end{aligned}
 \end{equation}
 
@@ -513,7 +514,7 @@
 
 \begin{equation}
     \begin{aligned}
-        D(y_j^\theta) =& \frac{\theta (1-\theta)}{2} h_j^2 u''(y_j^\theta)
+        D(y_j^\theta) =& -\frac{\theta (1-\theta)}{2} h_j^2 u''(y_j^\theta)
         + \frac{\theta (1-\theta)}{3!} h_j^3 (\theta^2 u'''(\eta_1) - (1-\theta)^2 u'''(\eta_2))
     \end{aligned}
 \end{equation}
@@ -526,7 +527,7 @@
     \begin{aligned}
         T_{ij} =& \int_{x_{j-1}}^{x_{j}} D(y) |x_i - y|^{1-\alpha} dy   \\
         =& \int_0^1 \frac{\theta (1-\theta)}{2} h_j^{3} u''(y_j^\theta) |x_i - y_j^\theta|^{1-\alpha} d\theta \\
-        & + \int_0^1 \frac{\theta (1-\theta)}{2} h_j^{4}  |x_i - y_j^\theta|^{1-\alpha} (\theta^2 u'''(\eta_{1,j}^\theta) -  (1-\theta)^2 u'''(\eta_{2,j}^\theta)) d\theta
+        & + \int_0^1 \frac{\theta (1-\theta)}{3!} h_j^{4}  |x_i - y_j^\theta|^{1-\alpha} (\theta^2 u'''(\eta_{1,j}^\theta) -  (1-\theta)^2 u'''(\eta_{2,j}^\theta)) d\theta
     \end{aligned}
 \end{equation}
 
@@ -610,8 +611,8 @@
     \begin{aligned}
         (h_J^3)'' &= 6 h_J x^{2/r-2}(y_R^{1-1/r}-y_L^{1-1/r})^2 + 3 h_J^2 \frac{r-1}{r} x^{1/r-2}(y_R^{1-2/r}z_R-y_L^{1-2/r}z_L)    \\
         &\sim h y_R^{1-1/r} x^{2/r-2} (hy_R^{1-2/r})^2 + \frac{r-1}{r} h^2 y_R^{2-2/r} x^{1/r-2}(z_R h y_R^{1-3/r} - hy_L^{1-2/r})    \\
-        &\sim h^3 x^{1-3/r} + \frac{r-1}{r} h^3 (x^{1-4/r}z_R - x^{1-3/r})  \\
-        &\sim h^3 (x^{1-3/r} + x^{1-4/r}z_R)    \\
+        &\sim h^3 y_R^{3-5/r} x^{2/r-2} + \frac{r-1}{r} h^3 (y_R^{3-5/r}x^{1/r-2}z_R - y_R^{3-4/r} x^{1/r-2})  \\
+        &\sim h^3 ( y_R^{3-5/r} x^{2/r-2} + y_R^{3-4/r} x^{1/r-2} + y_R^{3-5/r}x^{1/r-2}z_R)    \\
         & < h^3 x^{1-3/r}
     \end{aligned}
 \end{equation}
@@ -626,8 +627,8 @@
 
 \begin{equation}
     \begin{aligned}
-        |x-y_\theta|^{1-\alpha} &= |x-\theta y_L - (1-\theta) y_R |^{1-\alpha} \sim | (\theta z_L + (1-\theta) z_R) x^{1-1/r} |^{1-\alpha}  \\
-        &\sim z_\theta^{1-\alpha} x^{1-\alpha + (\alpha-1)/r}
+        |x-y_\theta|^{1-\alpha} &= |x-\theta y_L - (1-\theta) y_R |^{1-\alpha} \sim | (\theta z_L + (1-\theta) z_R) \xi^{1-1/r} |^{1-\alpha}  \\
+        &\sim z_\theta^{1-\alpha} \xi^{1-\alpha + (\alpha-1)/r}, \quad \xi\in [y_L, x]
     \end{aligned}
 \end{equation}
 
@@ -635,8 +636,8 @@
     \begin{aligned}
         (|x-y_\theta|^{1-\alpha})' &= (1-\alpha)|x-y_\theta|^{-\alpha}(1-x^{1/r-1}(\theta y_L^{1-1/r} + (1-\theta)y_R^{1-1/r}))     \\
         & = (1-\alpha)|x-y_\theta|^{-\alpha}x^{1/r-1} (x^{1-1/r} - (\theta y_L^{1-1/r} + (1-\theta)y_R^{1-1/r})) \\
-        & \sim |x-y_\theta|^{-\alpha} x^{1/r-1} (\theta z_L + (1-\theta) z_R) x^{1-2/r} \\
-        & \sim | (\theta z_L + (1-\theta) z_R) x^{1-1/r} |^{-\alpha} x^{-1/r} (\theta z_L + (1-\theta) z_R) \\
+        & \sim |x-y_\theta|^{-\alpha} x^{1/r-1} (\theta z_L + (1-\theta) z_R) \xi_2^{1-2/r} \\
+        & \sim | (\theta z_L + (1-\theta) z_R) \xi_1^{1-1/r} |^{-\alpha} x^{1/r-1} (\theta z_L + (1-\theta) z_R)\xi_2^{1-2/r} \\
         & \sim z_\theta^{1-\alpha} x^{-\alpha + (\alpha-1)/r}
     \end{aligned}
 \end{equation}
@@ -646,8 +647,8 @@
         (|x-y_\theta|^{1-\alpha})'' 
         = & \alpha(\alpha-1)|x-y_\theta|^{-1-\alpha} (1-x^{1/r-1}(\theta y_L^{1-1/r} + (1-\theta)y_R^{1-1/r}))^2 \\
             &+ (1-\alpha)|x-y_\theta|^{-\alpha}(\frac{1-r}{r} x^{1/r-2} (\theta y_L^{1-2/r} z_L + (1-\theta) y_R^{1-2/r} z_R))  \\
-        \sim & | (\theta z_L + (1-\theta) z_R) x^{1-1/r} |^{-1-\alpha} x^{-2/r} (\theta z_L + (1-\theta) z_R)^2 \\
-            &+ | (\theta z_L + (1-\theta) z_R) x^{1-1/r} |^{-\alpha} x^{-1-1/r} (\theta z_L + (1-\theta) z_R)   \\
+        \sim & | (\theta z_L + (1-\theta) z_R) \xi_1^{1-1/r} |^{-1-\alpha} x^{2/r-2} \xi_2^{2-4/r} (\theta z_L + (1-\theta) z_R)^2 \\
+            &+ | (\theta z_L + (1-\theta) z_R) \xi_1^{1-1/r} |^{-\alpha} x^{1/r-2} (\theta z_L + (1-\theta) z_R)y_R^{1-2/r}   \\
         \sim & z_\theta^{1-\alpha} x^{-1-\alpha + (\alpha-1)/r}
     \end{aligned}
 \end{equation}
@@ -663,7 +664,7 @@
 \begin{equation}
     \begin{aligned}
         (u''(y_\theta))' &= u'''(y_\theta) x^{1/r-1}(\theta y_L^{1-1/r} + (1-\theta) y_R^{1-1/r})   \\
-        & \le C y_\theta^{\alpha/2-3} \sim x^{\alpha/2-3}
+        & \le C y_\theta^{\alpha/2-3}x^{1/r-1} y_R^{1-1/r} \sim x^{\alpha/2-3}
     \end{aligned}
 \end{equation}
 
@@ -671,7 +672,7 @@
     \begin{aligned}
         (u''(y_\theta))'' =& u''''(y_\theta) (x^{1/r-1}(\theta y_L^{1-1/r} + (1-\theta) y_R^{1-1/r}))^2 \\
         & + u'''(y_\theta)\frac{r-1}{r} x^{1/r-2}(\theta y_L^{1-2/r}z_L + (1-\theta) y_R^{1-2/r}z_R) \\
-        \sim & x^{\alpha/2-4} + (\theta z_L + (1-\theta) z_R)x^{\alpha/2-3 -1-1/r}  \\
+        \sim & y_\theta^{\alpha/2-4} (x^{1/r-1} y_R^{1-1/r})^2 + z_\theta y_R^{\alpha/2-3 +1-2/r}x^{1/r-2}  \\
         < & x^{\alpha/2-4}
     \end{aligned}
 \end{equation}
@@ -738,7 +739,7 @@
     \begin{aligned}
         \frac{1}{h_i} & (K_2(x_{i}) u'''(\eta_{1,j}^\theta) - K_2(x_{i-1}) u'''(\eta_{1,j-1}^\theta))    \\
         = &  \frac{1}{h_i} K_2(x_{i}) ( u'''(\eta_{1,j}^\theta) - u'''(\eta_{1,j-1}^\theta) ) + \frac{1}{h_i} (K_2(x_{i}) - K_2(x_{i-1}) u'''(\eta_{1,j-1}^\theta)) \\
-        = & K_2(x_i) u''''(\eta_{j}^\theta) (x_j-x_{j-2}) + K_2'(\xi)u'''(\eta_{1,j-1}^\theta)    \quad (\eta_j^\theta \in [x_{j-2}, x_{j}], \xi \in [x_{j-1}, x_{j}])\\
+        \le & h_i^{-1}K_2(x_i) u''''(\eta_{j}^\theta) (x_j-x_{j-2}) + K_2'(\xi)u'''(\eta_{1,j-1}^\theta)    \quad (\eta_j^\theta \in [x_{j-2}, x_{j}], \xi \in [x_{j-1}, x_{j}])\\
         \sim & h_i^{-1} h_j^4 |x_i-y_{j}^\theta|^{1-\alpha}\; C (\eta_{j}^\theta)^{\alpha/2-4} 2h_j \\
             % & + u'''(\eta_{1,j-1}^\theta)(4h_J^3 \xi^{1/r-1}(y_R^{1-1/r} - y_L^{1-1/r})|\xi-y_\theta|^{1-\alpha} \\
             % &\quad + h_J^4 (1-\alpha)|x-y_\theta|^{-\alpha}x^{1/r-1} (x^{1-1/r} - (\theta y_L^{1-1/r} + (1-\theta)y_R^{1-1/r})))    \\
@@ -866,6 +867,29 @@
 % \begin{equation}
 %     R_i \le C h^{r\alpha/2+r} x_i^{-1-\alpha} + h^2 x_i^{-\alpha/2-2/r}
 % \end{equation}
+
+\begin{equation}
+    \begin{aligned}
+        I_4 = & \sum_{j=i+1}^{N-1} \frac{2}{h_i + h_{i+1}} 
+        \left( \frac{1}{h_{i+1}} T_{i+1, j+1} 
+        - (\frac{1}{h_{i}}+\frac{1}{h_{i+1}}) T_{i,j}
+        +  \frac{1}{h_{i}} T_{i-1, j-1} \right)   \\
+    \end{aligned}
+\end{equation}
+
+类似的，我们要研究的就变成
+
+\(y_L^{1/r} = x^{1/r} + z_L, \; y_R^{1/r} = x^{1/r} + z_R, \quad z_L = 2^{-1/r}\frac{j-i-1}{N}, \; z_R =2^{-1/r}\frac{j-i}{N} \)
+
+\begin{equation}
+    K_1(x) = h_J^3(x) |y_\theta(x)-x|^{1-\alpha} u''(y_\theta(x))
+\end{equation}
+
+在网格 \(x_{i-1}, x_i , x_{i+1}\) 的数值二阶差商。
+\begin{equation}
+    \frac{2}{h_i + h_{i+1}} 
+    ( \frac{1}{h_{i+1}}  K_1(x_{i+1}) - (\frac{1}{h_{i}} + \frac{1}{h_{i+1}}) K_1(x_{i}) + \frac{1}{h_{i}} K_1(x_{i-1})) = K_1''(\xi), \;\xi\in [x_{i-1}, x_{i+1}]
+\end{equation}
 
 
 

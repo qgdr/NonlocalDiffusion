@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.9.7)  19 AUG 2024 20:29
+This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.9.7)  22 AUG 2024 16:40
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -585,81 +585,86 @@ Overfull \hbox (73.6552pt too wide) detected at line 293
  []
 
 
-Overfull \hbox (38.62921pt too wide) detected at line 314
+Overfull \hbox (38.62921pt too wide) detected at line 315
 [][][]\OML/cmm/m/it/10.53937 R[] \OT1/cmr/m/n/10.53937 = [][] \OML/cmm/m/it/10.53937 D\OT1/cmr/m/n/10.53937 (\OML/cmm/m/it/10.53937 y\OT1/cmr/m/n/10.53937 )[]([]\OMS/cmsy/m/n/10.53937 j\OML/cmm/m/it/10.53937 x[] \OMS/cmsy/m/n/10.53937 ^^@ \OML/cmm/m/it/10.53937 y\OMS/cmsy/m/n/10.53937 j[] ^^@ \OT1/cmr/m/n/10.53937 ([] + [])\OMS/cmsy/m/n/10.53937 j\OML/cmm/m/it/10.53937 x[] \OMS/cmsy/m/n/10.53937 ^^@ \OML/cmm/m/it/10.53937 y\OMS/cmsy/m/n/10.53937 j[] \OT1/cmr/m/n/10.53937 + []\OMS/cmsy/m/n/10.53937 j\OML/cmm/m/it/10.53937 x[] \OMS/cmsy/m/n/10.53937 ^^@ \OML/cmm/m/it/10.53937 y\OMS/cmsy/m/n/10.53937 j[]\OT1/cmr/m/n/10.53937 )\OML/cmm/m/it/10.53937 dy
  []
 
 [6]
-Overfull \hbox (8.77753pt too wide) detected at line 375
+Overfull \hbox (8.77753pt too wide) detected at line 376
 [][][][][]
  []
 
 [7]
-Overfull \hbox (19.99992pt too wide) detected at line 391
+Overfull \hbox (19.99992pt too wide) detected at line 392
 [][][][][]
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 405--406
+Underfull \hbox (badness 10000) in paragraph at lines 406--407
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 418--419
+Underfull \hbox (badness 10000) in paragraph at lines 419--420
 
- []
-
-
-Overfull \hbox (9.19638pt too wide) detected at line 468
-[][][][][]
  []
 
 [8]
-Overfull \hbox (44.81146pt too wide) detected at line 479
+Overfull \hbox (53.02657pt too wide) detected at line 469
+[][][][][]
+ []
+
+
+Overfull \hbox (44.81146pt too wide) detected at line 480
 [][][][][]
  []
 
 [9]
-Underfull \hbox (badness 10000) in paragraph at lines 499--501
+Underfull \hbox (badness 10000) in paragraph at lines 500--502
 
  []
 
 [10]
-Overfull \hbox (38.333pt too wide) detected at line 578
+Overfull \hbox (38.333pt too wide) detected at line 579
 [][][][]\OT1/cmr/m/n/10.53937 ([]\OML/cmm/m/it/10.53937 K[]\OT1/cmr/m/n/10.53937 (\OML/cmm/m/it/10.53937 x[]\OT1/cmr/m/n/10.53937 ) \OMS/cmsy/m/n/10.53937 ^^@ \OT1/cmr/m/n/10.53937 ([] + [])\OML/cmm/m/it/10.53937 K[]\OT1/cmr/m/n/10.53937 (\OML/cmm/m/it/10.53937 x[]\OT1/cmr/m/n/10.53937 ) + []\OML/cmm/m/it/10.53937 K[]\OT1/cmr/m/n/10.53937 (\OML/cmm/m/it/10.53937 x[]\OT1/cmr/m/n/10.53937 )) = \OML/cmm/m/it/10.53937 K[]\OT1/cmr/m/n/10.53937 (\OML/cmm/m/it/10.53937 ^^X\OT1/cmr/m/n/10.53937 )\OML/cmm/m/it/10.53937 ;  ^^X \OMS/cmsy/m/n/10.53937 2 \OT1/cmr/m/n/10.53937 [\OML/cmm/m/it/10.53937 x[]; x[]\OT1/cmr/m/n/10.53937 ]
  []
 
 [11]
-Overfull \hbox (10.80008pt too wide) detected at line 617
+Overfull \hbox (10.80008pt too wide) detected at line 618
 [][][][][]
  []
 
 
-Overfull \hbox (2.64278pt too wide) detected at line 642
+Overfull \hbox (2.64278pt too wide) detected at line 643
 [][][][][]
  []
 
 [12]
-Overfull \hbox (21.30823pt too wide) detected at line 653
+Overfull \hbox (21.30823pt too wide) detected at line 654
 [][][][][]
  []
 
 [13] [14]
-Overfull \hbox (17.8839pt too wide) detected at line 750
+Overfull \hbox (34.69238pt too wide) detected at line 751
 [][][][][]
  []
 
 [15]
-Underfull \hbox (badness 10000) in paragraph at lines 780--782
+Underfull \hbox (badness 10000) in paragraph at lines 781--783
 
  []
 
 
-Overfull \hbox (18.02667pt too wide) detected at line 796
+Overfull \hbox (18.02667pt too wide) detected at line 797
 [][][][][]
  []
 
-[16] [17] (./main.aux)
+[16] [17]
+Overfull \hbox (38.333pt too wide) detected at line 892
+[][][][]\OT1/cmr/m/n/10.53937 ([]\OML/cmm/m/it/10.53937 K[]\OT1/cmr/m/n/10.53937 (\OML/cmm/m/it/10.53937 x[]\OT1/cmr/m/n/10.53937 ) \OMS/cmsy/m/n/10.53937 ^^@ \OT1/cmr/m/n/10.53937 ([] + [])\OML/cmm/m/it/10.53937 K[]\OT1/cmr/m/n/10.53937 (\OML/cmm/m/it/10.53937 x[]\OT1/cmr/m/n/10.53937 ) + []\OML/cmm/m/it/10.53937 K[]\OT1/cmr/m/n/10.53937 (\OML/cmm/m/it/10.53937 x[]\OT1/cmr/m/n/10.53937 )) = \OML/cmm/m/it/10.53937 K[]\OT1/cmr/m/n/10.53937 (\OML/cmm/m/it/10.53937 ^^X\OT1/cmr/m/n/10.53937 )\OML/cmm/m/it/10.53937 ;  ^^X \OMS/cmsy/m/n/10.53937 2 \OT1/cmr/m/n/10.53937 [\OML/cmm/m/it/10.53937 x[]; x[]\OT1/cmr/m/n/10.53937 ]
+ []
+
+[18] (./main.aux)
 
 LaTeX Font Warning: Size substitutions with differences
 (Font)              up to 0.41063pt have occurred.
@@ -670,10 +675,10 @@ Package rerunfilecheck Info: File `main.out' has not changed.
 Here is how much of TeX's memory you used:
  16866 strings out of 476683
  367191 string characters out of 5803607
- 1862012 words of memory out of 5000000
+ 1860012 words of memory out of 5000000
  36870 multiletter control sequences out of 15000+600000
  517815 words of font info for 74 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  89i,9n,97p,359b,348s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on main.pdf (17 pages).
+Output written on main.pdf (18 pages).

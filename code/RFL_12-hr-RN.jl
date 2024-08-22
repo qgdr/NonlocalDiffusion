@@ -45,7 +45,7 @@ r = 15 // 10
 a = Ω[1]
 b = Ω[2]
 
-α = 15 // 10
+α = 13 // 10
 α = BigFloat(α)
 
 @show 1 < α < 2
@@ -54,7 +54,7 @@ R1 = []
 RN = []
 
 
-Ns = 2 .^(10:15)
+Ns = 2 .^(11:16)
 for N ∈ Ns
 
     function x(j)
@@ -101,7 +101,7 @@ for N ∈ Ns
 
     # i = 4N ÷ 5
     # i = 2
-    i= N-3
+    i= N-2
 
     FN = 0
     for j = 1:2N-1
@@ -115,5 +115,5 @@ for N ∈ Ns
 end
 
 plot(log.(Ns), abs.(RN) .|> log)
-#  diff( abs.(RN) .|> log)./diff(log.(Ns))
+diff( abs.(RN) .|> log)./diff(log.(Ns))
 

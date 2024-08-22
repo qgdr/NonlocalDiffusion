@@ -40,11 +40,11 @@ end
 
 
 
-r = 1
+@show r = 27 // 10
 Ω = (0, 1)
 
 
-α = 13 // 10
+@show α = 15 // 10
 α = BigFloat(α)
 
 @show 1 < α < 2
@@ -87,7 +87,7 @@ function num_err(Ω, r, α, N)
     A_1 = OffsetArray(zeros(BigFloat, 2N + 1, 2N - 1), 0:2N, 1:2N-1)
 
     C_a = 1 / (2 - α) / (3 - α)
-    for j = 1:2N-1
+    Threads.@threads for j = 1:2N-1
         A_1[:, j] = C_a * (D[:, j+1] / h[j+1] - (h[j] + h[j+1]) / (h[j] * h[j+1]) * D[:, j] + D[:, j-1] / h[j])
     end
 
@@ -95,7 +95,7 @@ function num_err(Ω, r, α, N)
 
     A = zeros(BigFloat, 2N - 1, 2N - 1)
 
-    for i = 1:2N-1
+    Threads.@threads for i = 1:2N-1
         A[i, :] = 2 * CR * (A_1[i+1, :] / h[i+1] / (h[i] + h[i+1]) - A_1[i, :] / (h[i] * h[i+1]) + A_1[i-1, :] / h[i] / (h[i] + h[i+1]))
     end
 
@@ -120,22 +120,31 @@ end
 
 Ns = [50, 100, 200, 400]
 num = length(Ns)
-trunc_err = zeros(num)
+# trunc_err = zeros(num)
 u_err = zeros(num)
-Ri = zeros(num)
-S = zeros(num)
+RSi = zeros(num)
+RS1 = zeros(num)
+RSN = zeros(num)
+
+
+# S = zeros(num)
 
 
 
 Threads.@threads for l = 1:num
     @show N = Int64(Ns[l])
     (x, U, F, U_s, Si) = num_err(Ω, r, α, N)
-    trunc_err[l] = abs.(F .- 1) |> parent |> maximum
+    # trunc_err[l] = abs.(F .- 1) |> parent |> maximum
     u_err[l] = abs.(U[1:2N-1] - U_s) |> maximum
-    R = parent(abs.(F .- 1)) .* (x[1:2N-1] .^ α)
+    # R = parent(abs.(F .- 1)) .* (x[1:2N-1] .^ α)
+    R = parent(abs.(F .- 1)) ./ Si
+
     # println(Ri[l])
-    Ri[l] = maximum(R[1:N])
-    S[l] = maximum( abs.(Si[1:N] .* x[1:N] .* α) )
+    RSi[l] = maximum(R[1:N])
+    RS1[l] = (F[1] - 1) / Si[1]
+    RSN[l] = (F[N] - 1) #/ Si[N]
+
+    # S[l] = maximum( abs.(Si[1:N] .* x[1:N] .* α) )
     println("N = ", Ns[l], "  over")
 end
 
@@ -146,72 +155,12 @@ end
 # plot(u_err .* Ns.^(α/2))
 # plot(Ri)
 # plot(Ri .* Ns .^ (α / 2))
-plot(S)
+# plot(S)
+
+@show diff( abs.(RSi) .|> log)./diff(log.(Ns))
+@show diff( abs.(RS1) .|> log)./diff(log.(Ns))
+@show diff( abs.(RSN) .|> log)./diff(log.(Ns))
+
+diff( abs.(u_err) .|> log)./diff(log.(Ns))
 
 
-
-
-
-##############################################
-
-
-# for i = 1:2N-1
-#     # xi = x[i]
-#     # xi_1 = x[i-1]
-#     # xi1 = x[i+1]
-#     # hi = xi - xi_1
-#     # hi1 = xi1 - xi
-#     Hi = 2 / (h[i] + h[i+1])
-#     Xi = [x[i-1] x[i] x[i+1]]
-#     Ci = [1 / h[i] -1 / h[i] - 1 / h[i+1] 1 / h[i+1]
-
-#     for j = 2:N
-#         xj = x[j]
-#         xj_1 = x[j-1]
-#         xj1 = x[j+1]
-#         hj = xj - xj_1
-#         hj1 = xj1 - xj
-#         Xj = [x[j-1] x[j] x[j+1]]
-#         Cj = [1 / hj -1 / hj - 1 / hj1 1 / hj1]
-#         ###########################################
-#         Ωij = abs.(Xj .- Xi') .^ (3 - α)
-#         A[i-1, j-1] = (CR*C_a*Hi*Ci*Ωij*Cj')[1]
-#     end
-#     f[i-1] = function_f(xi, α)
-# end
-# u = A \ f       #inv(A)*f;
-# t = x[2:N]
-# ut = u_exact(t, α)
-# error = maximum(abs.(u - ut))
-
-
-
-
-
-
-# # m = 6;
-# index = [11//10 13//10 15//10 17//10 19//10];
-# Result_e = [0 (exp.(log(2) .* ((1:m) .+ 4)))']      #zeros(BigFloat,1,m)#;
-
-
-
-# for α ∈ index #,2
-
-
-# for nn = 1:m
-#     error[nn] = Collocation_RFL(Ω, 2^(nn + 4), α)
-
-# end
-# rho = log.(error[1:m-1] ./ error[2:m]) ./ log(2)
-# Result_e = [Result_e; α error; 0 0 rho']
-
-
-
-# XLSX.openxlsx("Result_U.xlsx", mode="w") do xf
-#     sheet = xf[1]
-#     sheet["A2"] = Result_e
-#     #sheet["A2"]=["α" 0 (2*ones(Int64,1,m)).^(t.+4)']
-#     sheet["A1"] = "Uniform"
-#     #sheet["A1"]="r=4/α" 
-# end
-#==#
