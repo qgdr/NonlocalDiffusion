@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.9.7)  22 AUG 2024 16:40
+This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.9.7)  23 AUG 2024 23:34
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -599,58 +599,43 @@ Overfull \hbox (19.99992pt too wide) detected at line 392
 [][][][][]
  []
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 406--407
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 419--420
-
- []
-
 [8]
-Overfull \hbox (53.02657pt too wide) detected at line 469
-[][][][][]
- []
-
-
 Overfull \hbox (44.81146pt too wide) detected at line 480
 [][][][][]
  []
 
 [9]
-Underfull \hbox (badness 10000) in paragraph at lines 500--502
+Underfull \hbox (badness 10000) in paragraph at lines 501--503
 
  []
 
 [10]
-Overfull \hbox (38.333pt too wide) detected at line 579
+Overfull \hbox (38.333pt too wide) detected at line 580
 [][][][]\OT1/cmr/m/n/10.53937 ([]\OML/cmm/m/it/10.53937 K[]\OT1/cmr/m/n/10.53937 (\OML/cmm/m/it/10.53937 x[]\OT1/cmr/m/n/10.53937 ) \OMS/cmsy/m/n/10.53937 ^^@ \OT1/cmr/m/n/10.53937 ([] + [])\OML/cmm/m/it/10.53937 K[]\OT1/cmr/m/n/10.53937 (\OML/cmm/m/it/10.53937 x[]\OT1/cmr/m/n/10.53937 ) + []\OML/cmm/m/it/10.53937 K[]\OT1/cmr/m/n/10.53937 (\OML/cmm/m/it/10.53937 x[]\OT1/cmr/m/n/10.53937 )) = \OML/cmm/m/it/10.53937 K[]\OT1/cmr/m/n/10.53937 (\OML/cmm/m/it/10.53937 ^^X\OT1/cmr/m/n/10.53937 )\OML/cmm/m/it/10.53937 ;  ^^X \OMS/cmsy/m/n/10.53937 2 \OT1/cmr/m/n/10.53937 [\OML/cmm/m/it/10.53937 x[]; x[]\OT1/cmr/m/n/10.53937 ]
  []
 
 [11]
-Overfull \hbox (10.80008pt too wide) detected at line 618
+Overfull \hbox (10.80008pt too wide) detected at line 619
 [][][][][]
  []
 
 
-Overfull \hbox (2.64278pt too wide) detected at line 643
+Overfull \hbox (34.25806pt too wide) detected at line 644
 [][][][][]
  []
 
 [12]
-Overfull \hbox (21.30823pt too wide) detected at line 654
+Overfull \hbox (76.31401pt too wide) detected at line 655
 [][][][][]
  []
 
 [13] [14]
-Overfull \hbox (34.69238pt too wide) detected at line 751
+Overfull \hbox (34.69238pt too wide) detected at line 752
 [][][][][]
  []
 
 [15]
-Underfull \hbox (badness 10000) in paragraph at lines 781--783
+Underfull \hbox (badness 10000) in paragraph at lines 782--784
 
  []
 
@@ -660,25 +645,40 @@ Overfull \hbox (18.02667pt too wide) detected at line 797
  []
 
 [16] [17]
-Overfull \hbox (38.333pt too wide) detected at line 892
-[][][][]\OT1/cmr/m/n/10.53937 ([]\OML/cmm/m/it/10.53937 K[]\OT1/cmr/m/n/10.53937 (\OML/cmm/m/it/10.53937 x[]\OT1/cmr/m/n/10.53937 ) \OMS/cmsy/m/n/10.53937 ^^@ \OT1/cmr/m/n/10.53937 ([] + [])\OML/cmm/m/it/10.53937 K[]\OT1/cmr/m/n/10.53937 (\OML/cmm/m/it/10.53937 x[]\OT1/cmr/m/n/10.53937 ) + []\OML/cmm/m/it/10.53937 K[]\OT1/cmr/m/n/10.53937 (\OML/cmm/m/it/10.53937 x[]\OT1/cmr/m/n/10.53937 )) = \OML/cmm/m/it/10.53937 K[]\OT1/cmr/m/n/10.53937 (\OML/cmm/m/it/10.53937 ^^X\OT1/cmr/m/n/10.53937 )\OML/cmm/m/it/10.53937 ;  ^^X \OMS/cmsy/m/n/10.53937 2 \OT1/cmr/m/n/10.53937 [\OML/cmm/m/it/10.53937 x[]; x[]\OT1/cmr/m/n/10.53937 ]
+Overfull \hbox (44.81146pt too wide) detected at line 875
+[][][][][]
  []
 
-[18] (./main.aux)
+
+Overfull \hbox (72.53358pt too wide) detected at line 887
+[][][][][]
+ []
+
+
+Overfull \hbox (83.75598pt too wide) detected at line 900
+[][][][][]
+ []
+
+[18]
+Overfull \hbox (53.02657pt too wide) detected at line 1082
+[][][][][]
+ []
+
+[19] [20] (./main.aux)
 
 LaTeX Font Warning: Size substitutions with differences
 (Font)              up to 0.41063pt have occurred.
 
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: 785CEBDE5C5DDBA3DEACBE47A982DD71;443.
+(rerunfilecheck)             Checksum: BFB2C86CC17FB11A795E67C139CCFB15;667.
  ) 
 Here is how much of TeX's memory you used:
- 16866 strings out of 476683
- 367191 string characters out of 5803607
- 1860012 words of memory out of 5000000
- 36870 multiletter control sequences out of 15000+600000
+ 16854 strings out of 476683
+ 366391 string characters out of 5803607
+ 1861012 words of memory out of 5000000
+ 36858 multiletter control sequences out of 15000+600000
  517815 words of font info for 74 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  89i,9n,97p,359b,348s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on main.pdf (18 pages).
+Output written on main.pdf (20 pages).
