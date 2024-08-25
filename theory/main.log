@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.9.7)  25 AUG 2024 14:43
+This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.9.7)  25 AUG 2024 22:38
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -659,12 +659,27 @@ Overfull \hbox (83.75598pt too wide) detected at line 906
 [][][][][]
  []
 
-[18]
-Overfull \hbox (53.02657pt too wide) detected at line 1088
+[18] [19]
+Overfull \hbox (7.28891pt too wide) detected at line 1108
+[][][]\OML/cmm/m/it/10.53937 x[] \OT1/cmr/m/n/10.53937 + (1 \OMS/cmsy/m/n/10.53937 ^^@ \OML/cmm/m/it/10.53937 x[]\OT1/cmr/m/n/10.53937 )[] = 2[]([] + []) = 2[](2 \OMS/cmsy/m/n/10.53937 ^^@ []\OT1/cmr/m/n/10.53937 ) = \OML/cmm/m/it/10.53937 x[] \OT1/cmr/m/n/10.53937 + (1 \OMS/cmsy/m/n/10.53937 ^^@ \OML/cmm/m/it/10.53937 x[]\OT1/cmr/m/n/10.53937 )[]
+ []
+
+[20]
+Overfull \hbox (111.62898pt too wide) detected at line 1184
 [][][][][]
  []
 
-[19] [20] (./main.aux)
+
+Overfull \hbox (85.79495pt too wide) detected at line 1193
+[][][][][]
+ []
+
+[21]
+Overfull \hbox (8.05331pt too wide) detected at line 1217
+[][][][][]
+ []
+
+[22] [23] (./main.aux)
 
 LaTeX Font Warning: Size substitutions with differences
 (Font)              up to 0.41063pt have occurred.
@@ -681,4 +696,4 @@ Here is how much of TeX's memory you used:
  1348 hyphenation exceptions out of 8191
  89i,9n,97p,359b,348s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on main.pdf (20 pages).
+Output written on main.pdf (23 pages).
