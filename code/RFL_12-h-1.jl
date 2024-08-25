@@ -49,7 +49,7 @@ r = 30//10
 
 @show 1 < α < 2
 
-N = 500
+N = 250
 
 
 # function num_err(Ω, r, α, N)
@@ -100,7 +100,7 @@ F = parent(A) * U[1:2N-1]
 # plot(x[1:2N-1], F)
 
 U_s = parent(A) \ ones(2N - 1)
-@show plot(x[1:2N-1], U[1:2N-1]-U_s)
+# @show plot(x[1:2N-1], U[1:2N-1]-U_s)
 # plot!(x[1:2N-1], U_s)
 
 Si = sum(parent(A), dims=2)
@@ -135,3 +135,17 @@ R = F .- 1
 # plot(x[1:2N-1], R ./ (x[1:2N-1] .^ (-α-1) .+ (1 .- x[1:2N-1]) .^ (-α-1)) )
 
 # plot(R[N÷2:3N÷2] .|> abs)
+# plot(x[1:2N-1], abs.(U[1:2N-1]-U_s))
+
+
+#################
+
+λ = α - 1 # 1/(α-1)
+g = zeros(2N-1)
+g[1:N] = x[1:N]
+g[N+1:2N-1] = 1 .-x[N+1:2N-1]
+
+B = A * diagm(g.+λ)
+M = sum(B, dims=2)
+@show all(M .> 0) # 是否是 M 矩阵
+plot((R ./ M) .* N^2)
