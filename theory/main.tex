@@ -45,10 +45,10 @@
 
 \begin{equation}
     (-\Delta)^{\frac{\alpha}{2}} u(x) = -\frac{\partial^\alpha u}{\partial |x|^\alpha}
-    = C_R \frac{d^2}{dx^2} \int_\Omega \frac{u(y)}{|x-y|^{\alpha-1}} dy
+    = -\kappa_\alpha \frac{d^2}{dx^2} \int_\Omega \frac{u(y)}{|x-y|^{\alpha-1}} dy
 \end{equation}
 \begin{equation}
-    C_R = \frac{1}{2\cos(\alpha\pi/2)\Gamma(2-\alpha)} < 0
+    \kappa_\alpha = -\frac{1}{2\cos(\alpha\pi/2)\Gamma(2-\alpha)} > 0
 \end{equation}
 
 \section{数值格式}
@@ -59,7 +59,7 @@
 
 \begin{equation}
     \begin{aligned}
-        C_R ( & \frac{2}{h_{i+1} (h_i + h_{i+1})}\int_\Omega \frac{u_h(x)}{ |x_{i+1}-y|^{\alpha-1} } dy \\
+        -\kappa_\alpha ( & \frac{2}{h_{i+1} (h_i + h_{i+1})}\int_\Omega \frac{u_h(x)}{ |x_{i+1}-y|^{\alpha-1} } dy \\
               & -\frac{2}{h_i h_{i+1}}\int_\Omega \frac{u_h(x)}{ |x_i-y|^{\alpha-1} } dy                \\
               & + \frac{2}{h_i (h_i+ h_{i+1})}\int_\Omega \frac{u_h(x)}{ |x_{i-1}-y|^{\alpha-1} } dy
         )                                                                                               \\
@@ -79,7 +79,7 @@
 
 \begin{equation}
     \begin{aligned}
-        a_{ij} & = \frac{C_R}{(2-\alpha)(3-\alpha)} h^{-\alpha}                                                                             \\
+        a_{ij} & = \frac{-\kappa_\alpha}{(2-\alpha)(3-\alpha)} h^{-\alpha}                                                                             \\
                & \left( |i-j-2|^{3-\alpha} - 4 |i-j-1|^{3-\alpha} + 6 |i-j|^{3-\alpha} - 4 |i-j+1|^{3-\alpha} +  |i-j+2|^{3-\alpha} \right)
     \end{aligned}
 \end{equation}
@@ -88,7 +88,7 @@
 
 \begin{equation}
     \begin{aligned}
-        S_i = \sum_{j=1}^{2N-1} a_{ij} & = \frac{C_R}{(2-\alpha)(3-\alpha)} h^{-\alpha}
+        S_i = \sum_{j=1}^{2N-1} a_{ij} & = \frac{-\kappa_\alpha}{(2-\alpha)(3-\alpha)} h^{-\alpha}
         ( |i+1|^{3-\alpha} - 3 |i|^{3-\alpha} + 3 |i-1|^{3-\alpha} - |i-2|^{3-\alpha}  + ... 2N )
     \end{aligned}
 \end{equation}
@@ -451,7 +451,7 @@
 因为 \(1-\alpha > -1\)，应用引理 \ref{lmm:Dx1}，
 \begin{equation}
     \begin{aligned}
-        S_{11} & \le 2^{1-r} \int_0^{x_1} \frac{D(y)}{h_1^2}
+        S_{11} & \le 2^{1-r} \int_0^{x_1} \frac{|D(y)|}{h_1^2}
         ( |x_{2}-y|^{1-\alpha}
         + 2|x_{1}-y|^{1-\alpha}
         +|y|^{1-\alpha} )  dy                                                                                                         \\
@@ -463,11 +463,11 @@
 
 \begin{equation}
     \begin{aligned}
-        S_{12} & \le 2^{1-r} \int_{x_1}^{x_2} \frac{D(y)}{h_1^2}
+        S_{12} & \le 2^{1-r} \int_{x_1}^{x_2} \frac{|D(y)|}{h_1^2}
         ( |x_{2}-y|^{1-\alpha}
         +2 |x_{1}-y|^{1-\alpha}
         +|y|^{1-\alpha} )  dy                                                                           \\
-            & \le C x_1^{\alpha/2-2} h_2^{2-\alpha} \le C x_1^{\alpha/2} x_2^{-\alpha} \le C h^{-r\alpha/2}
+            & \le C x_1^{\alpha/2-2} (3h_2^{2-\alpha}+h_2h_1^{1-\alpha})  \le C h^{-r\alpha/2}
     \end{aligned}
 \end{equation}
 
@@ -1347,30 +1347,7 @@
 
 \section{收敛性分析}
 
-\begin{lemma} \label{lmm:D2simd2}
-    若 \(g(x)\) 三阶连续可微，那么\\
-    1.
-    \begin{gather*}
-        g(x_{i-1}) = g(x_{i}) - (x_{i}-x_{i-1}) g'(x_{i}) + \frac{(x_{i}-x_{i-1})^2}{2} g''(\xi_1), \quad \xi_1 \in [x_{i-1}, x_{i}]        \\
-        g(x_{i+1}) = g(x_{i}) + (x_{i+1}-x_{i}) g'(x_{i}) + \frac{(x_{i+1}-x_{i})^2}{2} g''(\xi_2), \quad \xi_2 \in [x_{i}, x_{i+1}]
-    \end{gather*}
-    2.
-    \begin{equation}
-        \frac{2}{h_i + h_{i+1}} \left( \frac{1}{h_{i+1}} g(x_{i+1}) - (\frac{1}{h_{i}}+\frac{1}{h_{i+1}})g(x_{i}) + \frac{1}{h_{i}} g(x_{i-1}) \right) = g''(\xi), \quad \xi \in [x_{i-1}, x_{i+1}]
-    \end{equation}
-    % 3.
-    % \begin{gather*}
-    %     g(x_{i+1}) = g(x_{i}) - h_{i} g'(x_{i}) + \frac{h_{i}^2}{2} g''(x_{i}) - \frac{h_{i}^3}{3!}g'''(\xi_1), \quad \xi_1 \in [x_{i-1}, x_{i}]        \\
-    %     g(x_{i+1}) = g(x_{i}) + h_{i+1} g'(x_{i}) + \frac{h_{i+1}^2}{2} g''(x_{i}) + \frac{h_{i+1}^3}{3!}g'''(\xi_2), \quad \xi_2 \in [x_{i}, x_{i+1}]  
-    % \end{gather*}
-    % 4.
-    % \begin{equation}
-    %     \begin{aligned}
-    %         \frac{2}{h_i + h_{i+1}} & \left( \frac{1}{h_{i+1}} g(x_{i+1}) - (\frac{1}{h_{i}}+\frac{1}{h_{i+1}})g(x_{i}) + \frac{1}{h_{i}} g(x_{i-1}) \right) \\
-    %         &= g''(x_{i}) + \frac{2}{h_i + h_{i+1}}\left( \frac{h_{i+1}^2}{3!}g'''(\xi_2) - \frac{h_{i}^2}{3!}g'''(\xi_1) \right)
-    %     \end{aligned}
-    % \end{equation}
-\end{lemma}
+
 
 
 \begin{lemma}
@@ -1388,8 +1365,8 @@
 \end{equation}
 其中
 \begin{gather*}
-    g_{0}(x) := \frac{C_R}{(2-\alpha)(3-\alpha)} \frac{|x_i-x_0|^{3-\alpha} - |x_i-x_1|^{3-\alpha}}{h_1}    \\
-    g_{2N}(x) := \frac{C_R}{(2-\alpha)(3-\alpha)} \frac{|x_{2N}-x_i|^{3-\alpha} - |x_{2N-1}-x_i|^{3-\alpha}}{h_{2N}}
+    g_{0}(x) := \frac{-\kappa_\alpha}{(2-\alpha)(3-\alpha)} \frac{|x_i-x_0|^{3-\alpha} - |x_i-x_1|^{3-\alpha}}{h_1}    \\
+    g_{2N}(x) := \frac{-\kappa_\alpha}{(2-\alpha)(3-\alpha)} \frac{|x_{2N}-x_i|^{3-\alpha} - |x_{2N-1}-x_i|^{3-\alpha}}{h_{2N}}
 \end{gather*}
 
 
@@ -1398,7 +1375,7 @@
 \begin{lemma}\label{lmm:AisM}
     % \begin{equation}
     %     \begin{aligned}
-    %         S_i =\sum_{j=1}^{2N-1}a_{ij} = & \frac{C_R}{(2-\alpha)(3-\alpha)} \frac{2}{h_i + h_{i+1}}                                               \\
+    %         S_i =\sum_{j=1}^{2N-1}a_{ij} = & \frac{-\kappa_\alpha}{(2-\alpha)(3-\alpha)} \frac{2}{h_i + h_{i+1}}                                               \\
     %         & ( \frac{1}{h_{i+1}} \frac{|x_{i+1}-x_0|^{3-\alpha} - |x_{i+1}-x_1|^{3-\alpha}}{x_1 - x_0}              \\
     %         & - (\frac{1}{h_{i}}+\frac{1}{h_{i+1}})\frac{|x_{i}-x_0|^{3-\alpha} - |x_{i}-x_1|^{3-\alpha}}{x_1 - x_0} \\
     %         & +  \frac{1}{h_{i}} \frac{|x_{i-1}-x_0|^{3-\alpha} - |x_{i-1}-x_1|^{3-\alpha}}{x_1 - x_0} )             \\
@@ -1426,9 +1403,9 @@
     又有
     \begin{equation}
         \begin{aligned}
-            g_0''(\xi) & =  C_R \frac{|\xi-x_0|^{1-\alpha} - |\xi-x_1|^{1-\alpha}}{h_1}                        \\
-                       & = -C_R(\alpha-1)|\xi-\eta|^{-\alpha} , \quad \eta\in [x_0, x_1]                       \\
-                       & \ge -C_R(\alpha-1) x_{i+1}^{-\alpha}  \ge -C_R(\alpha-1) 2^{-r\alpha} x_{i}^{-\alpha}
+            g_0''(\xi) & =  -\kappa_\alpha \frac{|\xi-x_0|^{1-\alpha} - |\xi-x_1|^{1-\alpha}}{h_1}                        \\
+                       & = \kappa_\alpha(\alpha-1)|\xi-\eta|^{-\alpha} , \quad \eta\in [x_0, x_1]                       \\
+                       & \ge \kappa_\alpha(\alpha-1) x_{i+1}^{-\alpha}  \ge \kappa_\alpha(\alpha-1) 2^{-r\alpha} x_{i}^{-\alpha}
         \end{aligned}
     \end{equation}
 
@@ -1436,18 +1413,18 @@
     \begin{equation}
         \begin{aligned}
             \frac{2}{h_{1} + h_{2}} & \left( \frac{1}{h_{2}} g_0(x_{2}) - (\frac{1}{h_{1}}+\frac{1}{h_{2}})g_0(x_{1}) + \frac{1}{h_{1}} g_0(x_{0}) \right)                                                  \\
-            =                       & \frac{-2C_R}{(2-\alpha)(3-\alpha)} \frac{h_1^{3-\alpha}+h_2^{3-\alpha} + 2h_1^{2-\alpha}h_2 - (h_1+h_2)^{3-\alpha} }{(h_{1} + h_{2})h_1 h_2}                          \\
-            =                       & \frac{-2C_R}{(2-\alpha)(3-\alpha)} \frac{h_1^{3-\alpha}+h_2^{3-\alpha} + 2h_1^{2-\alpha}h_2 - (h_1+h_2)^{3-\alpha} }{(h_{1} + h_{2})h_1^{1-\alpha} h_2} h_1^{-\alpha} \\
-            =                       & \frac{-2C_R}{(2-\alpha)(3-\alpha)} \frac{1+(2^r-1)^{3-\alpha} + 2(2^r-1) - (2^r)^{3-\alpha} }{2^r (2^r-1)} h_1^{-\alpha}
+            =                       & \frac{2\kappa_\alpha}{(2-\alpha)(3-\alpha)} \frac{h_1^{3-\alpha}+h_2^{3-\alpha} + 2h_1^{2-\alpha}h_2 - (h_1+h_2)^{3-\alpha} }{(h_{1} + h_{2})h_1 h_2}                          \\
+            =                       & \frac{2\kappa_\alpha}{(2-\alpha)(3-\alpha)} \frac{h_1^{3-\alpha}+h_2^{3-\alpha} + 2h_1^{2-\alpha}h_2 - (h_1+h_2)^{3-\alpha} }{(h_{1} + h_{2})h_1^{1-\alpha} h_2} h_1^{-\alpha} \\
+            =                       & \frac{2\kappa_\alpha}{(2-\alpha)(3-\alpha)} \frac{1+(2^r-1)^{3-\alpha} + 2(2^r-1) - (2^r)^{3-\alpha} }{2^r (2^r-1)} h_1^{-\alpha}
         \end{aligned}
     \end{equation}
     因为 \(3-\alpha > 1\)，我们有 \(1+(2^r-1)^{3-\alpha} \ge (2^r)^{3-\alpha}\)，因此
     \begin{equation}
-        RHS \ge \frac{-2C_R}{(2-\alpha)(3-\alpha)} 2^{1-r} x_1^{-\alpha}
+        RHS \ge \frac{2\kappa_\alpha}{(2-\alpha)(3-\alpha)} 2^{1-r} x_1^{-\alpha}
     \end{equation}
     关于\(g_{2N}(x)\)，完全对称，所以存在 \(C=C(\alpha,r)\) 使得
     \begin{equation}
-        S_i \ge C (x_i^{-\alpha} + (1-x_i)^{-\alpha})
+        S_i \ge \kappa_\alpha(\alpha-1) 2^{-r\alpha} (x_i^{-\alpha} + (1-x_i)^{-\alpha})
     \end{equation}
 \end{proof}
 
@@ -1460,7 +1437,7 @@
     矩阵 \(B := AG\) 主对角元为正，其他元为负。且存在 \(C=C(\alpha,r)>0\) 使得
     \begin{equation}
         M_i := \sum_{j=1}^{2N-1} b_{ij}
-        \ge -C(x_i^{-\alpha} + (1-x_i)^{-\alpha}) + C\begin{cases}
+        \ge -C(x_i^{1-\alpha} + (1-x_i)^{1-\alpha}) + C\begin{cases}
             |\frac{1}{2} - x_{i-1}|^{1-\alpha} , & i\le N \\
             |x_{i+1} - \frac{1}{2}|^{1-\alpha} , & i\ge N
         \end{cases}
@@ -1480,7 +1457,7 @@
             \tilde{M_i} & := \sum_{j=1}^{2N-1} \tilde{b}_{ij}
             = \sum_{j=1}^{2N-1} \tilde{a}_{ij} g(x_j)                                                                                                         \\
                         & = \int_{0}^1 |x_i-y|^{1-\alpha} g(y) dy                                                                                             \\
-                        & = -\frac{2}{(2-\alpha)(3-\alpha)}|\frac{1}{2}-x_i|^{3-\alpha} + \frac{1}{(2-\alpha)(3-\alpha)}(x_i^{3-\alpha} + (1-x_i)^{3-\alpha}) \\
+                        & = \frac{-2}{(2-\alpha)(3-\alpha)}|\frac{1}{2}-x_i|^{3-\alpha} + \frac{1}{(2-\alpha)(3-\alpha)}(x_i^{3-\alpha} + (1-x_i)^{3-\alpha}) \\
                         & := w(x_i) = p(x_i) + q(x_i)
         \end{aligned}
     \end{equation}
@@ -1489,57 +1466,61 @@
     \begin{equation}
         \begin{aligned}
             M_i & := \sum_{j=1}^{2N-1} a_{ij} g(x_j) \\
-                & = C_R\frac{2}{h_i + h_{i+1}}
+                & = -\kappa_\alpha\frac{2}{h_i + h_{i+1}}
             \left( \frac{1}{h_{i+1}} w(x_{i+1})
             - (\frac{1}{h_{i}}+\frac{1}{h_{i+1}}) w(x_{i})
             +  \frac{1}{h_{i}} w(x_{i-1}) \right)
         \end{aligned}
     \end{equation}
 
-    其中 \(C_R < 0\).
+    % 其中 \(-\kappa_\alpha < 0\).
 
     特别的,
     \begin{equation}
         \begin{aligned}
-            P_N & := C_R \frac{2}{h_N + h_{N+1}}
+            P_N & := -\kappa_\alpha \frac{2}{h_N + h_{N+1}}
             \left( \frac{1}{h_{N+1}} p(x_{N+1})
             - (\frac{1}{h_{N}}+\frac{1}{h_{N+1}}) p(x_{N})
             +  \frac{1}{h_{N}} p(x_{N-1}) \right)                                        \\
-                & = \frac{-8 C_R}{(2-\alpha)(3-\alpha) h_N^2} h_N^{3-\alpha}             \\
-                & = \frac{-8 C_R}{(2-\alpha)(3-\alpha)} (\frac{1}{2}-x_{N-1})^{1-\alpha}
-            % \ge \frac{-2 C_R}{(2-\alpha)(3-\alpha)} (\frac{r}{2})^{1-\alpha} h^{1-\alpha}
+                & = \frac{4 \kappa_\alpha}{(2-\alpha)(3-\alpha) h_N^2} h_N^{3-\alpha}             \\
+                & = \frac{4 \kappa_\alpha}{(2-\alpha)(3-\alpha)} (\frac{1}{2}-x_{N-1})^{1-\alpha}
+            % \ge \frac{2 \kappa_\alpha}{(2-\alpha)(3-\alpha)} (\frac{r}{2})^{1-\alpha} h^{1-\alpha}
         \end{aligned}
     \end{equation}
 
     \begin{equation}
         \begin{aligned}
-            P_{N-1} & := \frac{2C_R}{h_{N-1} + h_{N}}
+            P_{N-1} & := \frac{-2\kappa_\alpha}{h_{N-1} + h_{N}}
             \left( \frac{1}{h_{N}} p(x_{N})
             - (\frac{1}{h_{N-1}}+\frac{1}{h_{N}}) p(x_{N-1})
             +  \frac{1}{h_{N-1}} p(x_{N-2}) \right)                                                                                           \\
-                    & = \frac{-2 C_R}{(2-\alpha)(3-\alpha)} \frac{2}{h_{N-1} + h_{N}}
+                    & = \frac{2 \kappa_\alpha}{(2-\alpha)(3-\alpha)} \frac{2}{h_{N-1} + h_{N}}
             \left( - (\frac{1}{h_{N-1}}+\frac{1}{h_{N}}) h_N^{3-\alpha}
             +  \frac{1}{h_{N-1}} (h_{N-1}+h_{N})^{3-\alpha} \right)                                                                           \\
-                    & = \frac{-4 C_R}{(2-\alpha)(3-\alpha) h_{N-1}}
+                    & = \frac{4 \kappa_\alpha}{(2-\alpha)(3-\alpha) h_{N-1}}
             \left( - h_{N}^{2-\alpha}
             +  (h_{N-1}+h_{N})^{2-\alpha} \right)                                                                                             \\
-                    & = \frac{-4 C_R}{(3-\alpha)} \xi^{1-\alpha}    \quad \xi \in [h_N, h_{N-1}+h_{N}]                                        \\
-                    & \ge \frac{-4 C_R}{(3-\alpha)} (h_{N-1}+h_{N})^{1-\alpha} = \frac{-4 C_R}{(3-\alpha)} (\frac{1}{2} - x_{N-2})^{1-\alpha} \\
-            % & \ge -4 C_R r^{1-\alpha} h^{1-\alpha} 
+                    & = \frac{4 \kappa_\alpha}{(3-\alpha)} \xi^{1-\alpha}    \quad \xi \in [h_N, h_{N-1}+h_{N}]                                        \\
+                    & \ge \frac{4 \kappa_\alpha}{(3-\alpha)} (h_{N-1}+h_{N})^{1-\alpha} = \frac{4 \kappa_\alpha}{(3-\alpha)} (\frac{1}{2} - x_{N-2})^{1-\alpha} \\
+            % & \ge 4 \kappa_\alpha r^{1-\alpha} h^{1-\alpha} 
         \end{aligned}
     \end{equation}
 
     对于 \(1\le i<N-1\)，应用引理 \ref{lmm:D2simd2} 得
     \begin{equation}
         \begin{aligned}
-            P_{i} & = -2 C_R |\frac{1}{2} - \xi|^{1-\alpha}  \quad \xi \in [x_{i-1}, x_{i+1}] \\
-                  & \ge -2 C_R |\frac{1}{2} - x_{i-1}|^{1-\alpha}
+            P_{i} & = -\kappa_\alpha\frac{2}{h_i + h_{i+1}}
+            \left( \frac{1}{h_{i+1}} p(x_{i+1})
+            - (\frac{1}{h_{i}}+\frac{1}{h_{i+1}}) p(x_{i})
+            +  \frac{1}{h_{i}} p(x_{i-1}) \right)       \\
+            & = 2 \kappa_\alpha |\frac{1}{2} - \xi|^{1-\alpha}  \quad \xi \in [x_{i-1}, x_{i+1}] \\
+                  & \ge 2 \kappa_\alpha |\frac{1}{2} - x_{i-1}|^{1-\alpha}
         \end{aligned}
     \end{equation}
 
     而 \(2N-i\) 完全对称，综合起来有
     \begin{equation}
-        P_i \ge C\begin{cases}
+        P_i \ge 2\kappa_\alpha \begin{cases}
             |\frac{1}{2} - x_{i-1}|^{1-\alpha} , & i\le N \\
             |x_{i+1} - \frac{1}{2}|^{1-\alpha} , & i\ge N
         \end{cases}
@@ -1549,33 +1530,33 @@
     并且对于 \(1<i\le N\), 我们有不等式
     \begin{equation}
         \begin{aligned}
-            Q_i & := C_R\frac{2}{h_i + h_{i+1}}
+            Q_i & := -\kappa_\alpha\frac{2}{h_i + h_{i+1}}
             \left( \frac{1}{h_{i+1}} q(x_{i+1})
             - (\frac{1}{h_{i}}+\frac{1}{h_{i+1}}) q(x_{i})
             +  \frac{1}{h_{i}} q(x_{i-1}) \right)                                    \\
-                & = C_R q''(\xi)        \quad \xi \in [x_{i-1}, x_{i+1}]             \\
-                & = C_R (\xi^{1-\alpha} + (1-\xi)^{1-\alpha})                        \\
-                & \ge C_R (x_{i-1}^{1-\alpha} + (1-x_{i+1})^{1-\alpha})              \\
-                & \ge C_R 2^{-r(1-\alpha)} (x_{i}^{1-\alpha} + (1-x_{i})^{1-\alpha})
+                & = -\kappa_\alpha q''(\xi)        \quad \xi \in [x_{i-1}, x_{i+1}]             \\
+                & = -\kappa_\alpha (\xi^{1-\alpha} + (1-\xi)^{1-\alpha})                        \\
+                & \ge -\kappa_\alpha (x_{i-1}^{1-\alpha} + (1-x_{i+1})^{1-\alpha})              \\
+                & \ge -\kappa_\alpha 2^{-r(1-\alpha)} (x_{i}^{1-\alpha} + (1-x_{i})^{1-\alpha})
         \end{aligned}
     \end{equation}
 
     \begin{equation}
         \begin{aligned}
-            {_L}Q_1 & = \frac{C_R}{(2-\alpha)(3-\alpha)} \frac{2}{h_{1} + h_{2}}
+            {_L}Q_1 & = \frac{-\kappa_\alpha}{(2-\alpha)(3-\alpha)} \frac{2}{h_{1} + h_{2}}
             \left( - (\frac{1}{h_{1}}+\frac{1}{h_{2}}) h_{1}^{3-\alpha}
             +  \frac{1}{h_{2}} (h_{1}+h_{2})^{3-\alpha} \right)                                       \\
-                    & = \frac{2 C_R}{(2-\alpha)(3-\alpha) h_{2}}
+                    & = \frac{-2 \kappa_\alpha}{(2-\alpha)(3-\alpha) h_{2}}
             \left( - h_{1}^{2-\alpha}
             +  (h_{1}+h_{2})^{2-\alpha} \right)                                                       \\
-                    & = \frac{2 C_R}{(3-\alpha)} \xi^{1-\alpha}    \quad \xi \in [h_N, h_{N-1}+h_{N}] \\
-                    & \ge \frac{2 C_R}{(3-\alpha)} h_1^{1-\alpha}
+                    & = \frac{-2 \kappa_\alpha}{(3-\alpha)} \xi^{1-\alpha}    \quad \xi \in [h_1, h_{1}+h_{2}] \\
+                    & \ge \frac{-2 \kappa_\alpha}{(3-\alpha)} h_1^{1-\alpha}
         \end{aligned}
     \end{equation}
 
     能得到
     \begin{equation}
-        Q_i \ge -C (x_i^{1-\alpha} + (1-x_i)^{1-\alpha})
+        Q_i \ge - 2^{r(\alpha-1)+1} \kappa_\alpha  (x_{i-1}^{1-\alpha} + (1-x_{i+1})^{1-\alpha})
     \end{equation}
 \end{proof}
 
@@ -1592,18 +1573,19 @@
     \end{equation}
 \end{theorem}
 \begin{proof}
-    由引理 \ref{lmm:AGhasSingularity} 以及定理 \ref{lmm:AisM}  只需令 \(\lambda > 2C_1/C_2\), 则
+    由引理 \ref{lmm:AGhasSingularity} 以及定理 \ref{lmm:AisM}  只需令 \(\lambda = (2^{r\alpha+1}+2^{2r\alpha-r+1})/(\alpha-1)\), 则
     \begin{equation}
         \begin{aligned}
-            M_i & \ge C_1 \begin{cases}
+            M_i & \ge 2\kappa_\alpha \begin{cases}
                               |\frac{1}{2} - x_{i-1}|^{1-\alpha} , & i\le N \\
                               |x_{i+1} - \frac{1}{2}|^{1-\alpha} , & i\ge N
                           \end{cases}
-            - C_1 (x_i^{1-\alpha} + (1-x_i)^{1-\alpha}) + \lambda C_2 (x_i^{-\alpha} + (1-x_i)^{-\alpha}) \\
-                & \ge C_1 \begin{cases}
+            - 2^{r(\alpha-1)+1} \kappa_\alpha (x_i^{1-\alpha} + (1-x_i)^{1-\alpha}) \\
+            & \quad + \lambda \kappa_\alpha(\alpha-1) 2^{-r\alpha} (x_i^{-\alpha} + (1-x_i)^{-\alpha}) \\
+                & \ge 2\kappa_\alpha \left(\begin{cases}
                               |\frac{1}{2} - x_{i-1}|^{1-\alpha} , & i\le N \\
                               |x_{i+1} - \frac{1}{2}|^{1-\alpha} , & i\ge N
-                          \end{cases}  +  C_1 (x_i^{-\alpha} + (1-x_i)^{-\alpha})
+                          \end{cases}  +   \alpha^{-r} (x_i^{-\alpha} + (1-x_i)^{-\alpha})\right) \\
         \end{aligned}
     \end{equation}
 \end{proof}
@@ -1623,6 +1605,39 @@
     \end{equation}
 \end{theorem}
 
+
+\appendix
+
+\section*{A}
+
+\begin{lemma} \label{lmm:D2simd2}
+    若 \(g(x)\) 三阶连续可微，那么\\
+    1.
+    \begin{gather*}
+        g(x_{i-1}) = g(x_{i}) - (x_{i}-x_{i-1}) g'(x_{i}) + \frac{(x_{i}-x_{i-1})^2}{2} g''(\xi_1), \quad \xi_1 \in [x_{i-1}, x_{i}]        \\
+        g(x_{i+1}) = g(x_{i}) + (x_{i+1}-x_{i}) g'(x_{i}) + \frac{(x_{i+1}-x_{i})^2}{2} g''(\xi_2), \quad \xi_2 \in [x_{i}, x_{i+1}]
+    \end{gather*}
+    2.
+    \begin{equation}
+        \begin{aligned}
+            \frac{2}{h_i + h_{i+1}} &\left( \frac{1}{h_{i+1}} g(x_{i+1}) - (\frac{1}{h_{i}}+\frac{1}{h_{i+1}})g(x_{i}) + \frac{1}{h_{i}} g(x_{i-1}) \right) \\
+            &= \frac{h_i}{h_i + h_{i+1}} g''(\xi_1) + \frac{h_{i+1}}{h_i + h_{i+1}} g''(\xi_2)  \\
+            &= g''(\xi), \quad \xi \in [x_{i-1}, x_{i+1}]
+        \end{aligned}
+    \end{equation}
+    % 3.
+    % \begin{gather*}
+    %     g(x_{i+1}) = g(x_{i}) - h_{i} g'(x_{i}) + \frac{h_{i}^2}{2} g''(x_{i}) - \frac{h_{i}^3}{3!}g'''(\xi_1), \quad \xi_1 \in [x_{i-1}, x_{i}]        \\
+    %     g(x_{i+1}) = g(x_{i}) + h_{i+1} g'(x_{i}) + \frac{h_{i+1}^2}{2} g''(x_{i}) + \frac{h_{i+1}^3}{3!}g'''(\xi_2), \quad \xi_2 \in [x_{i}, x_{i+1}]  
+    % \end{gather*}
+    % 4.
+    % \begin{equation}
+    %     \begin{aligned}
+    %         \frac{2}{h_i + h_{i+1}} & \left( \frac{1}{h_{i+1}} g(x_{i+1}) - (\frac{1}{h_{i}}+\frac{1}{h_{i+1}})g(x_{i}) + \frac{1}{h_{i}} g(x_{i-1}) \right) \\
+    %         &= g''(x_{i}) + \frac{2}{h_i + h_{i+1}}\left( \frac{h_{i+1}^2}{3!}g'''(\xi_2) - \frac{h_{i}^2}{3!}g'''(\xi_1) \right)
+    %     \end{aligned}
+    % \end{equation}
+\end{lemma}
 
 
 \end{document}
