@@ -140,7 +140,7 @@ Finally, we approximate the equation \eqref{eq:equation} with
 
 \textcolor{blue}{
   The discrete equation \eqref{def:discrete_equation} can be written in matrix form
-  \begin{equation}
+  \begin{equation} \label{eq:equation_matrix}
     AU = F
   \end{equation}
   where $U$ is unknown, $F=(f(x_1), \cdots, f(x_{2N-1}))$.
@@ -176,64 +176,39 @@ Here we state our main results; the proof is
 deferred to \cref{sec:proof}.
 
 \textcolor{blue}{
-\begin{theorem}[truncation error] \label{thm:truncation-error}
-  If $f \in C^2(\Omega)$ and $\alpha\in(1,2)$, then there exists a constant
+  Let's denote \(h=\frac{1}{N}\), we have
+\begin{theorem}[Truncation Error] \label{thm:truncation-error}
+  If $f \in C^2(\Omega)$ and $\alpha\in(1,2)$, and $u(x)$ is a solution of the equation \eqref{eq:equation}, then there exists a constant
   $C=C(\alpha, r, \|f\|_{C^2(\Omega)})$, such that
-  the truncation error of the discrete format
+  the truncation error of the discrete format satisfies
+  \begin{equation} \label{eq:truncation-error}
+    \begin{aligned}
+      | D_h^{\alpha} u_h(x_i) - f(x_i) | 
+      \le & C ( h^{r\alpha/2+r}(x_i^{-1-\alpha}+(1-x_i)^{-1-\alpha})) \\
+      &+ h^2(x_i^{-\alpha/2-2/r} + (1-x_i)^{-\alpha/2-2/r})  \\
+      &+ h^2
+      \begin{cases}
+          |\frac{1}{2}-x_{i-1}|^{1-\alpha}, \quad 1\le i\le N \\
+          |\frac{1}{2}-x_{i+1}|^{1-\alpha} , \quad N<i\le 2N-1
+      \end{cases})
+    \end{aligned}
+  \end{equation}
 \end{theorem}
 }
 
-\begin{theorem}[Mean Value Theorem]\label{thm:mvt}
-  Suppose $f$ is a function that is continuous on the closed interval
-  $[a,b]$.  and differentiable on the open interval $(a,b)$.
-  Then there exists a number $c$ such that $a < c < b$ and
-  \begin{displaymath}
-    f'(c) = \frac{f(b)-f(a)}{b-a}.
-  \end{displaymath}
-  In other words,
-  \begin{displaymath}
-    f(b)-f(a) = f'(c)(b-a).
-  \end{displaymath}
+\textcolor{blue}{
+\begin{theorem}[Convergence]\label{thm:convergence}
+  The discrete equation \eqref{def:discrete_equation} has sulotion $U$, 
+  and there exists a positive constant $C=C(\alpha, r, \|f\|_{C^2(\Omega)})$ 
+  such that the error between the numerial solution $U$ with the exact solution $u(x_i)$ satisfies
+  \begin{equation} \label{eq:error}
+    \max_{1\le i \le 2N-1} |U_i - x(x_i)| \le C h^{\min\{\frac{r\alpha}{2}, 2\}}
+  \end{equation}
+  That means the numerial method has convergence order ${\min\{\frac{r\alpha}{2}, 2\}}$.
 \end{theorem}
+}
 
 
-
-\begin{corollary}\label{cor:a}
-  Let $f(x)$ be continuous and differentiable everywhere. If $f(x)$
-  has at least two roots, then $f'(x)$ must have at least one root.
-\end{corollary}
-\begin{proof}
-  Let $a$ and $b$ be two distinct roots of $f$.
-  By \cref{thm:mvt}, there exists a number $c$ such that
-  \begin{displaymath}
-    f'(c) = \frac{f(b)-f(a)}{b-a} = \frac{0-0}{b-a} = 0.
-  \end{displaymath}
-\end{proof}
-
-Note that it may require two \LaTeX\ compilations for the proof marks
-to show.
-
-Display matrices can be rendered using environments from \texttt{amsmath}:
-\begin{equation}\label{eq:matrices}
-  S=\begin{bmatrix}1&0\\0&0\end{bmatrix}
-  \quad\text{and}\quad
-  C=\begin{pmatrix}1&1&0\\1&1&0\\0&0&0\end{pmatrix}.
-\end{equation}
-Equation \cref{eq:matrices} shows some example matrices.
-
-We calculate the Fr\'{e}chet derivative of $F$ as follows:
-\begin{subequations}
-  \begin{align}
-    F'(U,V)(H,K)
-     & = \langle R(U,V),H\Sigma V^{T} + U\Sigma K^{T} -
-    P(H\Sigma V^{T} + U\Sigma K^{T})\rangle \label{eq:aa}    \\
-     & = \langle R(U,V),H\Sigma V^{T} + U\Sigma K^{T}\rangle
-    \nonumber                                                \\
-     & = \langle R(U,V)V\Sigma^{T},H\rangle +
-    \langle \Sigma^{T}U^{T}R(U,V),K^{T}\rangle. \label{eq:bb}
-  \end{align}
-\end{subequations}
-\Cref{eq:aa} is the first line, and \cref{eq:bb} is the last line.
 
 \section{Algorithm}
 \label{sec:alg}

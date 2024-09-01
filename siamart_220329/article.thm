@@ -1,5 +1,3 @@
-\contentsline {theorem}{{Theorem}{3.1}{truncation error}}{3}{theorem.18}%
-\contentsline {theorem}{{Theorem}{3.2}{Mean Value Theorem}}{3}{theorem.19}%
-\contentsline {corollary}{{Corollary}{3.3}{}}{3}{theorem.20}%
-\contentsline {proof}{{Proof}{1}{}}{3}{proof.21}%
-\contentsline {lemma}{{Lemma}{A.1}{}}{5}{theorem.44}%
+\contentsline {theorem}{{Theorem}{3.1}{Truncation Error}}{3}{theorem.18}%
+\contentsline {theorem}{{Theorem}{3.2}{Convergence}}{3}{theorem.20}%
+\contentsline {lemma}{{Lemma}{A.1}{}}{5}{theorem.40}%
