@@ -40,12 +40,14 @@
 
 % REQUIRED
 \begin{abstract}
+  \textcolor{gray}{
   This is an example SIAM \LaTeX\ article. This can be used as a
   template for new articles.  Abstracts must be able to stand alone
   and so cannot contain citations to the paper's references,
   equations, etc.  An abstract must consist of a single paragraph and
   be concise. Because of online formatting, abstracts must appear as
   plain as possible. Any equations should be inline.
+  }
 \end{abstract}
 
 % REQUIRED
@@ -59,9 +61,11 @@
 \end{MSCcodes}
 
 \section{Introduction}
+\textcolor{gray}{
 The introduction introduces the context and summarizes the
 manuscript. It is importantly to clearly state the contributions of
 this piece of work.
+}
 
 \textcolor{blue}{
   For \(\Omega=(0,2T)\), \(1<\alpha<2\), suppose \(f\in C^2(\Omega)\)
@@ -92,11 +96,12 @@ this piece of work.
 
 
 % The outline is not required, but we show an example here.
+\textcolor{gray}{
 The paper is organized as follows. Our main results are in
 \cref{sec:main},  experimental
 results are in \cref{sec:experiments}, and the conclusions follow in
 \cref{sec:conclusions}.
-
+}
 
 \section{Numeric Format}
 \label{sec:numformat}
@@ -292,20 +297,19 @@ deferred to \cref{sec:proof-truncation-error} and \cref{sec:proof-convergence}.
 \section{Experimental results}
 \label{sec:experiments}
 
-
+\textcolor{gray}{
 \Cref{fig:testfig} shows some example results. Additional results are
 available in the supplement in \cref{tab:foo}.
-
 \begin{figure}[htbp]
   \centering
   \label{fig:a}\includegraphics{lexample_fig1}
   \caption{Example figure using external image files.}
   \label{fig:testfig}
 \end{figure}
-
 \Cref{tab:foo} shows additional
 supporting evidence.
-
+}
+\textcolor{gray}{
 \begin{table}[htbp]
   \footnotesize
   \caption{Example table.}\label{tab:foo}
@@ -319,12 +323,10 @@ supporting evidence.
     \end{tabular}
   \end{center}
 \end{table}
-
-\lipsum[51]
+}
 
 \section{Discussion of \texorpdfstring{{\boldmath$Z=X \cup Y$}}{Z = X union Y}}
 
-\lipsum[76]
 
 \section{Conclusions}
 \label{sec:conclusions}
@@ -547,9 +549,10 @@ Some conclusions here.
 
 
 \section*{Acknowledgments}
+\textcolor{gray}{
 We would like to acknowledge the assistance of volunteers in putting
 together this example manuscript and supplement.
-
+}
 \bibliographystyle{siamplain}
 \bibliography{references}
 \end{document}
