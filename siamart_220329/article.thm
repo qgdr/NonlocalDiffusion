@@ -1,13 +1,18 @@
-\contentsline {theorem}{{Theorem}{1.1}{}}{1}{theorem.5}%
-\contentsline {theorem}{{Theorem}{3.1}{Truncation Error}}{3}{theorem.20}%
-\contentsline {theorem}{{Theorem}{3.2}{Convergence}}{3}{theorem.22}%
-\contentsline {theorem}{{Theorem}{4.1}{}}{3}{theorem.27}%
-\contentsline {proof}{{Proof}{1}{}}{4}{proof.29}%
-\contentsline {lemma}{{Lemma}{A.1}{}}{5}{theorem.43}%
-\contentsline {proof}{{Proof}{2}{}}{5}{proof.46}%
-\contentsline {lemma}{{Lemma}{A.2}{}}{5}{theorem.47}%
-\contentsline {proof}{{Proof}{3}{}}{6}{proof.50}%
-\contentsline {lemma}{{Lemma}{B.1}{}}{6}{theorem.52}%
-\contentsline {proof}{{Proof}{4}{}}{6}{proof.54}%
-\contentsline {lemma}{{Lemma}{B.2}{}}{7}{theorem.55}%
-\contentsline {proof}{{Proof}{5}{}}{7}{proof.57}%
+\contentsline {remark}{{Remark}{2.1}{}}{1}{theorem.6}%
+\contentsline {theorem}{{Theorem}{2.2}{}}{1}{theorem.7}%
+\contentsline {theorem}{{Theorem}{2.3}{Regularity up to the boundary \cite {ROSOTON2014275}}}{1}{theorem.9}%
+\contentsline {corollary}{{Corollary}{2.4}{}}{2}{theorem.11}%
+\contentsline {theorem}{{Theorem}{4.1}{Truncation Error}}{3}{theorem.26}%
+\contentsline {theorem}{{Theorem}{4.2}{Convergence}}{3}{theorem.28}%
+\contentsline {theorem}{{Theorem}{5.1}{}}{4}{theorem.33}%
+\contentsline {proof}{{Proof}{1}{}}{4}{proof.35}%
+\contentsline {lemma}{{Lemma}{A.1}{}}{4}{theorem.49}%
+\contentsline {proof}{{Proof}{2}{}}{5}{proof.52}%
+\contentsline {lemma}{{Lemma}{A.2}{}}{6}{theorem.53}%
+\contentsline {proof}{{Proof}{3}{}}{6}{proof.56}%
+\contentsline {lemma}{{Lemma}{B.1}{}}{6}{theorem.58}%
+\contentsline {proof}{{Proof}{4}{}}{7}{proof.60}%
+\contentsline {lemma}{{Lemma}{B.2}{}}{7}{theorem.61}%
+\contentsline {proof}{{Proof}{5}{}}{7}{proof.63}%
+\contentsline {lemma}{{Lemma}{B.3}{}}{8}{theorem.65}%
+\contentsline {proof}{{Proof}{6}{}}{8}{proof.67}%
