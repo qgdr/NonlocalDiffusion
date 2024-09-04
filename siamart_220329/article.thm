@@ -6,13 +6,12 @@
 \contentsline {theorem}{{Theorem}{4.2}{Convergence}}{3}{theorem.28}%
 \contentsline {theorem}{{Theorem}{5.1}{}}{4}{theorem.33}%
 \contentsline {proof}{{Proof}{1}{}}{4}{proof.35}%
-\contentsline {lemma}{{Lemma}{A.1}{}}{4}{theorem.49}%
-\contentsline {proof}{{Proof}{2}{}}{5}{proof.52}%
-\contentsline {lemma}{{Lemma}{A.2}{}}{6}{theorem.53}%
-\contentsline {proof}{{Proof}{3}{}}{6}{proof.56}%
-\contentsline {lemma}{{Lemma}{B.1}{}}{6}{theorem.58}%
-\contentsline {proof}{{Proof}{4}{}}{7}{proof.60}%
-\contentsline {lemma}{{Lemma}{B.2}{}}{7}{theorem.61}%
-\contentsline {proof}{{Proof}{5}{}}{7}{proof.63}%
-\contentsline {lemma}{{Lemma}{B.3}{}}{8}{theorem.65}%
-\contentsline {proof}{{Proof}{6}{}}{8}{proof.67}%
+\contentsline {lemma}{{Lemma}{A.1}{}}{4}{theorem.44}%
+\contentsline {proof}{{Proof}{2}{}}{5}{proof.48}%
+\contentsline {lemma}{{Lemma}{A.2}{}}{6}{theorem.50}%
+\contentsline {proof}{{Proof}{3}{}}{6}{proof.53}%
+\contentsline {lemma}{{Lemma}{B.1}{}}{6}{theorem.55}%
+\contentsline {proof}{{Proof}{4}{}}{6}{proof.57}%
+\contentsline {lemma}{{Lemma}{B.2}{}}{7}{theorem.58}%
+\contentsline {proof}{{Proof}{5}{}}{7}{proof.60}%
+\contentsline {proof}{{Proof}{6}{Additional proof of \cref {lmm:trunerror2}}}{8}{proof.63}%
