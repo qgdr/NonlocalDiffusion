@@ -68,7 +68,7 @@
 }
 
 For \(\Omega=(0,2T)\), \(1<\alpha<2\),
-\textcolor{orange}{suppose \(f\in C^\beta(\Omega)\cap L^\infty(\Omega), \beta>4, \|f\|_{\beta}^{\alpha/2}<\infty\)}
+\textcolor{orange}{suppose \(f\in C^\beta(\Omega)\cap L^\infty(\Omega), \beta>4-\alpha, \|f\|_{\beta}^{\alpha/2}<\infty\)}
 \begin{equation} \label{eq:equation}
   \begin{cases}
     (-\Delta)^{\frac{\alpha}{2}} u(x) = f(x), & x \in \Omega                      \\
@@ -115,7 +115,9 @@ where
   \begin{corollary} \label{cor:regularity-u}
     Let $u$ be a solution of \eqref{eq:equation} on $\Omega$. Then, for any $x\in\Omega$ and \(l=0, 1, 2, 3, 4\)
     \begin{equation}
-      |u^{(l)}(x)| \le C [x(2T-x)]^{\alpha/2-l}
+      |u^{(l)}(x)| \le C \begin{cases}
+        x^{\alpha/2-l}, & \text{if } 0 < x \le T \\ (2T-x)^{\alpha/2-l}, & \text{if } T\le x < 2T
+      \end{cases}
     \end{equation}
   \end{corollary}
 }
@@ -160,7 +162,7 @@ And then, we can approximate $u(x)$ with
 
 For convience, we denote
 \begin{equation} \label{def:Ih}
-  I_h^{2-\alpha}(x) := \frac{1}{\Gamma(2-\alpha)}\int_{\Omega} |x-y|^{1-\alpha} u_h(y) dy
+  I_h^{2-\alpha}(x_i) := \frac{1}{\Gamma(2-\alpha)}\int_{\Omega} |x_i-y|^{1-\alpha} u_h(y) dy
 \end{equation}
 And now, we can approximate the operator \eqref{def:operator} at $x_i$ with
 \begin{equation} \label{def:Dhalpha}
@@ -256,20 +258,22 @@ For convience, let's denote
   I^{2-\alpha}(x) = \frac{1}{\Gamma(2-\alpha)} \int_{\Omega} |x-y|^{1-\alpha} u(y) dy
 \end{equation}
 Then, the truncation error of the discrete format can be written as
-\begin{equation}
+\begin{equation} \label{eq:truncerrordepart}
   \begin{aligned}
     - \kappa_\alpha D_h^{\alpha} u_h(x_i) - f(x_i)
      & = -\kappa_\alpha (D_h^2 I_h^{2-\alpha}(x_i) - \frac{d^2}{dx^2} I^{2-\alpha}(x_i))                                           \\
-     & = -\kappa_\alpha D_h^2 (I_h^{2-\alpha}(x_i)-I^{2-\alpha}(x_i)) - \kappa_\alpha (D_h^2 - \frac{d^2}{dx^2}) I^{2-\alpha}(x_i) \\
+     & = -\kappa_\alpha D_h^2 (I_h^{2-\alpha}-I^{2-\alpha})(x_i) - \kappa_\alpha (D_h^2 - \frac{d^2}{dx^2}) I^{2-\alpha}(x_i) \\
   \end{aligned}
 \end{equation}
 
+
+\subsection{Estimate of $-\kappa_\alpha (D_h^2 - \frac{d^2}{dx^2}) I^{2-\alpha} (x_i)$}
 
 \textcolor{blue}{
   \begin{theorem} \label{lmm:trunerror2}
     There exits a constant $C=C(T,\alpha, r, \|f\|_{\beta}^{(\alpha/2)})$ such that
     \begin{equation}
-      -\kappa_\alpha (D_h^2 - \frac{d^2}{dx^2}) I^{2-\alpha} (x_i) \le C h^2 (x_i^{-\alpha/2-2/r} + (2T-x_i)^{-\alpha/2-2/r})
+      \left|-\kappa_\alpha (D_h^2 - \frac{d^2}{dx^2}) I^{2-\alpha} (x_i) \right| \le C h^2 (x_i^{-\alpha/2-2/r} + (2T-x_i)^{-\alpha/2-2/r})
     \end{equation}
   \end{theorem}
   \begin{proof}
@@ -289,32 +293,132 @@ Then, the truncation error of the discrete format can be written as
     By \cref{lmm:hi1-hi} and \cref{thm:regularity-f}  we have
     1.
     \begin{equation}
-      \left| \frac{h_{i+1}-h_{i}}{3} f'(x_i) \right| \le \frac{\|f\|_{\beta}^{(\alpha/2)}}{3} 2^{|r-2|}r(r-1)T^{2/r} h^2 \begin{cases}
+      \left| \frac{h_{i+1}-h_{i}}{3} f'(x_i) \right| \le \frac{\|f\|_{\beta}^{(\alpha/2)}}{3} C h^2 \begin{cases}
         x_i^{-\alpha/2-2/r} ,     & 1\le i\le N-1 \\
         0,                        & i=N           \\
         (2T-x_i)^{-\alpha/2-2/r}, & N<i\le 2N-1
       \end{cases}
     \end{equation}
     2.
-    See \cref{prf:trucerr2d2f}, there is a constant \(C\) such that
+    See \cref{prf:trucerr2d2f}, there is a constant \(C=C(T, \alpha, r, \|f\|_{\beta}^{\alpha/2})\) such that
     \begin{equation}
       \begin{aligned}
-        \frac{1}{4!} \frac{2}{h_i + h_{i+1}} & (h_i^3 f''(\eta_1) + h_{i+1}^3 f''(\eta_2)) \\
-        &\le C h^2 (x_i^{-\alpha/2-2/r} + (2T-x_i)^{-\alpha/2-2/r})
+         & \left| \frac{1}{4!} \frac{2}{h_i + h_{i+1}} (h_i^3 f''(\eta_1) + h_{i+1}^3 f''(\eta_2)) \right| \\
+         & \quad \le C h^2 \begin{cases}
+                             x_i^{-\alpha/2-2/r} ,     & 1\le i\le N    \\
+                             (2T-x_i)^{-\alpha/2-2/r}, & N\le i\le 2N-1
+                           \end{cases}
       \end{aligned}
     \end{equation}
+    Summarizes, we get the result.
   \end{proof}
 }
 
 
+\subsection{Estimate of $R_i$}
+\label{subsec:Ri}
+
+Now, we study the first part of \cref{eq:truncerrordepart}
+\begin{equation}
+  \begin{aligned}
+    D_h^2(I^{2-\alpha}-I_h^{2-\alpha})(x_i)
+     & = D_h^2(\int_{0}^{2T}(u(y)-u_h(y)) \frac{|y-x_i|^{1-\alpha}}{\Gamma(2-\alpha)} dy) \\
+  \end{aligned}
+\end{equation}
+For convience, let's denote
+\begin{equation} \label{def:Tij}
+  T_{ij} = \int_{x_{j-1}}^{x_{j}} (u(y) - u_h(y)) \frac{|y-x_i|^{1-\alpha}}{\Gamma(2-\alpha)} dy
+\end{equation}
+And define
+\begin{equation} \label{eq:Ri}
+  \begin{aligned}
+    R_i &:= D_h^2(I^{2-\alpha}- I_h^{2-\alpha})(x_i) \\
+    &= \frac{2}{h_{i} + h_{i+1}}  \sum_{j=1}^{2N}  \left( \frac{1}{h_{i}}  T_{i-1,j} - \left(\frac{1}{h_{i}} + \frac{1}{h_{i+1}}\right)  T_{i,j} + \frac{1}{h_{i+1}} T_{i+1,j} \right)
+  \end{aligned}
+\end{equation}
+
+
+We have some results about the estimate of $R_i$
+
+\begin{theorem} \label{Ri-ilessNdiv2}
+  For \(1\le i < N/2\), there exists a constant $C$ such that
+  \begin{equation}
+    R_i \le C ( h^{r\alpha/2+r}x_i^{-1-\alpha} + h^2 x_i^{-\alpha/2-2/r} )
+  \end{equation}
+\end{theorem}
+
+\textcolor{orange}{
+\begin{theorem} \label{Ri-igreaterNdiv2-2}
+  For \(N/2 \le i\le N\), there exists constant $C, C_2$ such that
+  \begin{equation}
+    R_i \le C h^2 x_i^{-\alpha/2-2/r} + C_2 h^2 |T-x_{i-1}|^{1-\alpha}
+  \end{equation}
+  where \(C_2=0\) if \(r=1\).
+\end{theorem}
+}
+
+And for \(N<i\le 2N-1\), it is symmetric to the previous case.
+
+To prove these results, we need some utils.
+Also for simplicity, we denote
+\begin{equation}
+  S_{ij} =  \frac{2}{h_{i} + h_{i+1}}  \left( \frac{1}{h_{i}}  T_{i-1,j} - \left(\frac{1}{h_{i}} + \frac{1}{h_{i+1}}\right)  T_{i,j} + \frac{1}{h_{i+1}} T_{i+1,j} \right)
+\end{equation}
+then
+\begin{equation}
+  R_i = \sum_{j=1}^{2N} S_{ij}
+\end{equation}
+
+\begin{lemma} \label{lmm:Ti1}
+  While \(0 \le i < N/2\),
+  By \cref{lmm:Dyj1}
+  \begin{equation}
+    \begin{aligned}
+      |T_{i1}| &\le C \int_{0}^{x_1} x_1^{\alpha/2} \frac{|x_i-y|^{1-\alpha}}{\Gamma(2-\alpha)} dy \\
+      &= C \frac{1}{\Gamma(3-\alpha)} x_1^{\alpha/2}  \left| x_i^{2-\alpha} - |x_i-x_1|^{2-\alpha} \right| \\
+      &\le C \frac{1}{\Gamma(3-\alpha)} x_1^{\alpha/2 + 2-\alpha} =  C \frac{1}{\Gamma(3-\alpha)} x_1^{2-\alpha/2} \quad 0<2-\alpha<1
+    \end{aligned}
+  \end{equation}
+  For \(2\le j \le N\), by \cref{lmm:Dyj}
+  \begin{equation}
+    \begin{aligned}
+      |T_{ij}| &\le \frac{C}{4} \int_{x_{j-1}}^{x_j} h_j^2 x_{j-1}^{\alpha/2-2}  \frac{|y-x_i|^{1-\alpha}}{\Gamma(2-\alpha)} dy \\
+      & \le \frac{C}{4 \Gamma(3-\alpha)}  h_j^2 x_{j-1}^{\alpha/2-2}  \left| |x_j-x_i|^{2-\alpha} - |x_{j-1}-x_{i}|^{2-\alpha} \right| \\
+    \end{aligned}
+  \end{equation}
+\end{lemma}
+
+\textcolor{blue}{
+\begin{lemma} \label{lmm:sumSi-ilessNdiv2-2ip1-N}
+  While \(1 \le i < N/2\),
+  \begin{equation}
+    \begin{aligned}
+      \sum_{j=\max\{2i+1, i+3\}}^{N} S_{ij} \le C h^2 x_i^{-\alpha/2-2/r}
+    \end{aligned}
+  \end{equation}
+\end{lemma}
+\begin{proof}
+  For  \(\max\{2i+1, i+3\} \le j \le N\), by \cref{lmm:Dyjleh2yadiv2m2divr} and \cref{lmm:Dh2ymx1malecy1ma}
+  \begin{equation}
+    \begin{aligned}
+      S_{ij} &= \int_{x_{j-1}}^{x_{j}}(u(y) - u_h(y)) D_h^2 \left(\frac{|y-\cdot|^{1-\alpha}}{\Gamma(2-\alpha)}\right)(x_i) dy \\
+      % &\le C h^2 \int_{x_{j-1}}^{x_{j}} y^{\alpha/2-2/r} \frac{|y-x_{i+1}|^{-1-\alpha}}{\Gamma(-\alpha)} dy \\
+      &\le C h^2 \int_{x_{j-1}}^{x_{j}} y^{\alpha/2-2/r} \frac{y^{-1-\alpha}}{\Gamma(-\alpha)} dy   \\
+      &= C h^2 \int_{x_{j-1}}^{x_{j}} y^{-\alpha/2-2/r-1} dy
+    \end{aligned}
+  \end{equation}
+  Therefore,
+  \begin{equation}
+    \begin{aligned}
+      \sum_{j=\max\{2i+1, i+3\}}^{N} S_{ij} &\le C h^2 \int_{x_{2i}}^{x_{N}} y^{-\alpha/2-2/r-1} dy \\
+      &= \frac{C}{\alpha/2+2/r} h^2 ( 2^{r(-\alpha/2-2/r)} x_i^{-\alpha/2-2/r} - T^{-\alpha/2-2/r})
+    \end{aligned}
+  \end{equation}
+\end{proof}
+}
 
 \section{Proof of \cref{thm:convergence}}
 \label{sec:proof-convergence}
-
-\textcolor{orange}{
-  aaaaaaaaaa
-}
-
 
 \section{Experimental results}
 \label{sec:experiments}
@@ -365,14 +469,14 @@ Some conclusions here.
   there exists \(\xi \in [x_{i-1}, x_{i+1}]\) such that
   \begin{equation} \label{eq:Dh2simd2}
     \begin{aligned}
-      \frac{2}{h_i + h_{i+1}} & \left( \frac{1}{h_{i+1}} g(x_{i+1}) - (\frac{1}{h_{i}}+\frac{1}{h_{i+1}})g(x_{i}) + \frac{1}{h_{i}} g(x_{i-1}) \right) \\
+      D_h^2 g(x_i) &:= \frac{2}{h_i + h_{i+1}} \left( \frac{1}{h_{i+1}} g(x_{i+1}) - (\frac{1}{h_{i}}+\frac{1}{h_{i+1}})g(x_{i}) + \frac{1}{h_{i}} g(x_{i-1}) \right) \\
       % &= \frac{h_i}{h_i + h_{i+1}} g''(\xi_1) + \frac{h_{i+1}}{h_i + h_{i+1}} g''(\xi_2)  \\
                               & = g''(\xi), \quad \xi \in [x_{i-1}, x_{i+1}]
     \end{aligned}
   \end{equation}
   \begin{equation} \label{eq:Dh2Cauchy2}
     \begin{aligned}
-      &\frac{2}{h_i + h_{i+1}} \left( \frac{1}{h_{i+1}} g(x_{i+1}) - (\frac{1}{h_{i}}+\frac{1}{h_{i+1}})g(x_{i}) + \frac{1}{h_{i}} g(x_{i-1}) \right) \\
+       & \frac{2}{h_i + h_{i+1}} \left( \frac{1}{h_{i+1}} g(x_{i+1}) - (\frac{1}{h_{i}}+\frac{1}{h_{i+1}})g(x_{i}) + \frac{1}{h_{i}} g(x_{i-1}) \right)                          \\
       % &= \frac{h_i}{h_i + h_{i+1}} g''(\xi_1) + \frac{h_{i+1}}{h_i + h_{i+1}} g''(\xi_2)  \\
        & \quad = \frac{2}{h_i + h_{i+1}} \left( \frac{1}{h_{i}}\int_{x_{i-1}}^{x_i} g''(y) (y-x_{i-1}) dy + \frac{1}{h_{i+1}} \int_{x_i}^{x_{i+1}} g''(y) (x_{i+1}-y) dy \right)
     \end{aligned}
@@ -416,60 +520,77 @@ Some conclusions here.
   Expecially,
   \begin{equation} \label{eq:Dh2Cauchy4}
     \begin{aligned}
-      \frac{h_i^4}{4!}g''''(\eta_1) &= \int_{x_{i-1}}^{x_{i}} g''''(y) \frac{(y-x_{i-1})^3}{3!} dy \\
-      \frac{h_{i+1}^4}{4!}g''''(\eta_2) &= \int_{x_{i}}^{x_{i+1}} g''''(y) \frac{(x_{i+1}-y)^3}{3!} dy
+      \frac{h_i^4}{4!}g''''(\eta_1)     & = \int_{x_{i-1}}^{x_{i}} g''''(y) \frac{(y-x_{i-1})^3}{3!} dy \\
+      \frac{h_{i+1}^4}{4!}g''''(\eta_2) & = \int_{x_{i}}^{x_{i+1}} g''''(y) \frac{(x_{i+1}-y)^3}{3!} dy
     \end{aligned}
   \end{equation}
   Subsitute them to the left side of \eqref{eq:Dh2simd4}, we can get the result.
 \end{proof}
 
 
-\textcolor{blue}{
-  \begin{lemma} \label{lmm:Dyj}
-    If \(y\in [x_{j-1}, x_j]\), denote \(y = \theta x_{j-1} + (1-\theta) x_j, \theta\in [0,1]\),
-    % then for \(2\le j \le 2N-1\)
-    \begin{equation}
-      \begin{aligned}
-        u(y_j^\theta) - u_h(y_j^\theta) & = -\frac{\theta (1-\theta)}{2} h_j^2 u''(\xi), \quad \xi \in [x_{j-1}, x_j]
-      \end{aligned}
-    \end{equation}
-    \begin{equation}
-      \begin{aligned}
-        u(y_j^\theta) - u_h(y_j^\theta) = & -\frac{\theta (1-\theta)}{2} h_j^2 u''(y_j^\theta)
-        + \frac{\theta (1-\theta)}{3!} h_j^3 (\theta^2 u'''(\eta_1) - (1-\theta)^2 u'''(\eta_2))
-      \end{aligned}
-    \end{equation}
-    where \(\eta_1 \in [x_{j-1}, y_j^\theta], \eta_2 \in [y_j^\theta, x_j]\).
-  \end{lemma}
-  \begin{proof}
-    By Taylor expansion, we have
-    \begin{gather*}
-      u(x_{j-1}) = u(y_j^\theta) - \theta h_{j} u'(y_j^\theta) + \frac{\theta^2 h_{j}^2}{2!} u''(\xi_1), \quad \xi_1 \in [x_{j-1}, y_j^\theta] \\
-      u(x_{j}) = u(y_j^\theta) + (1-\theta) h_{j} u'(y_j^\theta) + \frac{(1-\theta)^2 h_{j}^2}{2!} u''(\xi_2) , \quad \xi_2 \in [y_j^\theta, x_j]
-    \end{gather*}
-    Thus
-    \begin{equation*}
-      \begin{aligned}
-        u(y_j^\theta) - u_h(y_j^\theta) & = u(y_j^\theta) - (1-\theta)u(x_{j-1}) - \theta u(x_{j})                          \\
-                                        & = -\frac{\theta (1-\theta)}{2} h_j^2 (\theta u''(\xi_1) + (1-\theta) u''(\xi_2) ) \\
-                                        & = -\frac{\theta (1-\theta)}{2} h_j^2 u''(\xi), \quad \xi \in [\xi_1, \xi_2]
-      \end{aligned}
-    \end{equation*}
-    The second equation is similar,
-    \begin{gather*}
-      u(x_{j-1}) = u(y_j^\theta) - \theta h_{j} u'(y_j^\theta) + \frac{\theta^2 h_{j}^2}{2!} u''(y_j^\theta) - \frac{\theta^3 h_{j}^3}{3!} u'''(\eta_1)  \\
-      u(x_{j}) = u(y_j^\theta) + (1-\theta) h_{j} u'(y_j^\theta) + \frac{(1-\theta)^2 h_{j}^2}{2!} u''(\xi_2) + \frac{(1-\theta)^3 h_{j}^3}{3!} u'''(\eta_2)
-    \end{gather*}
-    where \(\eta_1 \in [x_{j-1}, y_j^\theta], \eta_2 \in [y_j^\theta, x_j]\).
-    Thus
-    \begin{equation*}
-      \begin{aligned}
-        u(y_j^\theta) - u_h(y_j^\theta) & = u(y_j^\theta) - (1-\theta)u(x_{j-1}) - \theta u(x_{j})                                                                                      \\
-                                        & = -\frac{\theta (1-\theta)}{2} h_j^2 u''(y_j^\theta) + \frac{\theta (1-\theta)}{3!} h_j^3 (\theta^2 u'''(\eta_1) - (1-\theta)^2 u'''(\eta_2))
-      \end{aligned}
-    \end{equation*}
-  \end{proof}
-}
+\begin{lemma} \label{lmm:Dyj}
+  If \(y\in [x_{j-1}, x_j]\), denote \(y = \theta x_{j-1} + (1-\theta) x_j, \theta\in [0,1]\),
+  % then for \(2\le j \le 2N-1\)
+  \begin{equation}
+    \begin{aligned}
+      u(y_j^\theta) - u_h(y_j^\theta) & = -\frac{\theta (1-\theta)}{2} h_j^2 u''(\xi), \quad \xi \in [x_{j-1}, x_j]
+    \end{aligned}
+  \end{equation}
+  \begin{equation}
+    \begin{aligned}
+      u(y_j^\theta) - u_h(y_j^\theta) = & -\frac{\theta (1-\theta)}{2} h_j^2 u''(y_j^\theta)
+      + \frac{\theta (1-\theta)}{3!} h_j^3 (\theta^2 u'''(\eta_1) - (1-\theta)^2 u'''(\eta_2))
+    \end{aligned}
+  \end{equation}
+  where \(\eta_1 \in [x_{j-1}, y_j^\theta], \eta_2 \in [y_j^\theta, x_j]\).
+\end{lemma}
+\begin{proof}
+  By Taylor expansion, we have
+  \begin{gather*}
+    u(x_{j-1}) = u(y_j^\theta) - \theta h_{j} u'(y_j^\theta) + \frac{\theta^2 h_{j}^2}{2!} u''(\xi_1), \quad \xi_1 \in [x_{j-1}, y_j^\theta] \\
+    u(x_{j}) = u(y_j^\theta) + (1-\theta) h_{j} u'(y_j^\theta) + \frac{(1-\theta)^2 h_{j}^2}{2!} u''(\xi_2) , \quad \xi_2 \in [y_j^\theta, x_j]
+  \end{gather*}
+  Thus
+  \begin{equation*}
+    \begin{aligned}
+      u(y_j^\theta) - u_h(y_j^\theta) & = u(y_j^\theta) - (1-\theta)u(x_{j-1}) - \theta u(x_{j})                          \\
+                                      & = -\frac{\theta (1-\theta)}{2} h_j^2 (\theta u''(\xi_1) + (1-\theta) u''(\xi_2) ) \\
+                                      & = -\frac{\theta (1-\theta)}{2} h_j^2 u''(\xi), \quad \xi \in [\xi_1, \xi_2]
+    \end{aligned}
+  \end{equation*}
+  The second equation is similar,
+  \begin{gather*}
+    u(x_{j-1}) = u(y_j^\theta) - \theta h_{j} u'(y_j^\theta) + \frac{\theta^2 h_{j}^2}{2!} u''(y_j^\theta) - \frac{\theta^3 h_{j}^3}{3!} u'''(\eta_1)  \\
+    u(x_{j}) = u(y_j^\theta) + (1-\theta) h_{j} u'(y_j^\theta) + \frac{(1-\theta)^2 h_{j}^2}{2!} u''(y_j^\theta) + \frac{(1-\theta)^3 h_{j}^3}{3!} u'''(\eta_2)
+  \end{gather*}
+  where \(\eta_1 \in [x_{j-1}, y_j^\theta], \eta_2 \in [y_j^\theta, x_j]\).
+  Thus
+  \begin{equation*}
+    \begin{aligned}
+      u(y_j^\theta) - u_h(y_j^\theta) & = u(y_j^\theta) - (1-\theta)u(x_{j-1}) - \theta u(x_{j})                                                                                      \\
+                                      & = -\frac{\theta (1-\theta)}{2} h_j^2 u''(y_j^\theta) + \frac{\theta (1-\theta)}{3!} h_j^3 (\theta^2 u'''(\eta_1) - (1-\theta)^2 u'''(\eta_2))
+    \end{aligned}
+  \end{equation*}
+\end{proof}
+
+\begin{lemma} \label{lmm:Dyj1}
+  For \(x\in [x_{j-1}, x_j]\)
+  \begin{equation}
+    \begin{aligned}
+      |u(x) - u_h(x)| &= \left| \frac{x_{j}-x}{h_j} \int_{x_{j-1}}^x u'(y) dy - \frac{x-x_{j-1}}{h_j} \int_{x}^{x_{j}} u'(y) dy \right| \\
+      &\le \int_{x_{j-1}}^{x_{j}} |u'(y)| dy 
+    \end{aligned}
+  \end{equation}
+  If \(x\in [0, x_1]\), with \cref{cor:regularity-u}, we have
+  \begin{equation}
+    |u(x) - u_h(x)| \le \int_{0}^{x_1} |u'(y)| dy \le \int_{0}^{x_1} C y^{\alpha/2-1} dy  \le C\frac{2}{\alpha} x_1^{\alpha/2}
+  \end{equation}
+  Similarly, if \(x\in [x_{2N-1}, 1]\), we have
+  \begin{equation}
+    |u(x) - u_h(x)| \le C\frac{2}{\alpha} (2T-x_{2N-1})^{\alpha/2} = C\frac{2}{\alpha} x_1^{\alpha/2}
+  \end{equation}
+\end{lemma}
+
 
 \section{Inequality}
 
@@ -597,9 +718,9 @@ Some conclusions here.
   For \(2\le i \le N-1\),
   \begin{equation*}
     \begin{aligned}
-      \frac{2}{h_i + h_{i+1}} & (h_i^3 f''(\eta_1) + h_{i+1}^3 f''(\eta_2)) \\
-      &\le C\frac{2}{h_i + h_{i+1}} (h_i^3 x_{i-1}^{-2-\alpha/2} + h_{i+1}^3 x_{i}^{-2-\alpha/2}) \\
-      &\le 2C (h_i^2 x_{i-1}^{-2-\alpha/2} + h_{i+1}^2 x_{i}^{-2-\alpha/2})
+      \frac{2}{h_i + h_{i+1}} & (h_i^3 f''(\eta_1) + h_{i+1}^3 f''(\eta_2))                                                \\
+                              & \le C\frac{2}{h_i + h_{i+1}} (h_i^3 x_{i-1}^{-2-\alpha/2} + h_{i+1}^3 x_{i}^{-2-\alpha/2}) \\
+                              & \le 2C (h_i^2 x_{i-1}^{-2-\alpha/2} + h_{i+1}^2 x_{i}^{-2-\alpha/2})
     \end{aligned}
   \end{equation*}
   Since \cref{lmm:hilexi}, we have
@@ -619,9 +740,9 @@ Some conclusions here.
   For \(i=1\), by \eqref{eq:Dh2Cauchy4}
   \begin{equation*}
     \begin{aligned}
-      & \frac{1}{4!}\frac{2}{h_1 + h_{2}} (h_1^3 f''(\eta_1) + h_{2}^3 f''(\eta_2)) \\
-      & \quad =  \frac{2}{h_1 + h_{2}} \left( \frac{1}{h_1}\int_{0}^{x_1} f''(y) \frac{y^3}{3!} dy + 
-      \frac{1}{4!} h_2^3 f''(\eta_2) \right) \\
+       & \frac{1}{4!}\frac{2}{h_1 + h_{2}} (h_1^3 f''(\eta_1) + h_{2}^3 f''(\eta_2))                  \\
+       & \quad =  \frac{2}{h_1 + h_{2}} \left( \frac{1}{h_1}\int_{0}^{x_1} f''(y) \frac{y^3}{3!} dy +
+      \frac{1}{4!} h_2^3 f''(\eta_2) \right)                                                          \\
     \end{aligned}
   \end{equation*}
   We have proved above that
@@ -631,8 +752,8 @@ Some conclusions here.
   and we can get
   \begin{equation*}
     \begin{aligned}
-      \int_{0}^{x_1} f''(y) \frac{y^3}{3!} dy &\le C \frac{1}{3!}\int_{0}^{x_1} y^{1-\alpha/2} dy \\
-      &= C\frac{1}{3!(2-\alpha/2)} x_1^{2-\alpha/2} \\
+      \int_{0}^{x_1} f''(y) \frac{y^3}{3!} dy & \le C \frac{1}{3!}\int_{0}^{x_1} y^{1-\alpha/2} dy \\
+                                              & = C\frac{1}{3!(2-\alpha/2)} x_1^{2-\alpha/2}       \\
     \end{aligned}
   \end{equation*}
   so
@@ -642,17 +763,72 @@ Some conclusions here.
   And for \(i=N\), we have
   \begin{equation*}
     \begin{aligned}
-      \frac{2}{h_N + h_{N+1}} & (h_N^3 f''(\eta_1) + h_{N+1}^3 f''(\eta_2)) \\
-      &= h_N^{2} (f''(\eta_1) + f''(\eta_2)) \\
-      &\le r^2 T^{2/r} h^2 x_N^{2-2/r} \; 2C x_{N-1}^{-2-\alpha/2}  \\
-      &\le 2 r^2 T^{2/r} C 2^{-r(-2-\alpha/2)}\; h^2 x_N^{-\alpha/2-2/r} \\
+      \frac{2}{h_N + h_{N+1}} & (h_N^3 f''(\eta_1) + h_{N+1}^3 f''(\eta_2))                       \\
+                              & = h_N^{2} (f''(\eta_1) + f''(\eta_2))                             \\
+                              & \le r^2 T^{2/r} h^2 x_N^{2-2/r} \; 2C x_{N-1}^{-2-\alpha/2}       \\
+                              & \le 2 r^2 T^{2/r} C 2^{-r(-2-\alpha/2)}\; h^2 x_N^{-\alpha/2-2/r} \\
     \end{aligned}
   \end{equation*}
   Finally, \(N+1 \le i \le 2N-1\) is symmetric to the first half of the proof, so we can conclude that
   \begin{equation*}
-    \frac{2}{h_i + h_{i+1}} (h_i^3 f''(\eta_1) + h_{i+1}^3 f''(\eta_2)) \le C h^2 x_i^{-\alpha/2-2/r}, \quad 1\le i\le 2N-1
+    \frac{2}{h_i + h_{i+1}} (h_i^3 f''(\eta_1) + h_{i+1}^3 f''(\eta_2)) \le C h^2
+    \begin{cases}
+      x_i^{-\alpha/2-2/r}, & 1\le i\le N \\ (2T-x_i)^{-\alpha/2-2/r}, & N\le i\le 2N-1
+    \end{cases}
   \end{equation*}
 \end{proof}
+
+\begin{lemma} \label{lmm:Dyjleh2yadiv2m2divr}
+  There is a constant \(C\) for \(2\le j \le N\), if \(y\in [x_{j-1}, x_{j}]\), 
+  \begin{equation}
+    |u(y)-u_h(y)| \le C h^2 y^{\alpha/2-2/r}
+  \end{equation}
+\end{lemma}
+\begin{proof}
+  For  \(2\le j \le N\),  we have
+  \begin{equation*}
+    x_j \le 2^r y, \quad x_{j-1} \ge 2^{-r} y
+  \end{equation*}
+  And by \cref{lmm:Dyj} and \cref{lmm:hilexi}, we have
+  \begin{equation*}
+    \begin{aligned}
+      u(y)-u_h(y) &= -\frac{\theta (1-\theta)}{2} h_j^2 u''(\xi), \quad \xi \in [x_{j-1}, x_j] \\
+      &\le \frac{C}{4} h^2 x_j^{2-2/r} x_{j-1}^{\alpha/2-2}   \\
+      &\le \frac{C}{4} h^2 \; 2^{2r-2} y^{2-2/r} \; 2^{-r(\alpha/2-2)} y^{\alpha/2-2} \\
+      &= C 2^{-r\alpha/2-r} \; h^2 y^{\alpha/2-2/r}
+    \end{aligned}
+  \end{equation*}
+  symmetricly, for \(N <j \le 2N-1\), we have
+  \begin{equation}
+    |u(y) - u_h(y)| \le C h^2 (2T-y)^{\alpha/2-2/r}
+  \end{equation}
+\end{proof}
+
+
+\begin{lemma} \label{lmm:Dh2ymx1malecy1ma}
+  There is a constant \(C\) such that for all \(1 \le i < N/2\), \\
+  \(\max\{2i+1, i+3\} \le j \le N\) and \(y\in [x_{j-1}, x_{j}]\), we have
+  \begin{equation}
+    D_h^2(\frac{|y-\cdot|^{1-\alpha}}{\Gamma(2-\alpha)})(x_i) \le C y^{-1-\alpha}
+  \end{equation}
+\end{lemma}
+\begin{proof}
+  Sinec \(y\ge x_{j-1} > x_{i+1}\), by \cref{lmm:Dh2simd2}, if \(j-1>i+1\)
+  \begin{equation*}
+    \begin{aligned}
+      D_h^2(\frac{|y-\cdot|^{1-\alpha}}{\Gamma(2-\alpha)})(x_i) &= \frac{|y-\xi|^{-1-\alpha}}{\Gamma(-\alpha)}, \quad \xi \in [x_{i-1}, x_{i+1}] \\
+      &\le \frac{(y-x_{i+1})^{-1-\alpha}}{\Gamma(-\alpha)}  \\
+      &\le (1-(\frac{2}{3})^r)^{-1-\alpha}\frac{y^{-1-\alpha}}{\Gamma(-\alpha)} 
+    \end{aligned}
+  \end{equation*}
+  But if \(i=1, j=3, y\in [x_2, x_3]\)
+  \begin{equation*}
+    \begin{aligned}
+      D_h^2(\frac{|y-\cdot|^{1-\alpha}}{\Gamma(2-\alpha)})(x_1) &= \frac{2}{x_2}\left(  \right)
+    \end{aligned}
+  \end{equation*}
+\end{proof}
+
 
 
 
