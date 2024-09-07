@@ -68,7 +68,7 @@
 }
 
 For \(\Omega=(0,2T)\), \(1<\alpha<2\),
-\textcolor{orange}{suppose \(f\in C^\beta(\Omega)\cap L^\infty(\Omega), \beta>4-\alpha, \|f\|_{\beta}^{\alpha/2}<\infty\)}
+\textcolor{orange}{suppose \(f\in C^\beta(\Omega), \beta>4-\alpha, \|f\|_{\beta}^{(\alpha/2)}<\infty\)}
 \begin{equation} \label{eq:equation}
   \begin{cases}
     (-\Delta)^{\frac{\alpha}{2}} u(x) = f(x), & x \in \Omega                      \\
@@ -83,6 +83,7 @@ where
 \begin{equation} \label{def:kappa}
   \kappa_\alpha = -\frac{1}{2\cos(\alpha\pi/2)} > 0
 \end{equation}
+\textcolor{blue}{and the solution \(u\in C^{\alpha/2}(\Omega)\).}
 
 \section{Regularity}
 \label{sec:regularity}
@@ -339,14 +340,14 @@ And define
 
 
 We have some results about the estimate of $R_i$
-
+\textcolor{orange}{
 \begin{theorem} \label{thm:Ri-ilessNdiv2}
-  For \(1\le i < N/2\), there exists a constant $C$ such that
+  For \(1\le i < N/2\), there exists a constant $C=C(T, \alpha, r, f)$ such that
   \begin{equation}
     R_i \le C ( h^{r\alpha/2+r}x_i^{-1-\alpha} + h^2 x_i^{-\alpha/2-2/r} )
   \end{equation}
 \end{theorem}
-
+}
 \textcolor{orange}{
 \begin{theorem} \label{thm:Ri-igreaterNdiv2-2}
   For \(N/2 \le i\le N\), there exists constant $C, C_2$ such that
@@ -428,7 +429,7 @@ For \(i=1, 2\).
 \end{lemma}
 
 
-For \(2\le i < N/2\), we have a new separation of \(R_i\), Let's denote \(k=\lceil\frac{i}{2}\rceil\).
+For \(3\le i < N/2\), we have a new separation of \(R_i\), Let's denote \(k=\lceil\frac{i}{2}\rceil\).
 \begin{equation}
   \begin{aligned}
       R_i
@@ -465,13 +466,14 @@ For convience, let's denote
 \end{equation}
 
 
-
+\textcolor{orange}{
 \begin{lemma} \label{lmm:Ri-I1}
   There exists a constant \(C=C(T, \alpha, r, f)\) such that for \(3\le i < N/2, k=\lceil\frac{i}{2}\rceil\)
   \begin{equation}
     I_1 \le C (h^{r\alpha/2+r} x_i^{-1-\alpha} + h^2 x_i^{-\alpha/2-2/r})
   \end{equation}
 \end{lemma}
+}
 \begin{proof}
   For  \(2 \le j \le k-1\), by \cref{lmm:Dyjleh2yadiv2m2divr} and \cref{lmm:Dh2xmy1malecx1ma}
   \begin{equation}
@@ -505,6 +507,14 @@ For convience, let's denote
         \frac{1}{|\alpha/2-2/r+1|} x_1^{\alpha/2-2/r+1}, & \alpha/2-2/r+1 < 0
       \end{cases}
     \end{aligned}
+  \end{equation}
+  So we have
+  \begin{equation}
+    I_1 \le \begin{cases}
+      C h^2 x_i^{-1-\alpha} +  \frac{C}{\alpha/2-2/r+1} h^2 x_i^{-\alpha/2-2/r} , & \alpha/2-2/r+1 > 0 \\
+      C h^2 x_i^{-1-\alpha} (1 + r \ln(\frac{i}{2})), & \alpha/2-2/r+1 = 0    \\
+      C h^{r\alpha/2+r} x_i^{-1-\alpha}, & \alpha/2-2/r+1 < 0
+    \end{cases}
   \end{equation}
 \end{proof}
 

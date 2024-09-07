@@ -6,9 +6,10 @@ using OffsetArrays
 using Cubature
 using Plots
 
-β = -0.5
+β = -18//10
+β = BigFloat(β)
 function f(x, α)
-    return x^β
+    return x^β * exp(x)
 end
 
 # function u_exact(x, α)
@@ -39,11 +40,11 @@ end
 
 
 
-r = 40 // 10
+r = 30 // 10
 Ω = (0, 1)
 
 
-α = 12 // 10
+α = 19 // 10
 α = BigFloat(α)
 
 @show 1 < α < 2
