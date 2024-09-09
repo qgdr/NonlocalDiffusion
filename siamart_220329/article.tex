@@ -599,20 +599,20 @@ To estimete \(V_{ij}\), we need some preparations.
   where \(\eta_{j1}^\theta \in [x_{j-1}, y_j^\theta], \eta_{j2}^\theta \in [y_j^\theta, x_j]\).
 \end{lemma}
 Now Let's construct a series of functions to represent \(T_{ij}\).
-\begin{equation} \label{def:xi2yj}
+\begin{equation} \label{def:xi2yj-jlN}
   {y_{j-i}}(x) = (x^{1/r}+ Z_{j-i})^r, \quad Z_{j-i} = T^{1/r}\frac{j-i}{N}
 \end{equation}
-\begin{equation} \label{def:xi2yjt}
+\begin{equation} \label{def:xi2yj-jlNt}
   {y_{j-i}^{\theta}}(x) = \theta {y_{j-1-i}}(x) + (1-\theta) {y_{j-i}}(x)
 \end{equation}
-\begin{equation}
+\begin{equation} \label{def:hj-jlN}
   {h_{j-i}}(x) = {y_{j-i}}(x) - {y_{j-i-1}}(x)
 \end{equation}
 Now, we define
-\begin{equation}
+\begin{equation} \label{def:Pj-itheta-jlN}
   {P_{j-i}^\theta}(x) = ({h_{j-i}}(x))^3 u''({y_{j-i}^\theta}(x)) \frac{|{y_{j-i}^\theta}(x)-x|^{1-\alpha}}{\Gamma(2-\alpha)}
 \end{equation}
-\begin{equation}
+\begin{equation} \label{def:Qj-itheta-jlN}
   {Q_{j-i}^\theta}(x) = ({h_{j-i}}(x))^4 \frac{|{y_{j-i}^\theta}(x)-x|^{1-\alpha}}{\Gamma(2-\alpha)}
 \end{equation}
 And now we can rewrite \(T_{ij}\)
@@ -641,14 +641,112 @@ Immediately, we can see from \eqref{def:Vij} that
   \end{equation}
 \end{lemma}
 
-\textcolor{orange}{
+
+To estimate \(V_{ij}\), we first estimate \(D_h^2 P_{j-i}^\theta(x_i)\) , but
+By \cref{lmm:Dh2simd2}, 
+\begin{equation}
+  D_h^2 {P_{j-i}^\theta}(x_i) = {P_{j-i}^\theta}''(\xi), \quad \xi\in [x_{i-1}, x_{i+1}]
+\end{equation}
+By Leibniz formula, we calculate and estimate the derivations of 
+\(h_{j-i}^3\), \(u''(y_{j-i}^{\theta}(x)) \) and \(\frac{|{y_{j-i}^\theta}(x)-x|^{1-\alpha}}{\Gamma(2-\alpha)}\) separately.
+
+
+
+Firstly, we have
+\begin{lemma} \label{lmm:estimatesofhj-i3}
+  There exists a constant \(C=C(T, r)\) such that
+  For \(3\le i \le N-1, \lceil\frac{i}{2}\rceil+1 \le j \le \min\{2i-1, N-1\}\), \(\xi \in [x_{i-1}, x_{i+1}]\),
+  \begin{gather}
+    h_{j-i}^3(\xi) \le C h^{2} x_{i}^{2-2/r}  h_j \\
+    (h_{j-i}^3(\xi))' \le C(r-1)  h^2  x_{i}^{1-2/r} h_{j} \\
+    (h_{j-i}^3(\xi))'' \le C(r-1)  h^2  x_{i}^{-2/r} h_{j}
+  \end{gather}
+\end{lemma}
+The proof of this theorem see \cref{lmm:dhj-i3le-Ch2xi1-2r} and \cref{lmm:d2hj-i3leh2xi-2r}
+
+Second, 
+\begin{lemma} \label{lmm:estimatesofu2yj-itheta}
+  There exists a constant \(C=C(T, \alpha, r, \|u\|_{\beta+\alpha}^{(-\alpha/2)})\) such that
+  For \(3\le i \le N-1, \lceil\frac{i}{2}\rceil+1 \le j \le \min\{2i-1, N-1\}\), \(\xi \in [x_{i-1}, x_{i+1}]\),
+  \begin{gather}
+    u''(y_{j-i}^{\theta}(\xi)) \le C x_i^{\alpha/2-2}    \\
+    (u''(y_{j-i}^{\theta}(\xi)))' \le C x_i^{\alpha/2-3} \\
+    (u''(y_{j-i}^{\theta}(\xi)))'' \le C x_i^{\alpha/2-4}
+  \end{gather}
+\end{lemma}
+The proof of this theorem see \cref{prf:estimatesofu2yj-itheta}
+
+And Finally, we have
+\begin{lemma} \label{lmm:estimatesofy-xi1-a}
+  There exists a constant \(C=C(T, \alpha, r)\) such that
+  For \(3\le i \le N-1, \lceil\frac{i}{2}\rceil+1 \le j \le \min\{2i-1, N-1\}\), \(\xi \in [x_{i-1}, x_{i+1}]\),
+  \begin{gather}
+    |{y_{j-i}^\theta}(\xi)-\xi|^{1-\alpha} \le C | y_j^\theta - x_i|^{1-\alpha} \\
+    (|{y_{j-i}^\theta}(\xi)-\xi|^{1-\alpha})' \le C | y_j^\theta - x_i|^{1-\alpha} x_i^{-1} \\
+    (|{y_{j-i}^\theta}(\xi)-\xi|^{1-\alpha})'' \le C | y_j^\theta - x_i|^{1-\alpha} x_i^{-2}
+  \end{gather}
+  where \(y_j^\theta = \theta x_{j-1} + (1-\theta) x_{j}\)
+\end{lemma}
+The proof of this theorem see \cref{prf:estimatesofy-xi1-a}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\textcolor{red}{
+\begin{lemma} \label{lmm:d2Pj-itle}
+  For \(3\le i \le N-1, \lceil\frac{i}{2}\rceil+1 \le j \le \min\{2i-1, N-1\}\),
+  \begin{equation}
+    D_h^2 {P_{j-i}^\theta}(x_{i}) \le 
+  \end{equation}
+\end{lemma}
+\begin{proof}
+\end{proof}
+}
+\textcolor{red}{
 \begin{lemma} \label{lmm:Vijleh2xma22r}
-  There exists a constant \(C=C(T, \alpha, r, f)\) such that for \(3\le i < N, k=\lceil\frac{i}{2}\rceil, k+1 \le j \le \min\{2i-1, N\}\),
+  There exists a constant \(C=C(T, \alpha, r, f)\) such that for \(3\le i < N, k=\lceil\frac{i}{2}\rceil, k+1 \le j \le \min\{2i-1, N-1\}\),
   \begin{equation}
     V_{ij} \le \textcolor{red}{Sorry}
   \end{equation}
-\end{lemma} 
+\end{lemma}
 }
+\begin{proof}
+  
+\end{proof}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 \newpage
@@ -837,6 +935,12 @@ Some conclusions here.
         (2T-x_{i-1})^{1-1/r}, & N < i \le 2N-1
       \end{cases}
     \end{equation}
+    \begin{equation}
+      h_i \ge r T^{1/r} h \begin{cases}
+        x_{i-1}^{1-1/r},          & 1\le i \le N   \\
+        (2T-x_{i})^{1-1/r}, & N < i \le 2N-1
+      \end{cases}
+    \end{equation}
   \end{lemma}
   \begin{proof}
     For \(1\le i \le N\),
@@ -846,12 +950,18 @@ Some conclusions here.
             & \le rT \frac{1}{N} \left(\frac{i}{N}\right)^{r-1} = r T^{1/r} h x_{i}^{1-1/r} \\
       \end{aligned}
     \end{displaymath}
-    For \(N < i \le 2N-1\),
+    \begin{displaymath}
+      h_i \ge r T \frac{1}{N} \left(\frac{i-1}{N}\right)^{r-1} = r T^{1/r} h x_{i-1}^{1-1/r}
+    \end{displaymath}
+    For \(N < i \le 2N\),
     \begin{displaymath}
       \begin{aligned}
         h_i & = T\left(  \left(\frac{2N-i+1}{N}\right)^r - \left(\frac{2N-i}{N}\right)^r \right)        \\
             & \le rT \frac{1}{N} \left(\frac{2N-i+1}{N}\right)^{r-1} = r T^{1/r} h (2T-x_{i-1})^{1-1/r} \\
       \end{aligned}
+    \end{displaymath}
+    \begin{displaymath}
+      h_i \ge r T \frac{1}{N} \left(\frac{2N-i}{N}\right)^{r-1} = r T^{1/r} h (2T-x_{i})^{1-1/r}
     \end{displaymath}
   \end{proof}
 }
@@ -1140,6 +1250,241 @@ Some conclusions here.
   \end{equation*}
   For \(i=2\), \textcolor{red}{Sorry}
 \end{proof}
+
+
+\textcolor{orange}{
+\begin{lemma} \label{lmm:dhj-i3le-Ch2xi1-2r}
+  There exists a constant \(C=C(T, r, l)\) such that
+  For \(3\le i \le N-1, \lceil\frac{i}{2}\rceil+1 \le j \le \min\{2i-1, N-1\}\),
+  \(l=3, 4\), \\
+  when \(\xi \in [x_{i-1}, x_{i+1}]\),
+  \begin{equation}
+    (h_{j-i}^3(\xi))' \le (r-1) C h^2  x_{i}^{1-2/r} h_{j}
+  \end{equation}
+  \begin{equation}
+    (h_{j-i}^4(\xi))' \le (r-1) C h^3 x_{i}^{2-3/r} h_{j}
+  \end{equation}
+\end{lemma}
+}
+\begin{proof}
+  From \eqref{def:xi2yj-jlN}
+  \begin{gather} \label{eq:yj-i-diff}
+    y_{j-i}'(x) = y_{j-i}^{1-1/r}(x) x^{1/r-1}  \\
+    y_{j-i}''(x) = \frac{1-r}{r} y_{j-i}^{1-2/r}(x) x^{1/r-2} Z_{j-i}
+  \end{gather}
+  for \(l=3, 4\), by \eqref{def:hj-jlN}
+  \begin{equation}
+    \begin{aligned}
+      (h_{j-i}^l(\xi))' &= l \; h_{j-i}^{l-1}(\xi)(y_{j-i}'(\xi)-y_{j-i-1}'(\xi)) \\
+      &= l \; h_{j-i}^{l-1}(\xi) \xi^{1/r-1} (y_{j-i}^{1-1/r}(\xi)- y_{j-i-1}^{1-1/r}(\xi)) \ge 0 \\
+    \end{aligned}
+  \end{equation}
+  For \(\xi\in [x_{i-1}, x_{i+1}]\) and \(3\le \lceil\frac{i}{2}\rceil+1 \le j \le \min\{2i-1, N-1\}\), using \cref{lmm:hilexi}
+  \begin{equation*}
+    \begin{aligned}
+      h_{j-i}(\xi) &\le h_{j-i}(x_{i+1}) = h_{j+1} \\
+      &\le rT^{1/r} \; h x_{j+1}^{1-1/r} \le rT^{1/r}2^{r-1} \; hx_{i}^{1-1/r} \\
+    \end{aligned}
+  \end{equation*}
+  And
+  \begin{equation}
+    2^{-r}x_i  \le x_{i-1} \le \xi \le x_{i+1} \le 2^r x_i
+  \end{equation}
+  We have
+  \begin{equation}
+    \xi^{1/r-m} \le 2^{|mr-1|} x_i^{1/r-m}, \quad m=1,2
+  \end{equation}
+  but 
+  \begin{equation}
+    \begin{aligned}
+      y_{j-i}^{1-1/r}(\xi)- y_{j-i-1}^{1-1/r}(\xi) &= (\xi^{1/r}+ Z_{j-i})^{r-1} - (\xi^{1/r}+ Z_{j-i-1})^{r-1} \\
+      &= (r-1)Z_{1} (\xi^{1/r}+ Z_{j-i-\gamma})^{r-2}, \quad \gamma\in [0,1]    \\
+      &= (r-1)T^{1/r} h y_{j-i-\gamma}^{1-2/r}(\xi)
+    \end{aligned}
+  \end{equation}
+  And
+  \begin{equation} \label{eq:xj-2-xjp1-xi}
+      4^{-r} x_i \le x_{\lceil\frac{i}{2}\rceil-1} \le x_{j-2} = y_{j-i-1}(x_{i-1}) \le  y_{j-i-\gamma}(\xi) \le y_{j-i}(x_{i+1}) = x_{j+1} \le x_{2i} \le 2^r x_{i} \\
+  \end{equation}
+  Therefore,
+  \begin{equation}
+    y_{j-i-\gamma}^{1-2/r}(\xi) \le 2^{2|r-2|} x_i^{1-2/r}
+  \end{equation}
+  So we can get
+  \begin{equation} \label{eq:yj1-1divr-yj-1}
+    y_{j-i}'(\xi)- y_{j-i-1}'(\xi) \le (r-1) C(T,r) h x_i^{-1/r}
+  \end{equation}
+
+  We get
+  \begin{equation}
+    (h_{j-i}^l(\xi))' \le l(r-1) C \; h_{j+1}^{l-1}  h  x_i^{-1/r}  \\
+  \end{equation}
+  And by \cref{lmm:hilexi},
+  \begin{equation}
+      h_{j+1} \le rT h \left(\frac{j+1}{N}\right)^{r-1} \le rTh 2^{r-1} \left(\frac{j-1}{N}\right) = 2^{r-1} h_{j}
+  \end{equation}
+  \begin{equation}
+    h_{j+1} \le rT^{1/r} h x_{j+1}^{1-1/r} \le rT^{1/r} h x_{2i}^{1-1/r} \le rT^{1/r}2^{r-1} h x_{i}^{1-1/r}
+  \end{equation}
+  % \begin{equation}
+  %   x_{i+1}^{1/r-1} \le (\frac{4}{3})^{1/r-1} x_{i}^{1/r-1}
+  % \end{equation}
+  We can get
+  \begin{equation}
+    \begin{aligned}
+      (h_{j-i}^l(\xi))' &\le l(r-1)C \; h_j  h_{j+1}^{l-2}  h  x_i^{-1/r}  \\
+      &\le l (r-1)C h h_j ( h x_{i}^{1-1/r})^{l-2}  x_i^{-1/r}    \\
+      &= (r-1)C \; h^{l-1}   x_i^{l-2-(l-1)/r} h_j
+    \end{aligned}
+  \end{equation}
+  Meanwhile, we can get 
+  \begin{equation} \label{eq:hj-i3leCh2x2-2rhj}
+    h_{j-i}^3(\xi) \le h_{j+1}^3 \le C h^{2} x_{i}^{2-2/r}  h_j
+  \end{equation}
+\end{proof}
+
+
+\textcolor{orange}{
+\begin{lemma} \label{lmm:d2hj-i3leh2xi-2r}
+  There exists a constant \(C=C(T, r, l)\) such that
+  For \(3\le i \le N-1, \lceil\frac{i}{2}\rceil+1 \le j \le \min\{2i-1, N-1\}\), \\
+  when \(\xi \in [x_{i-1}, x_{i+1}]\),
+  \begin{equation}
+    (h_{j-i}^3(\xi))'' \le C(r-1)  h^2  x_{i}^{-2/r} h_{j}
+  \end{equation}
+\end{lemma}
+}
+\begin{proof}
+  From \eqref{eq:yj-i-diff}
+  \begin{equation}
+    \begin{aligned}
+      (h_{j-i}^3(\xi))'' &= 6 h_{j-i}(\xi)(y_{j-i}'(\xi)-y_{j-i-1}'(\xi))^2 + 3 h_{j-i}^2(\xi)( y_{j-i}''(\xi)-y_{j-i-1}''(\xi))\\
+      & = 6 h_{j-i}(\xi) \xi^{1/r-1} (y_{j-i}^{1-1/r}(\xi)- y_{j-i-1}^{1-1/r}(\xi)) \\
+      &\quad + 3 \frac{1-r}{r} h_{j-i}^2(\xi)\xi^{1/r-2}( y_{j-i}^{1-2/r}(\xi)  Z_{j-i} - y_{j-i-1}^{1-2/r}(\xi) Z_{j-i-1}) \\
+    \end{aligned}
+  \end{equation}
+  Using the inequalities of the proof of \cref{lmm:dhj-i3le-Ch2xi1-2r}
+  \begin{equation}
+    \begin{aligned}
+      6 h_{j-i}(\xi) &  (y_{j-i}'(\xi)-y_{j-i-1}'(\xi))^2   \\
+      &\le 6 h_{j+1} ( (r-1)C h x_{i}^{-1/r})^2  \\
+      &\le C(r-1)^2  \; h^2 x_i^{-2/r} h_j 
+    \end{aligned}
+  \end{equation}
+  For the second partial
+  \begin{equation}
+    \begin{aligned}
+      h_{j-i}^2(\xi) & \xi^{1/r-2} ( y_{j-i}^{1-2/r}(\xi)  Z_{j-i} - y_{j-i-1}^{1-2/r}(\xi) Z_{j-i-1}) \\
+      &\le C h_{j+1}^2 x_{i}^{1/r-2} ( (y_{j-i}^{1-2/r}(\xi)-y_{j-i-1}^{1-2/r}(\xi)) Z_{j-i} +  y_{j-i-1}^{1-2/r}(\xi) Z_{1})
+    \end{aligned}
+  \end{equation}
+  but
+  \begin{equation}
+    \begin{aligned}
+      y_{j-i}^{1-2/r}(\xi)-y_{j-i-1}^{1-2/r}(\xi)
+      &= (\xi^{1/r} + Z_{j-i})^{r-2} - (\xi^{1/r} + Z_{j-i-1})^{r-2} \\
+      &= (r-2) Z_1 (\xi^{1/r} + Z_{j-i-\gamma})^{r-3} \\
+      &= (r-2) T^{-r} h y_{j-i-\gamma}^{1-3/r}(\xi) \\
+      &\le C(r-2) h x_i^{1-3/r}
+    \end{aligned}
+  \end{equation}
+  So we can get
+  \begin{equation}
+    \begin{aligned}
+      h_{j-i}^2(\xi) & \xi^{1/r-2} ( y_{j-i}^{1-2/r}(\xi)  Z_{j-i} - y_{j-i-1}^{1-2/r}(\xi) Z_{j-i-1}) \\
+      &\le C h_{j} h x_i^{1-1/r} x_{i}^{1/r-2} (C(r-2)hx_i^{1-3/r} Z_{j-i} + C x_i^{1-2/r} T^{1/r}h)  \\
+      &\le C h^2 ((r-2) x_i^{-3/r} x_{|j-i|}^{1/r} + x_i^{-2/r}) h_j      \\
+      &\le C h^2 x_{i}^{-2/r} h_j
+    \end{aligned}
+  \end{equation}
+  Summarizes, we have
+  \begin{equation}
+    (h_{j-i}^3(\xi))'' \le C(r-1)  h^2  x_{i}^{-2/r} h_{j}
+  \end{equation}
+\end{proof}
+
+\begin{proof}[proof of \cref{lmm:estimatesofu2yj-itheta}] \label{prf:estimatesofu2yj-itheta}
+  From \eqref{def:xi2yj-jlN}
+  \begin{gather}
+    y_{j-i}'(x) = y_{j-i}^{1-1/r}(x) x^{1/r-1}  \\
+    y_{j-i}''(x) = \frac{1-r}{r} y_{j-i}^{1-2/r}(x) x^{1/r-2} Z_{j-i}
+  \end{gather}
+  Since
+  \begin{equation*}
+    x_{j-2} \le y_{j-i-1}(x_{i-1}) \le  y_{j-i}^\theta(\xi) \le y_{j-i-1}^\theta(x_{i+1}) \le x_{j+1}
+  \end{equation*}
+  We have known \eqref{eq:xj-2-xjp1-xi}
+  \begin{equation}
+    u''(y_{j-i}^{\theta}(\xi)) \le C ({y_{j-i}^{\theta}}(\xi))^{\alpha/2-2} \le C x_{j-2}^{\alpha/2-2} \le  C x_{\lceil\frac{i}{2}\rceil-1}^{\alpha/2-2} \le  C 4^{r(2-\alpha/2)} x_i^{\alpha/2-2}
+  \end{equation}
+  \begin{equation}
+    \begin{aligned}
+      (u''(y_{j-i}^{\theta}(\xi)))' &= u'''(y_{j-i}^{\theta}(\xi)) {y_{j-i}^{\theta}}'(\xi) \\
+      &\le C x_i^{\alpha/2-3} \xi^{1/r-1} y_{j-i}^{1-1/r}(\xi)  \\
+      &\le C x_i^{\alpha/2-3} x_i^{1/r-1} x_i^{1-1/r} = C x_i^{\alpha/2-3}
+    \end{aligned}
+  \end{equation}
+  \begin{equation}
+    \begin{aligned}
+      (u''(y_{j-i}^{\theta}(\xi)))'' &= u''''(y_{j-i}^{\theta}(\xi)) ({y_{j-i}^{\theta}}''(\xi))^2 + u'''(y_{j-i}^{\theta}(\xi)) {y_{j-i}^{\theta}}''(\xi) \\
+      &\le C x_i^{\alpha/2-4}  + C x_i^{\alpha/2-3} \frac{r-1}{r} x_i^{1-2/r} x_i^{1/r-2} Z_{|j-i|+1} \\
+      &\le C x_i^{\alpha/2-4} + C\frac{r-1}{r} x_i^{\alpha/2-3}  x_i^{-1/r} x_i^{1/r} \\
+      &= C x_i^{\alpha/2-4}
+    \end{aligned}
+  \end{equation}
+\end{proof}
+
+\begin{proof}[Proof of \cref{lmm:estimatesofy-xi1-a}] \label{prf:estimatesofy-xi1-a}
+  \begin{equation}
+    \begin{aligned}
+      |{y_{j-i}^\theta}(\xi)-\xi|
+      &= |\theta(y_{j-i-1}(\xi)-\xi) + (1-\theta)(y_{j-i}(\xi)-\xi)| \\
+      &= \theta |y_{j-i-1}(\xi)-\xi| + (1-\theta)|y_{j-i}(\xi)-\xi|
+    \end{aligned}
+  \end{equation}
+  Since \(|{y_{j-i}}(\xi)-\xi|\) is increasing about \(\xi\), we have
+  \begin{equation}
+    (\frac{i-1}{i})^r |x_{j} - x_{i}| \le |x_{j-1} - x_{i-1}| \le |{y_{j-i}}(\xi)-\xi| \le |x_{j+1} - x_{i+1}| \le (\frac{i+1}{i})^r |x_{j} - x_{i}|
+  \end{equation}
+  Thus,
+  \begin{equation} \label{eq:yj-ixi-xi-sim-xj-xi}
+    (\frac{2}{3})^r |y_j^\theta - x_i| \le |{y_{j-i}^\theta}(\xi)-\xi| \le (\frac{3}{4})^r (\theta |x_{j} - x_{i}| + (1-\theta) |x_{j-1} - x_{i}|) = (\frac{3}{4})^r |y_j^\theta - x_i|
+  \end{equation}
+  \begin{equation}
+    |{y_{j-i}^\theta}(\xi)-\xi|^{1-\alpha} \le C  |y_j^\theta - x_i|^{1-\alpha}
+  \end{equation}
+  Next,
+  \begin{equation}
+    \begin{aligned}
+      (|{y_{j-i}^\theta}(\xi)-\xi|^{1-\alpha})' &= (1-\alpha)|{y_{j-i}^\theta}(\xi)-\xi|^{-\alpha}|\xi^{1/r-1}(\theta y_{j-i-1}^{1-1/r}(\xi) + (1-\theta) y_{j-i}^{1-1/r}(\xi))-1| \\
+      &\le C |y_j^\theta - x_i|^{-\alpha} \xi^{1/r-1} |\theta y_{j-i-1}^{1-1/r}(\xi) + (1-\theta) y_{j-i}^{1-1/r}(\xi)-\xi^{1-1/r}| \\
+    \end{aligned}
+  \end{equation}
+  Similar with \eqref{eq:yj-ixi-xi-sim-xj-xi}, we have
+  \begin{equation}
+    \begin{aligned}
+      |y_{j-i}^{1-1/r}(\xi)-\xi^{1-1/r}| &\le C|x_{j}^{1-1/r}-x_{i}^{1-1/r}| \\
+      &\le C | x_{j} - x_{i} | x_{i}^{-1/r} \\
+    \end{aligned}
+  \end{equation}
+  So we can get
+  \begin{equation}
+    \begin{aligned}
+      & |\theta y_{j-i-1}^{1-1/r}(\xi) + (1-\theta) y_{j-i}^{1-1/r}(\xi)-\xi^{1-1/r}| \\
+      & \quad \le C x_i^{-1/r}(\theta |x_{j-1}-x_{i}| + (1-\theta)|x_{j}-x_{i}|)  \\
+      & \quad = C x_i^{-1/r} |y_{j}^\theta - x_i|
+    \end{aligned}
+  \end{equation}
+  Combine them, we get
+  \begin{equation}
+    \begin{aligned}
+      (|{y_{j-i}^\theta}(\xi)-\xi|^{1-\alpha})' &\le C |y_j^\theta - x_i|^{-\alpha} x_i^{1/r-1} x_i^{-1/r}|y_{j}^\theta - x_i| \\
+      &= C |y_j^\theta - x_i|^{1-\alpha} x_i^{-1}  \\
+    \end{aligned}
+  \end{equation}
+\end{proof}
+
+
 
 
 \section*{Acknowledgments}
