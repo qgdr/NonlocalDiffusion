@@ -690,31 +690,27 @@ And Finally, we have
 The proof of this theorem see \cref{prf:estimatesofy-xi1-a}
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-\textcolor{red}{
+\textcolor{orange}{
 \begin{lemma} \label{lmm:d2Pj-itle}
+  There exists a constant \(C=C(T, \alpha, r, \|u\|_{\beta+\alpha}^{(-\alpha/2)})\) such that
   For \(3\le i \le N-1, \lceil\frac{i}{2}\rceil+1 \le j \le \min\{2i-1, N-1\}\),
   \begin{equation}
-    D_h^2 {P_{j-i}^\theta}(x_{i}) \le 
+    D_h^2 {P_{j-i}^\theta}(x_{i}) \le C h^2 \frac{|y_j^\theta - x_i|^{1-\alpha}}{\Gamma(2-\alpha)} x_i^{\alpha/2-2-2/r} h_j
   \end{equation}
+  where \(y_j^\theta = \theta x_{j-1} + (1-\theta) x_{j}\)
 \end{lemma}
 \begin{proof}
+  Since
+  \begin{equation}
+    D_h^2 {P_{j-i}^\theta}(x_i) = {P_{j-i}^\theta}''(\xi), \quad \xi\in [x_{i-1}, x_{i+1}]
+  \end{equation}
+  From \eqref{def:Pj-itheta-jlN}, using Leibniz formula and \cref{lmm:estimatesofhj-i3}, \cref{lmm:estimatesofu2yj-itheta} and \cref{lmm:estimatesofy-xi1-a}
 \end{proof}
 }
+
+
+
+
 \textcolor{red}{
 \begin{lemma} \label{lmm:Vijleh2xma22r}
   There exists a constant \(C=C(T, \alpha, r, f)\) such that for \(3\le i < N, k=\lceil\frac{i}{2}\rceil, k+1 \le j \le \min\{2i-1, N-1\}\),
@@ -1480,6 +1476,34 @@ Some conclusions here.
     \begin{aligned}
       (|{y_{j-i}^\theta}(\xi)-\xi|^{1-\alpha})' &\le C |y_j^\theta - x_i|^{-\alpha} x_i^{1/r-1} x_i^{-1/r}|y_{j}^\theta - x_i| \\
       &= C |y_j^\theta - x_i|^{1-\alpha} x_i^{-1}  \\
+    \end{aligned}
+  \end{equation}
+  Finally, we have
+  \begin{equation}
+    \begin{aligned}
+      (|{y_{j-i}^\theta}(\xi)-\xi|^{1-\alpha})'' &= \alpha(\alpha-1)|{y_{j-i}^\theta}(\xi)-\xi|^{-\alpha-1}(\xi^{1/r-1}(\theta y_{j-i-1}^{1-1/r}(\xi) + (1-\theta) y_{j-i}^{1-1/r}(\xi))-1)^2 \\
+      & \quad + (1-\alpha)|{y_{j-i}^\theta}(\xi)-\xi|^{-\alpha}\frac{1-r}{r} \xi^{1/r-2}|\theta y_{j-i-1}^{1-2/r}(\xi)Z_{j-i-1} + (1-\theta) y_{j-i}^{1-2/r}(\xi)Z_{j-i}| \\
+    \end{aligned}
+  \end{equation}
+  Using the inequalities above ,we have
+  \begin{equation}
+    \begin{aligned}
+      &|{y_{j-i}^\theta}(\xi)-\xi|^{-\alpha-1}(\xi^{1/r-1}(\theta y_{j-i-1}^{1-1/r}(\xi) + (1-\theta) y_{j-i}^{1-1/r}(\xi))-1)^2 \\
+      & \quad \le C |y_j^\theta - x_i|^{-\alpha-1} (x_i^{-1}|y_{j}^\theta - x_i|)^2 \\
+      &\quad = C |y_j^\theta - x_i|^{1-\alpha} x_i^{-2} \\
+    \end{aligned}
+  \end{equation}
+  And by
+  \begin{equation}
+    |Z_{j-i}| = |x_{j}^{1/r}-x_{i}^{1/r}| \le |x_{j} - x_{i}| x_{i}^{1/r-1}
+  \end{equation}
+  we have
+  \begin{equation}
+    \begin{aligned}
+      & |{y_{j-i}^\theta}(\xi)-\xi|^{-\alpha} \xi^{1/r-2}|\theta y_{j-i-1}^{1-2/r}(\xi)Z_{j-i-1} + (1-\theta) y_{j-i}^{1-2/r}(\xi)Z_{j-i}| \\
+      &\le C |y_{j}^\theta - x_i|^{-\alpha} x_i^{1/r-2} x_i^{1-2/r} |\theta Z_{j-i-1} + (1-\theta) Z_{j-i}| \\
+      &\le C |y_{j}^\theta - x_i|^{-\alpha} x_i^{-2} |y_j^\theta - x_i| \\
+      &= C |y_{j}^\theta - x_i|^{1-\alpha} x_i^{-2} \\
     \end{aligned}
   \end{equation}
 \end{proof}
