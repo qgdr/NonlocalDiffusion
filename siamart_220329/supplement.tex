@@ -1,7 +1,7 @@
 % SIAM Supplemental File Template
 \documentclass[review,supplement,hidelinks,onefignum,onetabnum]{siamart220329}
 
-\input{ex_shared}
+\input{shared}
 
 \externaldocument[][nocite]{ex_article}
 
@@ -66,6 +66,64 @@ supporting evidence.
   \end{tabular}
 \end{center}
 \end{table}
+
+\begin{proof}
+  We use the similar skill in the last section, but more complicated.
+  for \(j=N\),
+  Let
+  \begin{equation}
+    y_{i\to N}(x) = \frac{x^{1/r} - Z_i}{Z_1} h_N + T, \quad Z_i = T^{1/r}\frac{i}{N}, x_N = T
+  \end{equation}
+  and
+  \begin{equation}
+    y_{i\to N-1}(x) = (x^{1/r} + Z_{N-1-i})^{r}, \quad Z_{N-1-i} = T^{1/r}\frac{N-1-i}{N}
+  \end{equation}
+  Thus,
+  \begin{gather*}
+    y_{i\to N}(x_{i-1}) = x_{N-1}, \quad  y_{i\to N}(x_{i}) = x_{N}, \quad y_{i\to N}(x_{i+1}) = x_{N+1} \\
+    y_{i\to N-1}(x_{i-1}) = x_{N-2}, \quad  y_{i\to N}(x_{i}) = x_{N-1}, \quad y_{i\to N}(x_{i+1}) = x_{N}
+  \end{gather*}
+  Then, define
+  \begin{equation}
+    y_{i\to N}^\theta(x) = \theta y_{i\to N-1}(x) + (1-\theta) y_{i\to N}(x)
+  \end{equation}
+  \begin{equation}
+    h_{i\to N}(x) = y_{i\to N}(x) - y_{i\to N-1}(x)
+  \end{equation}
+  We have
+  \begin{gather}
+    {y_{i\to N-1}}'(x) = y_{i\to N-1}^{1-1/r}(x) x^{1/r-1}  \\
+    {y_{i\to N-1}}''(x) = \frac{1-r}{r} y_{i\to N-1}^{1-2/r}(x) x^{1/r-2} Z_{N-1-i}  \\
+    {y_{i\to N}}'(x) = \frac{1}{r}\frac{h_N}{Z_1} x^{1/r-1}  \\
+    {y_{i\to N}}'(x) = \frac{1-r}{r^2}\frac{h_N}{Z_1} x^{1/r-2}
+  \end{gather}
+  \begin{equation}
+    P_{i\to N}^\theta(x) = (h_{i\to N}(x))^3 \frac{|y_{i\to N}^\theta(x)-x|^{1-\alpha}}{\Gamma(2-\alpha)} u''(y_{i\to N}^\theta(x)) 
+  \end{equation}
+  \begin{equation}
+    Q_{i\to N}^\theta(x) = (h_{i\to N}(x))^4 \frac{|y_{i\to N}^\theta(x)-x|^{1-\alpha}}{\Gamma(2-\alpha)} 
+  \end{equation}
+  Similar with \cref{lmm:Tij-express-as-int-of-function}, we can get for \(l=-1,0,1\),
+  \begin{equation}
+    \begin{aligned}
+      T_{i+l, N+l} & = \int_{0}^{1} -\frac{\theta (1-\theta)}{2} {P_{i\to N}^\theta}(x_{i+l}) d\theta                                                                                               \\
+              & + \int_{0}^{1} \frac{\theta (1-\theta)}{3!}{Q_{i\to N}^\theta}(x_{i+l})( \theta^2  u'''(\eta_{N+l, 1}^\theta) - (1-\theta)^2 u'''(\eta_{N+l, 2}^\theta)) d\theta
+    \end{aligned}
+  \end{equation}
+  So we have
+  \begin{equation}
+    \begin{aligned}
+      V_{iN} & = \frac{2}{h_{i} + h_{i+1}}  \left( \frac{1}{h_{i+1}} T_{i+1, N+1} - \left(\frac{1}{h_{i}}+\frac{1}{h_{i+1}}\right)  T_{i,N} + \frac{1}{h_{i}} T_{i-1, N-1} \right)                                                      \\
+             & = \int_{0}^{1} -\frac{\theta (1-\theta)}{2} D_h^2 P_{i\to N}^\theta(x_i)  d\theta                                                                                                                                           \\
+             & \quad +  \int_{0}^1 \frac{\theta^3 (1-\theta)}{3!} \frac{2}{h_{i} + h_{i+1}}\left( \frac{{Q_{i\to N}^\theta}(x_{i+1}) u'''(\eta_{N+1,1}^\theta) - {Q_{i\to N}^\theta}(x_{i}) u'''(\eta_{N,1}^\theta)}{h_{i+1}}\right)  d\theta \\
+             & \quad -  \int_{0}^1 \frac{\theta^3 (1-\theta)}{3!} \frac{2}{h_{i} + h_{i+1}}\left( \frac{{Q_{i\to N}^\theta}(x_{i}) u'''(\eta_{N,1}^\theta) - {Q_{i\to N}^\theta}(x_{i-1}) u'''(\eta_{N-1,1}^\theta)}{h_{i}}\right)  d\theta   \\
+             & \quad -  \int_{0}^1 \frac{\theta (1-\theta)^3}{3!} \frac{2}{h_{i} + h_{i+1}}\left( \frac{{Q_{i\to N}^\theta}(x_{i+1}) u'''(\eta_{N+1,2}^\theta) - {Q_{i\to N}^\theta}(x_{i}) u'''(\eta_{N,2}^\theta)}{h_{i+1}}\right)  d\theta \\
+             & \quad +  \int_{0}^1 \frac{\theta (1-\theta)^3}{3!} \frac{2}{h_{i} + h_{i+1}}\left( \frac{{Q_{i\to N}^\theta}(x_{i}) u'''(\eta_{N,2}^\theta) - {Q_{i\to N}^\theta}(x_{i-1}) u'''(\eta_{N-1,2}^\theta)}{h_{i}}\right)  d\theta
+    \end{aligned}
+  \end{equation}
+  To estimate \(D_h^2 P_{i\to N}^\theta(x_i)={P_{i\to N}^\theta}''(\xi), \xi \in [x_{i-1}, x_{i+1}]\),
+\end{proof}
+
 
 
 \bibliographystyle{siamplain}

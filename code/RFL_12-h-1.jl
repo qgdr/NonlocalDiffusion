@@ -40,16 +40,16 @@ end
 
 
 
-r = 22//10
+r = 40//10
 Ω = (0, 1)
 
 
-α = 13 // 10
+α = 11 // 10
 α = BigFloat(α)
 
 @show 1 < α < 2
 
-N = 125
+N = 200
 
 
 # function num_err(Ω, r, α, N)
@@ -99,7 +99,7 @@ F = parent(A) * U[1:2N-1]
 
 # plot(x[1:2N-1], F)
 
-U_s = parent(A) \ ones(2N - 1)
+# U_s = parent(A) \ ones(2N - 1)
 # @show plot(x[1:2N-1], U[1:2N-1]-U_s)
 # plot!(x[1:2N-1], U_s)
 
@@ -114,7 +114,7 @@ Si = sum(parent(A), dims=2)
 
 
 # trunc_err = abs.(F .- 1) |> parent |> maximum
-u_err = abs.(U[1:2N-1] - U_s) #  |> maximum
+# u_err = abs.(U[1:2N-1] - U_s) #  |> maximum
 # R = parent(abs.(F .- 1)) .* (x[1:2N-1] .^ α)
 # println(Ri[l])
 # Ri = maximum(R[1:N])
@@ -140,7 +140,7 @@ R = F .- 1
 
 #################
 
-λ = 0 # = 2//21 # 1/(α-1)
+λ = 2//21 # 1/(α-1)
 g = zeros(2N-1)
 g[1:N] = x[1:N]
 g[N+1:2N-1] = 1 .-x[N+1:2N-1]
@@ -149,4 +149,6 @@ B = A * diagm(g.+λ)
 M = sum(B, dims=2)
 @show all(M .> 0) # 是否是 M 矩阵
 # plot((R ./ M) .* N^2)
-plot(u_err)
+# plot(u_err)
+# plot(R ./ M .* N^2)
+plot(R[3N÷4:5N÷4] ./ (abs.(1//2 .-x[3N÷4:5N÷4]).+1//N).^(1-α) .* N^2)
