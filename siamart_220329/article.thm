@@ -34,37 +34,52 @@
 \contentsline {proof}{{Proof}{7}{}}{12}{proof.126}%
 \contentsline {lemma}{{Lemma}{5.22}{}}{12}{theorem.128}%
 \contentsline {proof}{{Proof}{8}{}}{12}{proof.131}%
-\contentsline {lemma}{{Lemma}{5.23}{}}{14}{theorem.145}%
-\contentsline {proof}{{Proof}{9}{}}{14}{proof.147}%
-\contentsline {lemma}{{Lemma}{5.24}{}}{16}{theorem.164}%
-\contentsline {proof}{{Proof}{10}{}}{16}{proof.171}%
-\contentsline {lemma}{{Lemma}{5.25}{}}{17}{theorem.177}%
-\contentsline {proof}{{Proof}{11}{}}{17}{proof.184}%
-\contentsline {lemma}{{Lemma}{5.26}{}}{17}{theorem.187}%
-\contentsline {proof}{{Proof}{12}{}}{17}{proof.194}%
-\contentsline {lemma}{{Lemma}{A.1}{}}{19}{theorem.212}%
-\contentsline {proof}{{Proof}{13}{}}{19}{proof.216}%
-\contentsline {lemma}{{Lemma}{A.2}{}}{20}{theorem.218}%
-\contentsline {proof}{{Proof}{14}{}}{20}{proof.221}%
-\contentsline {lemma}{{Lemma}{A.3}{}}{21}{theorem.222}%
-\contentsline {lemma}{{Lemma}{B.1}{}}{21}{theorem.227}%
-\contentsline {proof}{{Proof}{15}{}}{21}{proof.230}%
-\contentsline {lemma}{{Lemma}{B.2}{}}{22}{theorem.231}%
-\contentsline {proof}{{Proof}{16}{}}{22}{proof.233}%
-\contentsline {proof}{{Proof}{17}{Additional proof of \cref {lmm:trunerror2}}}{23}{proof.236}%
-\contentsline {lemma}{{Lemma}{C.1}{}}{24}{theorem.237}%
-\contentsline {proof}{{Proof}{18}{}}{24}{proof.239}%
-\contentsline {lemma}{{Lemma}{C.2}{}}{24}{theorem.241}%
-\contentsline {proof}{{Proof}{19}{}}{24}{proof.243}%
-\contentsline {lemma}{{Lemma}{C.3}{}}{25}{theorem.244}%
-\contentsline {proof}{{Proof}{20}{}}{25}{proof.246}%
-\contentsline {lemma}{{Lemma}{C.4}{}}{25}{theorem.247}%
-\contentsline {lemma}{{Lemma}{C.5}{}}{25}{theorem.250}%
-\contentsline {proof}{{Proof}{21}{}}{25}{proof.253}%
-\contentsline {lemma}{{Lemma}{C.6}{}}{26}{theorem.254}%
-\contentsline {proof}{{Proof}{22}{}}{26}{proof.257}%
-\contentsline {lemma}{{Lemma}{C.7}{}}{27}{theorem.277}%
-\contentsline {proof}{{Proof}{23}{}}{27}{proof.279}%
-\contentsline {proof}{{Proof}{24}{proof of \cref {lmm:estimatesofu2yj-itheta}}}{28}{proof.286}%
-\contentsline {proof}{{Proof}{25}{Proof of \cref {lmm:estimatesofy-xi1-a}}}{29}{proof.294}%
-\contentsline {proof}{{Proof}{26}{proof of \cref {lmm:dQj-itle}}}{30}{proof.307}%
+\contentsline {definition}{{Definition}{5.23}{}}{14}{theorem.146}%
+\contentsline {lemma}{{Lemma}{5.24}{}}{15}{theorem.160}%
+\contentsline {lemma}{{Lemma}{5.25}{}}{16}{theorem.162}%
+\contentsline {theorem}{{Theorem}{5.26}{}}{16}{theorem.165}%
+\contentsline {theorem}{{Theorem}{5.27}{}}{16}{theorem.167}%
+\contentsline {proof}{{Proof}{9}{}}{16}{proof.169}%
+\contentsline {theorem}{{Theorem}{5.28}{}}{18}{theorem.176}%
+\contentsline {proof}{{Proof}{10}{}}{18}{proof.178}%
+\contentsline {lemma}{{Lemma}{5.29}{}}{19}{theorem.213}%
+\contentsline {proof}{{Proof}{11}{}}{20}{proof.226}%
+\contentsline {lemma}{{Lemma}{5.30}{}}{21}{theorem.235}%
+\contentsline {proof}{{Proof}{12}{}}{21}{proof.242}%
+\contentsline {lemma}{{Lemma}{5.31}{}}{21}{theorem.245}%
+\contentsline {proof}{{Proof}{13}{}}{21}{proof.252}%
+\contentsline {lemma}{{Lemma}{5.32}{}}{22}{theorem.265}%
+\contentsline {lemma}{{Lemma}{5.33}{}}{23}{theorem.267}%
+\contentsline {lemma}{{Lemma}{A.1}{}}{24}{theorem.276}%
+\contentsline {proof}{{Proof}{14}{}}{24}{proof.280}%
+\contentsline {lemma}{{Lemma}{A.2}{}}{25}{theorem.282}%
+\contentsline {proof}{{Proof}{15}{}}{25}{proof.285}%
+\contentsline {lemma}{{Lemma}{A.3}{}}{26}{theorem.286}%
+\contentsline {lemma}{{Lemma}{B.1}{}}{26}{theorem.291}%
+\contentsline {proof}{{Proof}{16}{}}{26}{proof.294}%
+\contentsline {lemma}{{Lemma}{B.2}{}}{27}{theorem.295}%
+\contentsline {proof}{{Proof}{17}{}}{27}{proof.297}%
+\contentsline {proof}{{Proof}{18}{Additional proof of \cref {lmm:trunerror2}}}{28}{proof.300}%
+\contentsline {lemma}{{Lemma}{C.1}{}}{29}{theorem.301}%
+\contentsline {proof}{{Proof}{19}{}}{29}{proof.303}%
+\contentsline {lemma}{{Lemma}{C.2}{}}{29}{theorem.305}%
+\contentsline {proof}{{Proof}{20}{}}{29}{proof.307}%
+\contentsline {lemma}{{Lemma}{C.3}{}}{30}{theorem.308}%
+\contentsline {proof}{{Proof}{21}{}}{30}{proof.310}%
+\contentsline {lemma}{{Lemma}{C.4}{}}{30}{theorem.311}%
+\contentsline {lemma}{{Lemma}{C.5}{}}{30}{theorem.314}%
+\contentsline {proof}{{Proof}{22}{}}{30}{proof.317}%
+\contentsline {lemma}{{Lemma}{C.6}{}}{31}{theorem.318}%
+\contentsline {proof}{{Proof}{23}{}}{31}{proof.321}%
+\contentsline {lemma}{{Lemma}{C.7}{}}{32}{theorem.341}%
+\contentsline {proof}{{Proof}{24}{}}{32}{proof.343}%
+\contentsline {proof}{{Proof}{25}{proof of \cref {lmm:estimatesofu2yj-itheta}}}{33}{proof.350}%
+\contentsline {proof}{{Proof}{26}{Proof of \cref {lmm:estimatesofy-xi1-a}}}{34}{proof.358}%
+\contentsline {proof}{{Proof}{27}{proof of \cref {lmm:dQj-itle}}}{35}{proof.371}%
+\contentsline {lemma}{{Lemma}{C.8}{}}{36}{theorem.378}%
+\contentsline {proof}{{Proof}{28}{}}{36}{proof.385}%
+\contentsline {lemma}{{Lemma}{C.9}{}}{37}{theorem.393}%
+\contentsline {proof}{{Proof}{29}{}}{37}{proof.400}%
+\contentsline {lemma}{{Lemma}{C.10}{}}{38}{theorem.408}%
+\contentsline {proof}{{Proof}{30}{}}{38}{proof.415}%
+\contentsline {proof}{{Proof}{31}{}}{38}{proof.424}%
