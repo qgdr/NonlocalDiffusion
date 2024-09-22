@@ -49,7 +49,7 @@ r = 40//10
 
 @show 1 < α < 2
 
-N = 200
+N = 100
 
 
 # function num_err(Ω, r, α, N)
@@ -151,4 +151,4 @@ M = sum(B, dims=2)
 # plot((R ./ M) .* N^2)
 # plot(u_err)
 # plot(R ./ M .* N^2)
-plot(R[3N÷4:5N÷4] ./ (abs.(1//2 .-x[3N÷4:5N÷4]).+1//N).^(1-α) .* N^2)
+# plot(R[3N÷4:5N÷4] ./ (abs.(1//2 .-x[3N÷4:5N÷4]).+1//N).^(1-α) .* N^2)

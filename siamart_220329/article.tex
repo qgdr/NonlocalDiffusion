@@ -217,7 +217,10 @@ deferred to \cref{sec:proof-truncation-error} and \cref{sec:proof-convergence}.
 \textcolor{orange}{
   Let's denote \(h=\frac{1}{N}\), we have
   \begin{theorem}[Truncation Error] \label{thm:truncation-error}
-    If $f \in C^2(\Omega)$ and $\alpha\in(1,2)$, and $u(x)$ is a solution of the equation \eqref{eq:equation}, then there exists  constants
+    If $f$ satisfy that $f\in C^\beta(\Omega), \beta>4-\alpha$, $\|f\|_{\beta}^{(\alpha/2)} < \infty, \alpha\in(1,2)$, 
+    and $u(x)$ is a solution of the equation \eqref{eq:equation}, 
+    where $\|u\|_{\beta+\alpha}^{(-\alpha/2)}<\infty$,
+    then there exists  constants
     $C_1(T,\alpha, r, \|u\|_{\beta+\alpha}^{(-\alpha/2)}, \|f\|_{\beta}^{(\alpha/2)})$, 
     $C_2(T,\alpha, r,  \|u\|_{\beta+\alpha}^{(-\alpha/2)})$, such that
     the truncation error of the discrete format satisfies
@@ -1154,9 +1157,9 @@ For \(I_4\), we have
   \end{equation}
   Thus,
   \begin{gather*}
-    y_{i\to N-1}(x_{i-1}) = x_{N-2}, \quad  y_{i\to N}(x_{i}) = x_{N-1}, \quad y_{i\to N}(x_{i+1}) = x_{N} \\
+    y_{i\to N-1}(x_{i-1}) = x_{N-2}, \quad  y_{i\to N-1}(x_{i}) = x_{N-1}, \quad y_{i\to N-1}(x_{i+1}) = x_{N} \\
     y_{i\to N}(x_{i-1}) = x_{N-1}, \quad  y_{i\to N}(x_{i}) = x_{N}, \quad y_{i\to N}(x_{i+1}) = x_{N+1} \\
-    y_{i\to N-1}(x_{i-1}) = x_{N}, \quad  y_{i\to N}(x_{i}) = x_{N+1}, \quad y_{i\to N}(x_{i+1}) = x_{N+2}
+    y_{i\to N+1}(x_{i-1}) = x_{N}, \quad  y_{i\to N+1}(x_{i}) = x_{N+1}, \quad y_{i\to N+1}(x_{i+1}) = x_{N+2}
   \end{gather*}
   Then, define
   \begin{gather}
@@ -1291,7 +1294,7 @@ For \(I_4\), we have
       \begin{aligned}
         (h_{i\to N}^3(\xi))''
          & \le C h_N^2 \frac{1-r}{r} x_i^{1/r-2} + C (r-1)^2 h_N x_i^{2/r-2} h^2 \\
-         & \le C (r-1) h_N^2 x_i^{1/r-1}
+         & \le C (r-1) h_N^2
       \end{aligned}
     \end{equation}
 
@@ -1531,7 +1534,7 @@ For \(I_4\), we have
   \end{equation}
   Thus,
   \begin{equation}
-    \frac{2}{h_i + h_{i+1}} \frac{1}{h_{i}} (T_{i-1, l} -  T_{i, l}) \le C h_l^3
+    \frac{2}{h_i + h_{i+1}} \frac{1}{h_{i}} (T_{i-1, l} -  T_{i, l}) \le C h_l^2
   \end{equation}
   For
   \begin{equation}
@@ -2188,17 +2191,17 @@ And we can prove that kind theorems with the techneque we used in this paper.
   \end{gather*}
   And the last equation can be obtained by
   \begin{gather*}
-    g(x_{i-1}) = g(x_{i}) - h_{i} g'(x_{i}) + \frac{h_{i}^2}{2} g''(x_{i}) - \frac{h_{i}^3}{3!} g'''(x_{i}) +  \frac{h_{i}^4}{4!} g''''(\eta_1)         \\
-    g(x_{i+1}) = g(x_{i}) + h_{i+1} g'(x_{i}) + \frac{h_{i+1}^2}{2} g''(x_{i}) + \frac{h_{i+1}^3}{3!} g'''(x_{i}) + \frac{h_{i+1}^4}{4!} g''''(\eta_2)
+    g(x_{i-1}) = g(x_{i}) - h_{i} g'(x_{i}) + \frac{h_{i}^2}{2} g''(x_{i}) - \frac{h_{i}^3}{3!} g'''(x_{i}) +  \int_{x_{i-1}}^{x_{i}} g''''(y) \frac{(y-x_{i-1})^3}{3!} dy        \\
+    g(x_{i+1}) = g(x_{i}) + h_{i+1} g'(x_{i}) + \frac{h_{i+1}^2}{2} g''(x_{i}) + \frac{h_{i+1}^3}{3!} g'''(x_{i}) + \int_{x_{i}}^{x_{i+1}} g''''(y) \frac{(x_{i+1}-y)^3}{3!} dy
   \end{gather*}
-  where \(\eta_1 \in [x_{i-1}, x_{i}], \eta_2 \in [x_{i}, x_{i+1}]\).
   Expecially,
   \begin{equation} \label{eq:Dh2Cauchy4}
     \begin{aligned}
-      \frac{h_i^4}{4!}g''''(\eta_1)     & = \int_{x_{i-1}}^{x_{i}} g''''(y) \frac{(y-x_{i-1})^3}{3!} dy \\
-      \frac{h_{i+1}^4}{4!}g''''(\eta_2) & = \int_{x_{i}}^{x_{i+1}} g''''(y) \frac{(x_{i+1}-y)^3}{3!} dy
+      \int_{x_{i-1}}^{x_{i}} g''''(y) \frac{(y-x_{i-1})^3}{3!} dy & = \frac{h_i^4}{4!}g''''(\eta_1) \\
+      \int_{x_{i}}^{x_{i+1}} g''''(y) \frac{(x_{i+1}-y)^3}{3!} dy & = \frac{h_{i+1}^4}{4!}g''''(\eta_2)
     \end{aligned}
   \end{equation}
+  where \(\eta_1 \in [x_{i-1}, x_{i}], \eta_2 \in [x_{i}, x_{i+1}]\).
   Subsitute them to the left side of \eqref{eq:Dh2simd4}, we can get the result.
 \end{proof}
 
@@ -2590,7 +2593,7 @@ And we can prove that kind theorems with the techneque we used in this paper.
   \begin{equation*}
     x_1^{-\alpha/2} = T^{2/r} h^2 x_1^{-\alpha/2-2/r}
   \end{equation*}
-  For \(i=2\), \textcolor{red}{Sorry}
+  \(i=2\) is similar.
 \end{proof}
 
 
@@ -2702,7 +2705,7 @@ And we can prove that kind theorems with the techneque we used in this paper.
   \begin{equation}
     \begin{aligned}
       (h_{j-i}^3(\xi))'' & = 6 h_{j-i}(\xi)(y_{j-i}'(\xi)-y_{j-i-1}'(\xi))^2 + 3 h_{j-i}^2(\xi)( y_{j-i}''(\xi)-y_{j-i-1}''(\xi))               \\
-                         & = 6 h_{j-i}(\xi) \xi^{1/r-1} (y_{j-i}^{1-1/r}(\xi)- y_{j-i-1}^{1-1/r}(\xi))                                          \\
+                         & = 6 h_{j-i}(\xi) (\xi^{1/r-1} (y_{j-i}^{1-1/r}(\xi)- y_{j-i-1}^{1-1/r}(\xi)))^2                                \\
                          & \quad + 3 \frac{1-r}{r} h_{j-i}^2(\xi)\xi^{1/r-2}( y_{j-i}^{1-2/r}(\xi)  Z_{j-i} - y_{j-i-1}^{1-2/r}(\xi) Z_{j-i-1}) \\
     \end{aligned}
   \end{equation}
@@ -2727,7 +2730,7 @@ And we can prove that kind theorems with the techneque we used in this paper.
       y_{j-i}^{1-2/r}(\xi)-y_{j-i-1}^{1-2/r}(\xi)
        & = (\xi^{1/r} + Z_{j-i})^{r-2} - (\xi^{1/r} + Z_{j-i-1})^{r-2} \\
        & = (r-2) Z_1 (\xi^{1/r} + Z_{j-i-\gamma})^{r-3}                \\
-       & = (r-2) T^{-r} h y_{j-i-\gamma}^{1-3/r}(\xi)                  \\
+       & = (r-2) T^{1/r} h y_{j-i-\gamma}^{1-3/r}(\xi)                  \\
        & \le C(r-2) h x_i^{1-3/r}
     \end{aligned}
   \end{equation}
@@ -2754,7 +2757,7 @@ And we can prove that kind theorems with the techneque we used in this paper.
   \end{gather}
   Since
   \begin{equation*}
-    x_{j-2} \le y_{j-i-1}(x_{i-1}) \le  y_{j-i}^\theta(\xi) \le y_{j-i-1}^\theta(x_{i+1}) \le x_{j+1}
+    x_{j-2} \le y_{j-i-1}(x_{i-1}) \le  y_{j-i}^\theta(\xi) \le y_{j-i}^\theta(x_{i+1}) \le x_{j+1}
   \end{equation*}
   We have known \eqref{eq:xj-2-xjp1-xi}
   \begin{equation}
@@ -2769,7 +2772,7 @@ And we can prove that kind theorems with the techneque we used in this paper.
   \end{equation}
   \begin{equation}
     \begin{aligned}
-      (u''(y_{j-i}^{\theta}(\xi)))'' & = u''''(y_{j-i}^{\theta}(\xi)) ({y_{j-i}^{\theta}}''(\xi))^2 + u'''(y_{j-i}^{\theta}(\xi)) {y_{j-i}^{\theta}}''(\xi) \\
+      (u''(y_{j-i}^{\theta}(\xi)))'' & = u''''(y_{j-i}^{\theta}(\xi)) ({y_{j-i}^{\theta}}'(\xi))^2 + u'''(y_{j-i}^{\theta}(\xi)) {y_{j-i}^{\theta}}''(\xi) \\
                                      & \le C x_i^{\alpha/2-4}  + C x_i^{\alpha/2-3} \frac{r-1}{r} x_i^{1-2/r} x_i^{1/r-2} Z_{|j-i|+1}                       \\
                                      & \le C x_i^{\alpha/2-4} + C\frac{r-1}{r} x_i^{\alpha/2-3}  x_i^{-1/r} x_i^{1/r}                                       \\
                                      & = C x_i^{\alpha/2-4}
@@ -2786,11 +2789,11 @@ And we can prove that kind theorems with the techneque we used in this paper.
     \end{aligned}
   \end{equation}
   Since \(|{y_{j-i}}(\xi)-\xi|\) is increasing about \(\xi\), we have
-  \begin{equation}
+  \begin{equation} \label{eq:yj-ixi-xi-sim-xj-xi}
     (\frac{i-1}{i})^r |x_{j} - x_{i}| \le |x_{j-1} - x_{i-1}| \le |{y_{j-i}}(\xi)-\xi| \le |x_{j+1} - x_{i+1}| \le (\frac{i+1}{i})^r |x_{j} - x_{i}|
   \end{equation}
   Thus,
-  \begin{equation} \label{eq:yj-ixi-xi-sim-xj-xi}
+  \begin{equation} 
     (\frac{2}{3})^r |y_j^\theta - x_i| \le |{y_{j-i}^\theta}(\xi)-\xi| \le (\frac{3}{4})^r (\theta |x_{j} - x_{i}| + (1-\theta) |x_{j-1} - x_{i}|) = (\frac{3}{4})^r |y_j^\theta - x_i|
   \end{equation}
   \begin{equation}
@@ -3107,7 +3110,9 @@ And we can prove that kind theorems with the techneque we used in this paper.
 \end{proof}
 
 
-
+\begin{equation}
+  a^{1-\theta}|a^{\theta}-b^{\theta}| \le |a-b|, \theta \in [0,1]
+\end{equation}
 
 
 
