@@ -1,6 +1,6 @@
-\contentsline {remark}{{Remark}{2.1}{}}{1}{theorem.6}%
+\contentsline {definition}{{Definition}{2.1}{delta dependent norm \cite {ROSOTON2014275}}}{1}{theorem.6}%
 \contentsline {theorem}{{Theorem}{2.2}{}}{1}{theorem.7}%
-\contentsline {theorem}{{Theorem}{2.3}{Regularity up to the boundary \cite {ROSOTON2014275}}}{1}{theorem.9}%
+\contentsline {theorem}{{Theorem}{2.3}{Regularity up to the boundary \cite {ROSOTON2014275}}}{2}{theorem.9}%
 \contentsline {corollary}{{Corollary}{2.4}{}}{2}{theorem.11}%
 \contentsline {theorem}{{Theorem}{4.1}{Truncation Error}}{3}{theorem.26}%
 \contentsline {theorem}{{Theorem}{4.2}{Convergence}}{3}{theorem.28}%
@@ -10,18 +10,18 @@
 \contentsline {theorem}{{Theorem}{5.3}{}}{5}{theorem.47}%
 \contentsline {definition}{{Definition}{5.4}{}}{5}{theorem.49}%
 \contentsline {lemma}{{Lemma}{5.5}{}}{5}{theorem.53}%
-\contentsline {proof}{{Proof}{2}{}}{5}{proof.55}%
+\contentsline {proof}{{Proof}{2}{}}{6}{proof.55}%
 \contentsline {lemma}{{Lemma}{5.6}{}}{6}{theorem.58}%
 \contentsline {proof}{{Proof}{3}{}}{6}{proof.60}%
 \contentsline {lemma}{{Lemma}{5.7}{}}{7}{theorem.62}%
-\contentsline {lemma}{{Lemma}{5.8}{}}{7}{theorem.66}%
-\contentsline {proof}{{Proof}{4}{}}{7}{proof.68}%
+\contentsline {lemma}{{Lemma}{5.8}{}}{8}{theorem.66}%
+\contentsline {proof}{{Proof}{4}{}}{8}{proof.68}%
 \contentsline {definition}{{Definition}{5.9}{}}{8}{theorem.74}%
-\contentsline {theorem}{{Theorem}{5.10}{}}{8}{theorem.76}%
+\contentsline {theorem}{{Theorem}{5.10}{}}{9}{theorem.76}%
 \contentsline {lemma}{{Lemma}{5.11}{}}{9}{theorem.78}%
 \contentsline {definition}{{Definition}{5.12}{}}{9}{theorem.80}%
 \contentsline {lemma}{{Lemma}{5.13}{}}{9}{theorem.86}%
-\contentsline {lemma}{{Lemma}{5.14}{}}{9}{theorem.88}%
+\contentsline {lemma}{{Lemma}{5.14}{}}{10}{theorem.88}%
 \contentsline {lemma}{{Lemma}{5.15}{}}{10}{theorem.91}%
 \contentsline {lemma}{{Lemma}{5.16}{}}{10}{theorem.98}%
 \contentsline {lemma}{{Lemma}{5.17}{}}{10}{theorem.105}%

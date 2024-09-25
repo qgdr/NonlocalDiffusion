@@ -87,18 +87,25 @@ where
 
 \section{Regularity}
 \label{sec:regularity}
+For any \(\beta > 0\), 
+we use the standard notation \(C^\beta(\bar{\Omega}),  C^\beta(\mathbb{R})\), etc., for Hölder spaces
+and their norms and seminorms.
+When no confusion is possible, 
+we use the notation \(C^\beta (\Omega)\) to refer to \(C^{k,\beta'} (\Omega)\), where \(k\) is the greatest integer such that \(k<\beta\) and where \(\beta' = \beta - k\).
+The Hölder spaces \(C^{k, \beta'}(\Omega)\) are defined as the subspaces of \(C^k(\Omega)\) consisting of functions whose \(k\)-th order partial derivatives are locally Hölder continuous \textcolor{red}{cite} with exponent \(\beta'\) in \(\Omega\),
+where \(C^k(\Omega)\) is the set of all \(k\)-times continuously differentiable functions on open set \(\Omega\).
 
-\textcolor{pink}{
-  \begin{remark}
-    1. \(C^k(U)\) is the set of all \(k\)-times continuously differentiable functions on open set \(U\). \\
-    2. \(C^\beta(U)\) is the collection of function \(f\)  which for any \(V\subset\subset U\) \(f|_V\in C^\beta(\bar{V})\).   \\
-    % 3. The condition \(f\in L^\infty(\Omega)\) may be unessecary, but we have not proven it yet, the numerical examples is shown in \cref{sec:experiments}.
-  \end{remark}
+
+
+\textcolor{red}{
+\begin{definition}[delta dependent norm \cite{ROSOTON2014275}]
+  ...
+\end{definition}
 }
 
-\textcolor{orange}{
+\textcolor{blue}{
   \begin{theorem} \label{thm:regularity-f}
-    If \(f\in C^\beta(\Omega), \beta>2\) and \(\|f\|_{\beta}^{(\alpha/2)}<\infty\), then for \(l=0, 1, 2\)
+    Let \(f\in C^\beta(\Omega), \beta>2\) be such that \(\|f\|_{\beta}^{(\alpha/2)}<\infty\), then for \(l=0, 1, 2\)
     \begin{equation}
       |f^{(l)}(x)| \le \|f\|_{\beta}^{(\alpha/2)} \begin{cases}
         x^{-l-\alpha/2}, & \text{if } 0 < x \le T \\ (2T-x)^{-l-\alpha/2}, & \text{if } T\le x < 2T
@@ -109,6 +116,7 @@ where
 
 \textcolor{orange}{
   \begin{theorem}[Regularity up to the boundary \cite{ROSOTON2014275}] \label{thm:regularity}
+    Let \(\Omega\) be a bounded domain, and \(\beta>0\) be such that neither \(\beta\) nor \(\beta+\alpha\) is an integer. Let \(f \in C^\beta (\Omega)\) be such that\( \|f\|_{\beta}^{(\alpha/2)} < \infty\), and \(u \in C^{\alpha/2} (\mathbb{R}^n)\) be a solution of \cref{eq:equation}. Then, \(u \in C^{\beta+\alpha} (\Omega)\) and
     \begin{equation}
       \|u\|_{\beta+\alpha}^{(-\alpha/2)} \le C \left( \|u\|_{C^{\alpha/2}(\mathbb{R})} + \|f\|_{\beta}^{(\alpha/2)} \right)
     \end{equation}
@@ -1827,7 +1835,7 @@ Now we have
   The matrix \(A\) defined by \eqref{mat:aij} is a \(M\) matrix. and
   \begin{equation}
     \begin{aligned}
-      S_i := & \sum_{j=1}^{2N-1} a_{ij}                                                                                                                                                             \\
+      S_i := & \sum_{j=1}^{2N-1} a_{ij}      \\
       =      & \sum_{j=1}^{2N-1} \frac{2}{h_i + h_{i+1}} \left( \frac{1}{h_{i+1}} \tilde{a}_{i+1,j} - (\frac{1}{h_{i}}+\frac{1}{h_{i+1}})\tilde{a}_{i,j} + \frac{1}{h_{i}} \tilde{a}_{i-1,j}\right) \\
       \ge    & C (x_i^{-\alpha} + (2T-x_i)^{-\alpha})
     \end{aligned}
@@ -2143,7 +2151,7 @@ And we can prove that kind theorems with the techneque we used in this paper.
 \section{Approximate of difference quotients}
 
 \begin{lemma} \label{lmm:Dh2simd2}
-  If \(g(x)\) is twice differentable continous function on open set $\Omega$,
+  If \(g(x)\in C^2\Omega\),
   there exists \(\xi \in [x_{i-1}, x_{i+1}]\) such that
   \begin{equation} \label{eq:Dh2simd2}
     \begin{aligned}
@@ -2180,7 +2188,7 @@ And we can prove that kind theorems with the techneque we used in this paper.
                               & = \frac{h_i}{h_i + h_{i+1}} g''(\xi_1) + \frac{h_{i+1}}{h_i + h_{i+1}} g''(\xi_2)
     \end{aligned}
   \end{equation*}
-  Now, using intermediate value theorem , there exists \(\xi \in [\xi_1, \xi_2]\) such that
+  Now, using \textcolor{red}{intermediate value theorem} , there exists \(\xi \in [\xi_1, \xi_2]\) such that
   \begin{equation*}
     \frac{h_i}{h_i + h_{i+1}} g''(\xi_1) + \frac{h_{i+1}}{h_i + h_{i+1}} g''(\xi_2) = g''(\xi)
   \end{equation*}
