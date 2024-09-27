@@ -1852,7 +1852,7 @@ Now we have
   \begin{equation}
     \begin{aligned}
       S_i := & \sum_{j=1}^{2N-1} a_{ij}      \\
-      =      & \sum_{j=1}^{2N-1} \frac{2}{h_i + h_{i+1}} \left( \frac{1}{h_{i+1}} \tilde{a}_{i+1,j} - (\frac{1}{h_{i}}+\frac{1}{h_{i+1}})\tilde{a}_{i,j} + \frac{1}{h_{i}} \tilde{a}_{i-1,j}\right) \\
+      =      & -\kappa_\alpha \sum_{j=1}^{2N-1}  \frac{2}{h_i + h_{i+1}} \left( \frac{1}{h_{i+1}} \tilde{a}_{i+1,j} - (\frac{1}{h_{i}}+\frac{1}{h_{i+1}})\tilde{a}_{i,j} + \frac{1}{h_{i}} \tilde{a}_{i-1,j}\right) \\
       \ge    & C (x_i^{-\alpha} + (2T-x_i)^{-\alpha})
     \end{aligned}
   \end{equation}
@@ -1864,31 +1864,28 @@ Now we have
   \end{equation}
   where
   \begin{gather*}
-    g_{0}(x) := \frac{-\kappa_\alpha}{\Gamma(4-\alpha)} \frac{|x_i-x_0|^{3-\alpha} - |x_i-x_1|^{3-\alpha}}{h_1}    \\
-    g_{2N}(x) := \frac{-\kappa_\alpha}{\Gamma(4-\alpha)} \frac{|x_{2N}-x_i|^{3-\alpha} - |x_{2N-1}-x_i|^{3-\alpha}}{h_{2N}}
+    g_{0}(x) := \frac{-\kappa_\alpha}{\Gamma(4-\alpha)} \frac{|x-x_0|^{3-\alpha} - |x-x_1|^{3-\alpha}}{h_1}    \\
+    g_{2N}(x) := \frac{-\kappa_\alpha}{\Gamma(4-\alpha)} \frac{|x_{2N}-x|^{3-\alpha} - |x_{2N-1}-x|^{3-\alpha}}{h_{2N}}
   \end{gather*}
+  Thus
+  \begin{equation*}
+    -\kappa_\alpha \sum_{j=1}^{2N-1} \tilde{a}_{ij} = g(x_i)
+  \end{equation*}
 
-  Then, for \(2\le i\le 2N-2\),
+  Then
+  % Then, for \(2\le i\le 2N-2\),
   \begin{equation}
     \begin{aligned}
-      S_i := & \sum_{j=1}^{2N-1}a_{ij}                                                                                                                        \\
+      S_i := & \sum_{j=1}^{2N-1}a_{ij}          \\
       =      & \frac{2}{h_i + h_{i+1}} \left( \frac{1}{h_{i+1}} g(x_{i+1}) - (\frac{1}{h_{i}}+\frac{1}{h_{i+1}})g(x_{i}) + \frac{1}{h_{i}} g(x_{i-1}) \right) \\
-      =      & g_0''(\xi) + g_{2N}''(\xi), \quad \xi \in [x_{i-1}, x_{i+1}]
+      =      & D_h^2 g_0(x_i) + D_h^2 g_{2N}(x_i)
     \end{aligned}
   \end{equation}
-
-  While for \(i \ge 2\)
+  
+  When \(i=1\)
   \begin{equation}
     \begin{aligned}
-      g_0''(\xi) & =  -\kappa_\alpha \frac{|\xi-x_0|^{1-\alpha} - |\xi-x_1|^{1-\alpha}}{\Gamma(2-\alpha)h_1}                                               \\
-                 & = \frac{\kappa_\alpha}{-\Gamma(1-\alpha)}  |\xi-\eta|^{-\alpha} , \quad \eta\in [x_0, x_1]                                              \\
-                 & \ge \frac{\kappa_\alpha}{-\Gamma(1-\alpha)} x_{i+1}^{-\alpha}  \ge \frac{\kappa_\alpha}{-\Gamma(1-\alpha)} 2^{-r\alpha} x_{i}^{-\alpha}
-    \end{aligned}
-  \end{equation}
-  when \(i=1\)
-  \begin{equation}
-    \begin{aligned}
-      \frac{2}{h_{1} + h_{2}} & \left( \frac{1}{h_{2}} g_0(x_{2}) - (\frac{1}{h_{1}}+\frac{1}{h_{2}})g_0(x_{1}) + \frac{1}{h_{1}} g_0(x_{0}) \right)                                                       \\
+      D_h^2 g_0(x_1) &= \frac{2}{h_{1} + h_{2}} \left( \frac{1}{h_{2}} g_0(x_{2}) - (\frac{1}{h_{1}}+\frac{1}{h_{2}})g_0(x_{1}) + \frac{1}{h_{1}} g_0(x_{0}) \right)                                                       \\
       =                       & \frac{2\kappa_\alpha}{\Gamma(4-\alpha)} \frac{h_1^{3-\alpha}+h_2^{3-\alpha} + 2h_1^{2-\alpha}h_2 - (h_1+h_2)^{3-\alpha} }{(h_{1} + h_{2})h_1 h_2}                          \\
       =                       & \frac{2\kappa_\alpha}{\Gamma(4-\alpha)} \frac{h_1^{3-\alpha}+h_2^{3-\alpha} + 2h_1^{2-\alpha}h_2 - (h_1+h_2)^{3-\alpha} }{(h_{1} + h_{2})h_1^{1-\alpha} h_2} h_1^{-\alpha} \\
       =                       & \frac{2\kappa_\alpha}{\Gamma(4-\alpha)} \frac{1+(2^r-1)^{3-\alpha} + 2(2^r-1) - (2^r)^{3-\alpha} }{2^r (2^r-1)} h_1^{-\alpha}
@@ -1898,6 +1895,17 @@ Now we have
   \begin{equation}
     1+(2^r-1)^{3-\alpha} + 2(2^r-1) - (2^r)^{3-\alpha} > 0
   \end{equation}
+
+  While for \(i \ge 2\)
+  \begin{equation}
+    \begin{aligned}
+      D_h^2 g_0(x_i) &=  g_0''(\xi) , \quad \xi \in (x_{i-1}, x_{i+1}) \\
+                 & =  -\kappa_\alpha \frac{|\xi-x_0|^{1-\alpha} - |\xi-x_1|^{1-\alpha}}{\Gamma(2-\alpha)h_1}                                               \\
+                 & = \frac{\kappa_\alpha}{-\Gamma(1-\alpha)}  |\xi-\eta|^{-\alpha} , \quad \eta\in [x_0, x_1]                                              \\
+                 & \ge \frac{\kappa_\alpha}{-\Gamma(1-\alpha)} x_{i+1}^{-\alpha}  \ge \frac{\kappa_\alpha}{-\Gamma(1-\alpha)} 2^{-r\alpha} x_{i}^{-\alpha}
+    \end{aligned}
+  \end{equation}
+  
   So
   \begin{equation}
     \frac{2}{h_i + h_{i+1}} \left( \frac{1}{h_{i+1}} g_0(x_{i+1}) - (\frac{1}{h_{i}}+\frac{1}{h_{i+1}})g_0(x_{i}) + \frac{1}{h_{i}} g_0(x_{i-1}) \right) \ge C x_i^{-\alpha}
@@ -1934,17 +1942,20 @@ Then
   \end{equation}
 \end{lemma}
 \begin{proof}
+  \begin{equation*}
+    b_{ij} = a_{ij} g(x_j) = -\kappa_\alpha  \frac{2}{h_i + h_{i+1}} \left( \frac{1}{h_{i+1}} \tilde{a}_{i+1,j} - (\frac{1}{h_{i}}+\frac{1}{h_{i+1}})\tilde{a}_{i,j} + \frac{1}{h_{i}} \tilde{a}_{i-1,j}\right) g(x_j)
+  \end{equation*}
   Since
   \begin{equation}
-    g(x) \equiv g_h(x)
+    g(x) \equiv \Pi_h g(x)
   \end{equation}
   by \cref{eq:Ih}, we have
   \begin{equation}
     \begin{aligned}
       \tilde{M_i} & := \sum_{j=1}^{2N-1} \tilde{b}_{ij}
       = \sum_{j=1}^{2N-1} \tilde{a}_{ij} g(x_j)                                                                                        \\
-                  & = \int_{0}^{2T} \frac{|x_i-y|^{1-\alpha}}{\Gamma(2-\alpha)} g_h(y) dy
-      = \int_{0}^{2T} \frac{|x_i-y|^{1-\alpha}}{\Gamma(2-\alpha)} g(y) dy                                                              \\
+                  & = \int_{0}^{2T} \frac{|x_i-y|^{1-\alpha}}{\Gamma(2-\alpha)} \Pi_h g(y) dy
+      = \int_{0}^{2T} \frac{ |x_i-y|^{1-\alpha}}{\Gamma(2-\alpha)} g(y) dy                                                              \\
                   & = \frac{-2}{\Gamma(4-\alpha)}|T-x_i|^{3-\alpha} + \frac{1}{\Gamma(4-\alpha)}(x_i^{3-\alpha} + (2T-x_i)^{3-\alpha}) \\
                   & := w(x_i) = p(x_i) + q(x_i)
     \end{aligned}
@@ -1953,28 +1964,30 @@ Then
   Thus,
   \begin{equation}
     \begin{aligned}
-      M_i & := \sum_{j=1}^{2N-1} a_{ij} g(x_j)      \\
-          & = -\kappa_\alpha\frac{2}{h_i + h_{i+1}}
-      \left( \frac{1}{h_{i+1}} w(x_{i+1})
-      - (\frac{1}{h_{i}}+\frac{1}{h_{i+1}}) w(x_{i})
-      +  \frac{1}{h_{i}} w(x_{i-1}) \right)
+      M_i & := \sum_{j=1}^{2N-1} b_{ij} =\sum_{j=1}^{2N-1} a_{ij} g(x_j)      \\
+        &= -\kappa_\alpha\frac{2}{h_i + h_{i+1}}\left(\frac{1}{h_{i+1}} \tilde{M}_{i+1} - (\frac{1}{h_{i}}+\frac{1}{h_{i+1}})\tilde{M}_{i} + \frac{1}{h_{i}} \tilde{M}_{i-1}\right)  \\
+      %     & = -\kappa_\alpha\frac{2}{h_i + h_{i+1}}
+      % \left( \frac{1}{h_{i+1}} w(x_{i+1})
+      % - (\frac{1}{h_{i}}+\frac{1}{h_{i+1}}) w(x_{i})
+      % +  \frac{1}{h_{i}} w(x_{i-1}) \right)
+      & = -\kappa_\alpha D_h^2 (p(x_i) + q(x_i))
     \end{aligned}
   \end{equation}
   for \(1\le i<N-1\),by \cref{lmm:Dh2simd2}
   \begin{equation}
     \begin{aligned}
-      P_{i} & := -\kappa_\alpha\frac{2}{h_i + h_{i+1}}
+      D_h^2 p(x_i) & := -\kappa_\alpha\frac{2}{h_i + h_{i+1}}
       \left( \frac{1}{h_{i+1}} p(x_{i+1})
       - (\frac{1}{h_{i}}+\frac{1}{h_{i+1}}) p(x_{i})
       +  \frac{1}{h_{i}} p(x_{i-1}) \right)                                                                     \\
-            & = \frac{2 \kappa_\alpha}{\Gamma(2-\alpha)} |T - \xi|^{1-\alpha}  \quad \xi \in [x_{i-1}, x_{i+1}] \\
+            & = \frac{2 \kappa_\alpha}{\Gamma(2-\alpha)} |T - \xi|^{1-\alpha}  \quad \xi \in (x_{i-1}, x_{i+1}) \\
             & \ge \frac{2 \kappa_\alpha}{\Gamma(2-\alpha)} |T - x_{i-1}|^{1-\alpha}
     \end{aligned}
   \end{equation}
   and
   \begin{equation}
     \begin{aligned}
-      P_{N-1} & := \frac{-2\kappa_\alpha}{h_{N-1} + h_{N}}
+      D_h^2 p(x_{N-1}) & := \frac{-2\kappa_\alpha}{h_{N-1} + h_{N}}
       \left( \frac{1}{h_{N}} p(x_{N})
       - (\frac{1}{h_{N-1}}+\frac{1}{h_{N}}) p(x_{N-1})
       +  \frac{1}{h_{N-1}} p(x_{N-2}) \right)                                                                                                                                   \\
@@ -1990,7 +2003,7 @@ Then
   \end{equation}
   \begin{equation}
     \begin{aligned}
-      P_N & := -\kappa_\alpha \frac{2}{h_N + h_{N+1}}
+      D_h^2(x_N) & := -\kappa_\alpha \frac{2}{h_N + h_{N+1}}
       \left( \frac{1}{h_{N+1}} p(x_{N+1})
       - (\frac{1}{h_{N}}+\frac{1}{h_{N+1}}) p(x_{N})
       +  \frac{1}{h_{N}} p(x_{N-1}) \right)                                   \\
@@ -2194,8 +2207,8 @@ And we can prove that kind theorems with the techneque we used in this paper.
 \end{lemma}
 \begin{proof}
   \begin{gather*}
-    g(x_{i-1}) = g(x_{i}) - (x_{i}-x_{i-1}) g'(x_{i}) + \frac{(x_{i}-x_{i-1})^2}{2} g''(\xi_1), \quad \xi_1 \in [x_{i-1}, x_{i}]        \\
-    g(x_{i+1}) = g(x_{i}) + (x_{i+1}-x_{i}) g'(x_{i}) + \frac{(x_{i+1}-x_{i})^2}{2} g''(\xi_2), \quad \xi_2 \in [x_{i}, x_{i+1}]
+    g(x_{i-1}) = g(x_{i}) - (x_{i}-x_{i-1}) g'(x_{i}) + \frac{(x_{i}-x_{i-1})^2}{2} g''(\xi_1), \quad \xi_1 \in (x_{i-1}, x_{i})        \\
+    g(x_{i+1}) = g(x_{i}) + (x_{i+1}-x_{i}) g'(x_{i}) + \frac{(x_{i+1}-x_{i})^2}{2} g''(\xi_2), \quad \xi_2 \in (x_{i}, x_{i+1})
   \end{gather*}
   Subsitute them in the left side of \eqref{eq:Dh2simd2}, we have
   \begin{equation*}
