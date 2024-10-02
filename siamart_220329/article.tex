@@ -222,7 +222,7 @@ where
 Here we state our main results; the proof is
 deferred to \cref{sec:proof-truncation-error} and \cref{sec:proof-convergence}.
 
-\textcolor{orange}{
+\textcolor{blue}{
   Let's denote \(h=\frac{1}{N}\), we have
   \begin{theorem}[Truncation Error] \label{thm:truncation-error}
     If $f$ satisfy that $f\in C^\beta(\Omega), \beta>4-\alpha$, $\|f\|_{\beta}^{(\alpha/2)} < \infty, \alpha\in(1,2)$, 
@@ -520,6 +520,9 @@ For \(i=1, 2\).
 
 
 For \(3\le i < N/2\), we have a new separation of \(R_i\), Let's denote \(k=\lceil\frac{i}{2}\rceil\).
+
+\includegraphics[width=0.9\textwidth]{Depart_ManimCE_v0.18.1.png}
+
 \begin{equation}
   \begin{aligned}
     R_i
@@ -1853,7 +1856,7 @@ Now we have
     \begin{aligned}
       S_i := & \sum_{j=1}^{2N-1} a_{ij}      \\
       =      & -\kappa_\alpha \sum_{j=1}^{2N-1}  \frac{2}{h_i + h_{i+1}} \left( \frac{1}{h_{i+1}} \tilde{a}_{i+1,j} - (\frac{1}{h_{i}}+\frac{1}{h_{i+1}})\tilde{a}_{i,j} + \frac{1}{h_{i}} \tilde{a}_{i-1,j}\right) \\
-      \ge    & C (x_i^{-\alpha} + (2T-x_i)^{-\alpha})
+      \ge    & C_A (x_i^{-\alpha} + (2T-x_i)^{-\alpha})
     \end{aligned}
   \end{equation}
 \end{lemma}
@@ -1932,10 +1935,10 @@ And define
 Then
 \begin{lemma} \label{lmm:AGhasSingularity}
   The matrix \(B:= AG\) , the major diagnal is positive, and nonpositive on others.
-  And there is a constant \(C=C(\alpha, r)\) such that
+  And there is a constant \(C_{AG}, C=C(\alpha, r)\) such that
   \begin{equation}
     M_i := \sum_{j=1}^{2N-1} b_{ij}
-    \ge -C(x_i^{1-\alpha} + (2T-x_i)^{1-\alpha}) + C\begin{cases}
+    \ge -C_{AG} (x_i^{1-\alpha} + (2T-x_i)^{1-\alpha}) + C \begin{cases}
       |T - x_{i-1}|^{1-\alpha} , & i\le N \\
       |x_{i+1} - T|^{1-\alpha} , & i\ge N
     \end{cases}
@@ -1970,13 +1973,13 @@ Then
       % \left( \frac{1}{h_{i+1}} w(x_{i+1})
       % - (\frac{1}{h_{i}}+\frac{1}{h_{i+1}}) w(x_{i})
       % +  \frac{1}{h_{i}} w(x_{i-1}) \right)
-      & = -\kappa_\alpha D_h^2 (p(x_i) + q(x_i))
+      & =  D_h^2 (-\kappa_\alpha p) (x_i) - \kappa_\alpha D_h^2 q(x_i)
     \end{aligned}
   \end{equation}
-  for \(1\le i<N-1\),by \cref{lmm:Dh2simd2}
+  for \(1\le i\le N-1\),by \cref{lmm:Dh2simd2}
   \begin{equation}
     \begin{aligned}
-      D_h^2 p(x_i) & := -\kappa_\alpha\frac{2}{h_i + h_{i+1}}
+      D_h^2 (-\kappa_\alpha p)(x_i) & := -\kappa_\alpha\frac{2}{h_i + h_{i+1}}
       \left( \frac{1}{h_{i+1}} p(x_{i+1})
       - (\frac{1}{h_{i}}+\frac{1}{h_{i+1}}) p(x_{i})
       +  \frac{1}{h_{i}} p(x_{i-1}) \right)                                                                     \\
@@ -1984,26 +1987,26 @@ Then
             & \ge \frac{2 \kappa_\alpha}{\Gamma(2-\alpha)} |T - x_{i-1}|^{1-\alpha}
     \end{aligned}
   \end{equation}
-  and
+  % and
+  % \begin{equation}
+  %   \begin{aligned}
+  %     D_h^2 (-\kappa_\alpha p)(x_{N-1}) & := \frac{-2\kappa_\alpha}{h_{N-1} + h_{N}}
+  %     \left( \frac{1}{h_{N}} p(x_{N})
+  %     - (\frac{1}{h_{N-1}}+\frac{1}{h_{N}}) p(x_{N-1})
+  %     +  \frac{1}{h_{N-1}} p(x_{N-2}) \right)                                                                                                                                   \\
+  %             & = \frac{2 \kappa_\alpha}{\Gamma(4-\alpha)} \frac{2}{h_{N-1} + h_{N}}
+  %     \left( - (\frac{1}{h_{N-1}}+\frac{1}{h_{N}}) h_N^{3-\alpha}
+  %     +  \frac{1}{h_{N-1}} (h_{N-1}+h_{N})^{3-\alpha} \right)                                                                                                                   \\
+  %             & = \frac{4 \kappa_\alpha}{\Gamma(4-\alpha) h_{N-1}}
+  %     \left( - h_{N}^{2-\alpha}
+  %     +  (h_{N-1}+h_{N})^{2-\alpha} \right)                                                                                                                                     \\
+  %             & = \frac{4 \kappa_\alpha}{(3-\alpha)\Gamma(2-\alpha)} \xi^{1-\alpha}    \quad \xi \in [h_N, h_{N-1}+h_{N}]                                                       \\
+  %             & \ge \frac{4 \kappa_\alpha}{(3-\alpha)\Gamma(2-\alpha)} (h_{N-1}+h_{N})^{1-\alpha} = \frac{4 \kappa_\alpha}{(3-\alpha)\Gamma(2-\alpha)} (T - x_{N-2})^{1-\alpha}
+  %   \end{aligned}
+  % \end{equation}
   \begin{equation}
     \begin{aligned}
-      D_h^2 p(x_{N-1}) & := \frac{-2\kappa_\alpha}{h_{N-1} + h_{N}}
-      \left( \frac{1}{h_{N}} p(x_{N})
-      - (\frac{1}{h_{N-1}}+\frac{1}{h_{N}}) p(x_{N-1})
-      +  \frac{1}{h_{N-1}} p(x_{N-2}) \right)                                                                                                                                   \\
-              & = \frac{2 \kappa_\alpha}{\Gamma(4-\alpha)} \frac{2}{h_{N-1} + h_{N}}
-      \left( - (\frac{1}{h_{N-1}}+\frac{1}{h_{N}}) h_N^{3-\alpha}
-      +  \frac{1}{h_{N-1}} (h_{N-1}+h_{N})^{3-\alpha} \right)                                                                                                                   \\
-              & = \frac{4 \kappa_\alpha}{\Gamma(4-\alpha) h_{N-1}}
-      \left( - h_{N}^{2-\alpha}
-      +  (h_{N-1}+h_{N})^{2-\alpha} \right)                                                                                                                                     \\
-              & = \frac{4 \kappa_\alpha}{(3-\alpha)\Gamma(2-\alpha)} \xi^{1-\alpha}    \quad \xi \in [h_N, h_{N-1}+h_{N}]                                                       \\
-              & \ge \frac{4 \kappa_\alpha}{(3-\alpha)\Gamma(2-\alpha)} (h_{N-1}+h_{N})^{1-\alpha} = \frac{4 \kappa_\alpha}{(3-\alpha)\Gamma(2-\alpha)} (T - x_{N-2})^{1-\alpha}
-    \end{aligned}
-  \end{equation}
-  \begin{equation}
-    \begin{aligned}
-      D_h^2(x_N) & := -\kappa_\alpha \frac{2}{h_N + h_{N+1}}
+      D_h^2(-\kappa_\alpha p)(x_N) & := -\kappa_\alpha \frac{2}{h_N + h_{N+1}}
       \left( \frac{1}{h_{N+1}} p(x_{N+1})
       - (\frac{1}{h_{N}}+\frac{1}{h_{N+1}}) p(x_{N})
       +  \frac{1}{h_{N}} p(x_{N-1}) \right)                                   \\
@@ -2014,7 +2017,7 @@ Then
 
   Symmetricly for \(i\ge N\), we get
   \begin{equation} \label{eq:|T-xi-1|1-a}
-    P_i \ge \frac{2\kappa_\alpha}{\Gamma(2-\alpha)} \begin{cases}
+    D_h^2(-\kappa_\alpha p)(x_i)\ge \frac{2\kappa_\alpha}{\Gamma(2-\alpha)} \begin{cases}
       |T - x_{i-1}|^{1-\alpha} , & i\le N \\
       |x_{i+1} - T|^{1-\alpha} , & i\ge N
     \end{cases}
@@ -2023,13 +2026,14 @@ Then
   Similarly, we can get
   \begin{equation}
     \begin{aligned}
-      Q_i & := -\kappa_\alpha\frac{2}{h_i + h_{i+1}}
+      D_h^2 q(x_i) & := \frac{2}{h_i + h_{i+1}}
       \left( \frac{1}{h_{i+1}} q(x_{i+1})
       - (\frac{1}{h_{i}}+\frac{1}{h_{i+1}}) q(x_{i})
       +  \frac{1}{h_{i}} q(x_{i-1}) \right)                                                                               \\
-          & \ge \frac{- 2^{r(\alpha-1)+1} \kappa_\alpha}{\Gamma(2-\alpha)}  (x_{i-1}^{1-\alpha} + (1-x_{i+1})^{1-\alpha})
+          & \le \frac{2^{r(\alpha-1)+1}}{\Gamma(2-\alpha)}  (x_{i}^{1-\alpha} + (2T-x_{i})^{1-\alpha}), \quad i=1,\cdots, 2N-1
     \end{aligned}
   \end{equation}
+  So, we get the result.
 
 \end{proof}
 
@@ -2044,17 +2048,17 @@ We can get
 \begin{theorem}\label{thm:ALGisM}
   There exists a real \(\lambda=\lambda(T, \alpha, r) > 0\) and \(C=C(T,\alpha,r) > 0\) such that \(B := A(\lambda I+G)\) is an \(M\) matrix. And
   \begin{equation}
-    M_i := \sum_{j=1}^{2N-1} b_{ij} \ge C(x_i^{-\alpha} + (1-x_i)^{-\alpha}) + C\begin{cases}
-      |\frac{1}{2} - x_{i-1}|^{1-\alpha} , & i\le N \\
-      |x_{i+1} - \frac{1}{2}|^{1-\alpha} , & i\ge N
+    M_i := \sum_{j=1}^{2N-1} b_{ij} \ge C(x_i^{-\alpha} + (2T-x_i)^{-\alpha}) + C\begin{cases}
+      |T - x_{i-1}|^{1-\alpha} , & i\le N \\
+      |x_{i+1} - T|^{1-\alpha} , & i\ge N
     \end{cases}
   \end{equation}
 \end{theorem}
 \begin{proof}
-  By \ref{lmm:AisM} with \(C_1\)  and \ref{lmm:AGhasSingularity} with \(C_2\) , it's sufficient to take \(\lambda = 4TC_2/C_1\), then
+  By \cref{lmm:AisM} with \(C_{A}\)  and \cref{lmm:AGhasSingularity} with \(C_{AG}\) , it's sufficient to take \(\lambda = (C + 2T C_{AG})/C_{A} \), then
   \begin{equation}
     \begin{aligned}
-      M_i & \ge C_2 \left( (x_i^{-\alpha} + (1-x_i)^{-\alpha})
+      M_i & \ge C \left( (x_i^{-\alpha} + (1-x_i)^{-\alpha})
       + \begin{cases}
           |T - x_{i-1}|^{1-\alpha} , & i\le N \\
           |x_{i+1} - T|^{1-\alpha} , & i\ge N
@@ -2074,9 +2078,9 @@ For equation
 \end{equation}
 which means
 \begin{equation}
-  \sum_{j=1}^{2N-1} b_{ij} \frac{\epsilon_j}{\lambda + g(x_j)} = \tau_i
+  \sum_{j=1}^{2N-1} b_{ij} \frac{\epsilon_j}{\lambda + g(x_j)} = -\tau_i
 \end{equation}
-where \(\epsilon_i = u(x_i) - U_i\).
+where \(\epsilon_i = u(x_i) - u_i\).
 
 And if 
 \begin{equation}
@@ -2085,7 +2089,7 @@ And if
 Then, since \(B=A(\lambda I+G)\) is an \(M\) matrix, it is Strictly diagonally dominant. Thus,
 \begin{equation}
   \begin{aligned}
-    |\tau_{i_0}| &= |\sum_{j=1}^{2N-1} b_{i_0, j} \frac{\epsilon_j}{\lambda + g(x_i)}|  \\
+    |\tau_{i_0}| &= |\sum_{j=1}^{2N-1} b_{i_0, j} \frac{\epsilon_j}{\lambda + g(x_j)}|  \\
     &\ge b_{i_0, i_0} |\frac{\epsilon_{i_0}}{\lambda + g(x_{i_0})}| - \sum_{j\ne i_0} |b_{i_0, j}| |\frac{\epsilon_j}{\lambda + g(x_j)}| \\
     &\ge b_{i_0, i_0} |\frac{\epsilon_{i_0}}{\lambda + g(x_{i_0})}| - \sum_{j\ne i_0} |b_{i_0, j}| |\frac{\epsilon_{i_0}}{\lambda + g(x_{i_0})}| \\
     &= \sum_{j=1}^{2N-1} b_{i_0, j} |\frac{\epsilon_{i_0}}{\lambda + g(x_{i_0})}|  \\
@@ -2638,10 +2642,10 @@ And we can prove that kind theorems with the techneque we used in this paper.
 \end{proof}
 
 
-\textcolor{orange}{
+\textcolor{blue}{
   \begin{lemma} \label{lmm:dhj-i3le-Ch2xi1-2r}
     There exists a constant \(C=C(T, r, l)\) such that
-    For \(3\le i \le N-1, k+1=\lceil\frac{i}{2}\rceil, k \le j \le \min\{2i-1, N-1\}\),
+    For \(3\le i \le N-1, k=\lceil\frac{i}{2}\rceil, k \le j \le \min\{2i-1, N-1\}\),
     \(l=3, 4\), \\
     when \(\xi \in [x_{i-1}, x_{i+1}]\),
     \begin{equation}
@@ -2665,7 +2669,7 @@ And we can prove that kind theorems with the techneque we used in this paper.
                         & = l \; h_{j-i}^{l-1}(\xi) \xi^{1/r-1} (y_{j-i}^{1-1/r}(\xi)- y_{j-i-1}^{1-1/r}(\xi)) \ge 0 \\
     \end{aligned}
   \end{equation}
-  For \(\xi\in [x_{i-1}, x_{i+1}]\) and \(2\le k \le j \le \min\{2i-1, N-1\}\), using \cref{lmm:hilexi}
+  For \(\xi\in (x_{i-1}, x_{i+1})\) and \(2\le k \le j \le \min\{2i-1, N-1\}\), using \cref{lmm:hilexi}
   \begin{equation*}
     \begin{aligned}
       h_{j-i}(\xi) & \le h_{j-i}(x_{i+1}) = h_{j+1}                                          \\
@@ -2696,6 +2700,14 @@ And we can prove that kind theorems with the techneque we used in this paper.
   \begin{equation}
     y_{j-i-\gamma}^{1-2/r}(\xi) \le 2^{2|r-2|} x_i^{1-2/r}
   \end{equation}
+  But expecially for \(i=3, j=2\), 
+  \begin{equation*}
+    y_{-1}^{1-1/r}(\xi)- y_{-2}^{1-1/r}(\xi) 
+    \le \max \begin{cases}
+      x_3^{1-1/r} - x_2^{1-1/r} \\
+      x_1^{1-1/r} - 0
+    \end{cases} \le C (r-1) x_1^{1-1/r} \le C (r-1) h x_3^{1-2/r}
+  \end{equation*}
   So we can get
   \begin{equation} \label{eq:yj1-1/r-yj-1}
     y_{j-i}'(\xi)- y_{j-i-1}'(\xi) \le (r-1) C(T,r) h x_i^{-1/r}
@@ -2731,7 +2743,7 @@ And we can prove that kind theorems with the techneque we used in this paper.
 \end{proof}
 
 
-\textcolor{orange}{
+\textcolor{blue}{
   \begin{lemma} \label{lmm:d2hj-i3leh2xi-2r}
     There exists a constant \(C=C(T, r, l)\) such that
     For \(3\le i \le N-1, \lceil\frac{i}{2}\rceil+1 \le j \le \min\{2i-1, N-1\}\), \\
@@ -3073,7 +3085,7 @@ And we can prove that kind theorems with the techneque we used in this paper.
 \end{proof}
 
 
-\textcolor{orange}{
+\textcolor{blue}{
   \begin{lemma}
     \label{lmm:estimate-|yj-i-xi|^1-a-j>N}
     There exists a constant \(C=C(T, \alpha, r)\) such that
