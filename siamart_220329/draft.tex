@@ -737,8 +737,12 @@ For \(3\le i < N/2\), we have a new separation of \(R_i\), Let's denote \(k=\lce
 }
 
 To estimete \(V_{ij}\), we need some preparations.
-\begin{lemma} \label{lmm:Tijexpand}
-  For \(y\in[x_{j-1}, x_{j}]\), we can rewrite \(y = x_{j-1} + \theta h_j = (1-\theta) x_{j-1} + \theta x_j =: y_j^\theta , \; \theta\in [0,1]\), by \cref{lmm:Dyj}
+\begin{lemma} 
+  For \(y\in (x_{j-1}, x_{j})\), we can rewrite 
+  \begin{equation}\label{def:yjt}
+    y = x_{j-1} + \theta h_j = (1-\theta) x_{j-1} + \theta x_j =: y_j^\theta , \; \theta\in (0,1)
+  \end{equation}
+  by \cref{lmm:Dyj},
   \begin{equation}
     \begin{aligned}
       T_{ij} & = \int_{x_{j-1}}^{x_{j}} (u(y) - \Pi_hu(y)) \frac{|y-x_i|^{1-\alpha}}{\Gamma(2-\alpha)} dy  \\
@@ -751,7 +755,7 @@ To estimete \(V_{ij}\), we need some preparations.
              & \quad + \frac{\theta (1-\theta)}{3!} h_j^4 \frac{|y_j^\theta-x_i|^{1-\alpha}}{\Gamma(2-\alpha)} ( \theta^2 u'''(\eta_{j1}^\theta) - (1-\theta)^2 u'''(\eta_{j2}^\theta)) d\theta
     \end{aligned}
   \end{equation}
-  where \(\eta_{j1}^\theta \in [x_{j-1}, y_j^\theta], \eta_{j2}^\theta \in [y_j^\theta, x_j]\).
+  where \(\eta_{j1}^\theta \in (x_{j-1}, y_j^\theta), \eta_{j2}^\theta \in (y_j^\theta, x_j)\).
 \end{lemma}
 Now Let's construct a series of functions to represent \(T_{ij}\).
 \begin{definition} \label{def:yj-i}
@@ -803,7 +807,7 @@ Immediately, we can see from \eqref{def:Vij} that
 To estimate \(V_{ij}\), we first estimate \(D_h^2 P_{j-i}^\theta(x_i)\) , but
 By \cref{lmm:Dh2simd2},
 \begin{equation}
-  D_h^2 {P_{j-i}^\theta}(x_i) = {P_{j-i}^\theta}''(\xi), \quad \xi\in [x_{i-1}, x_{i+1}]
+  D_h^2 {P_{j-i}^\theta}(x_i) = {P_{j-i}^\theta}''(\xi), \quad \xi\in (x_{i-1}, x_{i+1})
 \end{equation}
 By Leibniz formula, we calculate and estimate the derivations of
 \(h_{j-i}^3(x)\), \(u''(y_{j-i}^{\theta}(x)) \) and \(\frac{|{y_{j-i}^\theta}(x)-x|^{1-\alpha}}{\Gamma(2-\alpha)}\) separately.
@@ -813,7 +817,7 @@ By Leibniz formula, we calculate and estimate the derivations of
 Firstly, we have
 \begin{lemma} \label{lmm:estimatesofhj-i3}
   There exists a constant \(C=C(T, r)\) such that
-  For \(3\le i \le N-1, \lceil\frac{i}{2}\rceil+1 \le j \le \min\{2i-1, N-1\}\), \(\xi \in [x_{i-1}, x_{i+1}]\),
+  For \(3\le i \le N-1, \lceil\frac{i}{2}\rceil+1 \le j \le \min\{2i-1, N-1\}\), \(\xi\in (x_{i-1}, x_{i+1})\),
   \begin{gather}
     h_{j-i}^3(\xi) \le C h^{2} x_{i}^{2-2/r}  h_j \\
     (h_{j-i}^3(\xi))' \le C(r-1)  h^2  x_{i}^{1-2/r} h_{j} \\
@@ -825,7 +829,7 @@ The proof of this theorem see \cref{lmm:dhj-i3le-Ch2xi1-2r} and \cref{lmm:d2hj-i
 Second,
 \begin{lemma} \label{lmm:estimatesofu2yj-itheta}
   There exists a constant \(C=C(T, \alpha, r, \|u\|_{\beta+\alpha}^{(-\alpha/2)})\) such that
-  For \(3\le i \le N-1, \lceil\frac{i}{2}\rceil+1 \le j \le \min\{2i-1, N-1\}\), \(\xi \in [x_{i-1}, x_{i+1}]\),
+  For \(3\le i \le N-1, \lceil\frac{i}{2}\rceil+1 \le j \le \min\{2i-1, N-1\}\), \(\xi\in (x_{i-1}, x_{i+1})\),
   \begin{gather}
     u''(y_{j-i}^{\theta}(\xi)) \le C x_i^{\alpha/2-2}    \\
     (u''(y_{j-i}^{\theta}(\xi)))' \le C x_i^{\alpha/2-3} \\
@@ -837,7 +841,7 @@ The proof of this theorem see \cref{prf:estimatesofu2yj-itheta}
 And Finally, we have
 \begin{lemma} \label{lmm:estimatesofy-xi1-a}
   There exists a constant \(C=C(T, \alpha, r)\) such that
-  For \(3\le i \le N-1, 1 \le j \le \min\{2i-1, N-1\}\), \(\xi \in [x_{i-1}, x_{i+1}]\),
+  For \(3\le i \le N-1, \lceil\frac{i}{2}\rceil+1 \le j \le \min\{2i-1, N-1\}\), \(\xi\in (x_{i-1}, x_{i+1})\),
   \begin{gather}
     |{y_{j-i}^\theta}(\xi)-\xi|^{1-\alpha} \le C | y_j^\theta - x_i|^{1-\alpha} \\
     (|{y_{j-i}^\theta}(\xi)-\xi|^{1-\alpha})' \le C | y_j^\theta - x_i|^{1-\alpha} x_i^{-1} \\
@@ -858,9 +862,9 @@ The proof of this theorem see \cref{prf:estimatesofy-xi1-a}
     where \(y_j^\theta = \theta x_{j-1} + (1-\theta) x_{j}\)
   \end{lemma}
   \begin{proof}
-    Since
+    Since \cref{lmm:Dh2simd2}
     \begin{equation}
-      D_h^2 {P_{j-i}^\theta}(x_i) = {P_{j-i}^\theta}''(\xi), \quad \xi\in [x_{i-1}, x_{i+1}]
+      D_h^2 {P_{j-i}^\theta}(x_i) = {P_{j-i}^\theta}''(\xi), \quad \xi\in (x_{i-1}, x_{i+1})
     \end{equation}
     From \eqref{def:Pj-itheta-jlN}, using Leibniz formula and \cref{lmm:estimatesofhj-i3}, \cref{lmm:estimatesofu2yj-itheta} and \cref{lmm:estimatesofy-xi1-a}
   \end{proof}
@@ -883,7 +887,7 @@ The proof of this theorem see \cref{prf:estimatesofy-xi1-a}
                                   & \le C h^2 \frac{|y_j^\theta - x_i|^{1-\alpha}}{\Gamma(2-\alpha)} x_i^{\alpha/2-2-2/r} h_j
       \end{aligned}
     \end{equation}
-    where \(\eta_{j}^\theta \in [x_{j-1}, x_{j}]\).
+    where \(\eta_{j}^\theta \in (x_{j-1}, x_{j})\).
   \end{lemma}
 }
 proof see \cref{prf:dQj-itle}
@@ -1134,7 +1138,7 @@ Now we have, for \(i<N, j \ge N+2\),
 
 Similarly, we first estimate
 \begin{equation}
-  D_h^2 P_{j-i}^\theta(\xi) = {P_{j-i}^\theta}''(\xi), \quad \xi \in [x_{i-1}, x_{i+1}]
+  D_h^2 P_{j-i}^\theta(\xi) = {P_{j-i}^\theta}''(\xi), \quad \xi\in (x_{i-1}, x_{i+1})
 \end{equation}
 
 
@@ -1142,7 +1146,7 @@ Similarly, we first estimate
   Combine lemmas \cref{lmm:estimate-hj-i-j>N}, \cref{lmm:estimate-d2uj-i-j>N} and \cref{lmm:estimate-|yj-i-xi|^1-a-j>N} , we have
   \begin{lemma} \label{lmm:estimate-Pij-theta-j>N}
     There exists a constant \(C=C(T, \alpha, r, \|u\|_{\beta+\alpha}^{(-\alpha/2)})\) such that
-    For \(N/2\le i <N\), \(N+2 \le j \le 2N-\lceil\frac{N}{2}\rceil+1\) , \(\xi \in [x_{i-1}, x_{i+1}]\),  we have
+    For \(N/2\le i <N\), \(N+2 \le j \le 2N-\lceil\frac{N}{2}\rceil+1\) , \(\xi\in (x_{i-1}, x_{i+1})\),  we have
     \begin{equation}
       \begin{aligned}
         |{P_{j-i}^\theta}''(\xi)| & \le C h_j h^2 (|y_j^\theta - x_i|^{1-\alpha}                            \\
@@ -1159,7 +1163,7 @@ And
 \textcolor{blue}{
   \begin{lemma} \label{lmm:estimate-Qij-theta-j>N}
     There exists a constant \(C=C(T, \alpha, r, \|u\|_{\beta+\alpha}^{(-\alpha/2)})\) such that
-    For \(N/2\le i <N\),  , \(\xi \in [x_{i-1}, x_{i+1}]\),  we have
+    For \(N/2\le i <N\),  , \(\xi\in (x_{i-1}, x_{i+1})\),  we have
     for \(N+1 \le j \le 2N-\lceil\frac{N}{2}\rceil\)
     \begin{equation}
       \begin{aligned}
@@ -1354,7 +1358,7 @@ For \(I_4\), we have
   \end{equation}
   \(N+1\) is similar.
 
-  We estimate \(D_h^2 {_L}P_{N-i}^\theta(x_i)={{_L}P_{N-i}^\theta}''(\xi) , \xi \in [x_{i-1}, x_{i+1}]\),
+  We estimate \(D_h^2 {_L}P_{N-i}^\theta(x_i)={{_L}P_{N-i}^\theta}''(\xi) , \xi\in (x_{i-1}, x_{i+1})\),
 
 
   \textcolor{orange}{
@@ -1579,7 +1583,7 @@ For \(I_4\), we have
   \begin{lemma} \label{lmm:d2Pi2N}
     \begin{equation}
       \begin{aligned}
-        D_h^2 {_L}P_{N-i}^\theta(x_i) & = {{_L}P_{N-i}^\theta}''(\xi) \quad \xi \in [x_{i-1}, x_{i+1}]                                                          \\
+        D_h^2 {_L}P_{N-i}^\theta(x_i) & = {{_L}P_{N-i}^\theta}''(\xi) \quad \xi\in (x_{i-1}, x_{i+1})                                                          \\
                                      & \le C h^3 |y_N^\theta - x_i|^{1-\alpha} + C(r-1)(h^3 |y_N^\theta - x_i|^{-\alpha} + h^2 |y_N^\theta - x_i|^{1-\alpha})
       \end{aligned}
     \end{equation}
@@ -2294,8 +2298,8 @@ Remarks:
 \section{Approximate of difference quotients}
 
 \begin{lemma} \label{lmm:Dh2simd2}
-  If \(g(x)\in C^2\Omega\),
-  there exists \(\xi \in [x_{i-1}, x_{i+1}]\) such that
+  If \(g(x)\in C^2(\Omega)\),
+  there exists \(\xi\in (x_{i-1}, x_{i+1})\) such that
   \begin{equation} \label{eq:Dh2simd2}
     \begin{aligned}
       D_h^2 g(x_i) & := \frac{2}{h_i + h_{i+1}} \left( \frac{1}{h_{i+1}} g(x_{i+1}) - (\frac{1}{h_{i}}+\frac{1}{h_{i+1}})g(x_{i}) + \frac{1}{h_{i}} g(x_{i-1}) \right) \\
@@ -2420,6 +2424,12 @@ Remarks:
   \end{equation}
 \end{lemma}
 
+
+\begin{lemma} \label{ineq:a-b-theta}
+  \begin{equation}
+    b^{1-\theta}|a^{\theta}-b^{\theta}| \le |a-b| \; (\text{  also  }a^{1-\theta}|a^{\theta}-b^{\theta}| \le |a-b|), \quad a,b\ge 0,\; \theta \in [0,1]
+  \end{equation}
+\end{lemma}
 
 \section{Inequality}
 
@@ -2666,7 +2676,7 @@ for some constants \(c_1\) and \(C_1\) that are independent of mesh parameters.
   Sinec \(y\ge x_{j-1} > x_{i+1}\), by \cref{lmm:Dh2simd2}, if \(j-1>i+1\)
   \begin{equation*}
     \begin{aligned}
-      D_h^2 K_y (x_i) & = K_y''(\xi)= \frac{|y-\xi|^{-1-\alpha}}{\Gamma(-\alpha)}, \quad \xi \in [x_{i-1}, x_{i+1}] \\
+      D_h^2 K_y (x_i) & = K_y''(\xi)= \frac{|y-\xi|^{-1-\alpha}}{\Gamma(-\alpha)}, \quad \xi\in (x_{i-1}, x_{i+1}) \\
                       & \le \frac{(y-x_{i+1})^{-1-\alpha}}{\Gamma(-\alpha)}                             \\
                       & \le (1-(\frac{2}{3})^r)^{-1-\alpha}\frac{y^{-1-\alpha}}{\Gamma(-\alpha)}
     \end{aligned}
@@ -2685,7 +2695,7 @@ for some constants \(c_1\) and \(C_1\) that are independent of mesh parameters.
   Sinec \(y \le x_{j} < x_{i-1}\), by \cref{lmm:Dh2simd2},
   \begin{equation*}
     \begin{aligned}
-      D_h^2 K_y (x_i) & = \frac{|\xi-y|^{-1-\alpha}}{\Gamma(-\alpha)}, \quad \xi \in [x_{i-1}, x_{i+1}]                                    \\
+      D_h^2 K_y (x_i) & = \frac{|\xi-y|^{-1-\alpha}}{\Gamma(-\alpha)}, \quad \xi\in (x_{i-1}, x_{i+1})                                    \\
                                                                 & \le \frac{(x_{i-1}-x_{j})^{-1-\alpha}}{\Gamma(-\alpha)}  \le \frac{(x_{i-1}-x_{k-1})^{-1-\alpha}}{\Gamma(-\alpha)} \\
                                                                 & \le ((\frac{2}{3})^r-(\frac{1}{2})^r)^{-1-\alpha}\frac{x_i^{-1-\alpha}}{\Gamma(-\alpha)}
     \end{aligned}
@@ -2761,7 +2771,7 @@ for some constants \(c_1\) and \(C_1\) that are independent of mesh parameters.
   \begin{lemma} \label{lmm:dhj-i3le-Ch2xi1-2r}
     There exists a constant \(C=C(T, r, l)\) such that
     For \(3\le i \le N-1, k=\lceil\frac{i}{2}\rceil, k \le j \le \min\{2i-1, N-1\}\), \\
-    when \(\xi \in [x_{i-1}, x_{i+1}]\),
+    when \(\xi\in (x_{i-1}, x_{i+1})\),
     \begin{equation}
       (h_{j-i}^3(\xi))' \le (r-1) C h^2  x_{i}^{1-2/r} h_{j}
     \end{equation}
@@ -3008,19 +3018,24 @@ for some constants \(c_1\) and \(C_1\) that are independent of mesh parameters.
 \end{proof}
 
 \begin{proof}[Proof of \cref{lmm:estimatesofy-xi1-a}] \label{prf:estimatesofy-xi1-a}
-  \begin{equation}
+  \begin{equation} \label{eq:yj-it-x}
     \begin{aligned}
       |{y_{j-i}^\theta}(\xi)-\xi|
        & = |\theta(y_{j-i-1}(\xi)-\xi) + (1-\theta)(y_{j-i}(\xi)-\xi)| \\
        & = \theta |y_{j-i-1}(\xi)-\xi| + (1-\theta)|y_{j-i}(\xi)-\xi|
     \end{aligned}
   \end{equation}
-  where \(y_{j-i-1}(\xi)-\xi\) and \(y_{j-i}(\xi)-\xi\) have the same sign (\(\ge 0\) or \(\le 0\)).
+  where \(y_{j-i-1}(\xi)-\xi\) and \(y_{j-i}(\xi)-\xi\) have the same sign (\(\ge 0\) or \(\le 0\)), independent with \(\xi\).
 
-  Since \(|{y_{j-i}}(\xi)-\xi| \simeq |x_j - x_i| \), we have
-  % \begin{equation} \label{eq:yj-ixi-xi-sim-xj-xi}
-  %   (\frac{i-1}{i})^r |x_{j} - x_{i}| \le |x_{j-1} - x_{i-1}| \le |{y_{j-i}}(\xi)-\xi| \le |x_{j+1} - x_{i+1}| \le (\frac{i+1}{i})^r |x_{j} - x_{i}|
-  % \end{equation}
+  Since \(|{y_{j-i}}(\xi)-\xi|=\text{sign}(j-i)({y_{j-i}}(\xi)-\xi)\) is increasing with \(\xi\),
+  \begin{equation} \label{eq:yj-ixi-xi-sim-xj-xi}
+    (\frac{i-1}{i})^r |x_{j} - x_{i}| \le |x_{j-1} - x_{i-1}| \le |{y_{j-i}}(\xi)-\xi| \le |x_{j+1} - x_{i+1}| \le (\frac{i+1}{i})^r |x_{j} - x_{i}|
+  \end{equation}
+  we have
+  \begin{equation} \label{eq:yj-i-x-sim-xj-xi}
+    |{y_{j-i}}(\xi)-\xi| \simeq |x_j - x_i|
+  \end{equation}
+  Similarly, \(|{y_{j-1-i}}(\xi)-\xi| \simeq |x_{j-1} - x_i|\).
   % Thus,
   % \begin{equation} 
   %   (\frac{2}{3})^r |y_j^\theta - x_i| \le |{y_{j-i}^\theta}(\xi)-\xi| \le (\frac{3}{4})^r (\theta |x_{j} - x_{i}| + (1-\theta) |x_{j-1} - x_{i}|) = (\frac{3}{4})^r |y_j^\theta - x_i|
@@ -3029,67 +3044,98 @@ for some constants \(c_1\) and \(C_1\) that are independent of mesh parameters.
   %   |{y_{j-i}^\theta}(\xi)-\xi|^{1-\alpha} \le C  |y_j^\theta - x_i|^{1-\alpha}
   % \end{equation}
   \textcolor{purple}{
-  \begin{equation*}
-    |{y_{j-i}^\theta}(\xi)-\xi|^{1-\alpha} \simeq |y_j^\theta - x_i|^{1-\alpha}
-  \end{equation*}
+    Thus, with \eqref{eq:yj-it-x} , \eqref{eq:yj-i-x-sim-xj-xi} and \eqref{def:yjt}  we get
+  \begin{equation} \label{eq:yj-it-x-sim-xjt-xi}
+    |{y_{j-i}^\theta}(\xi)-\xi| \simeq |y_j^\theta - x_i|
+  \end{equation}
   }
-  Next,
+  Next, since \(|y_{j-i}^\theta(\xi)-\xi| = \text{sign}(j-i-1+\theta)(y_{j-i}^\theta(\xi)-\xi)\), so we can derivate it.
   \begin{equation}
     \begin{aligned}
-      (|{y_{j-i}^\theta}(\xi)-\xi|^{1-\alpha})' & = (1-\alpha)|{y_{j-i}^\theta}(\xi)-\xi|^{-\alpha}|\xi^{1/r-1}(\theta y_{j-i-1}^{1-1/r}(\xi) + (1-\theta) y_{j-i}^{1-1/r}(\xi))-1| \\
-                                                & \le C |y_j^\theta - x_i|^{-\alpha} \xi^{1/r-1} |\theta y_{j-i-1}^{1-1/r}(\xi) + (1-\theta) y_{j-i}^{1-1/r}(\xi)-\xi^{1-1/r}|      \\
+      |(|{y_{j-i}^\theta}(\xi)-\xi|^{1-\alpha})'| 
+      & = (\alpha-1)|{y_{j-i}^\theta}(\xi)-\xi|^{-\alpha}|({y_{j-i}^\theta}(\xi))'-1|
     \end{aligned}
   \end{equation}
-  Similar with \eqref{eq:yj-ixi-xi-sim-xj-xi}, we have
-  \begin{equation}
+  While, similar with \cref{eq:yj-it-x}, we have
+  \begin{equation} 
+    |({y_{j-i}^\theta}(\xi))'-1| = (1-\theta)|y_{j-i-1}'(\xi) - 1| + \theta |y_{j-i}'(\xi) - 1|
+  \end{equation}
+  By \cref{ineq:a-b-theta} and \cref{eq:yj-i-x-sim-xj-xi}, we have
+  \begin{equation} 
     \begin{aligned}
-      |y_{j-i}^{1-1/r}(\xi)-\xi^{1-1/r}| & \le C|x_{j}^{1-1/r}-x_{i}^{1-1/r}|   \\
-                                         & \le C | x_{j} - x_{i} | x_{i}^{-1/r} \\
+      |y_{j-i}'(\xi) - 1|
+      &= \xi^{1/r-1}|y_{j-i}^{1-1/r}(\xi) - \xi^{1-1/r}| \\
+      & \le \xi^{-1} | y_{j-i}(\xi)-\xi| \\
+      & \simeq x_i^{-1} |x_{j}-x_{i}|
     \end{aligned}
   \end{equation}
-  So we can get
-  \begin{equation}
+  So similar with \cref{eq:yj-it-x-sim-xjt-xi}, we can get
+  \begin{equation} \label{eq:yj-it'-1}
     \begin{aligned}
-       & |\theta y_{j-i-1}^{1-1/r}(\xi) + (1-\theta) y_{j-i}^{1-1/r}(\xi)-\xi^{1-1/r}| \\
-       & \quad \le C x_i^{-1/r}(\theta |x_{j-1}-x_{i}| + (1-\theta)|x_{j}-x_{i}|)      \\
-       & \quad = C x_i^{-1/r} |y_{j}^\theta - x_i|
+      |({y_{j-i}^\theta}(\xi))'-1| \le C x_i^{-1} |y_{j}^\theta-x_{i}|
     \end{aligned}
   \end{equation}
-  Combine them, we get
+  Combine with \cref{eq:yj-it-x-sim-xjt-xi}, we get
   \begin{equation}
     \begin{aligned}
-      (|{y_{j-i}^\theta}(\xi)-\xi|^{1-\alpha})' & \le C |y_j^\theta - x_i|^{-\alpha} x_i^{1/r-1} x_i^{-1/r}|y_{j}^\theta - x_i| \\
-                                                & = C |y_j^\theta - x_i|^{1-\alpha} x_i^{-1}                                    \\
+      |(|{y_{j-i}^\theta}(\xi)-\xi|^{1-\alpha})'| 
+       \le C |y_j^\theta - x_i|^{-\alpha} x_i^{-1}|y_{j}^\theta - x_i|
+       = C |y_j^\theta - x_i|^{1-\alpha} x_i^{-1}
     \end{aligned}
   \end{equation}
   Finally, we have
   \begin{equation}
     \begin{aligned}
-      (|{y_{j-i}^\theta}(\xi)-\xi|^{1-\alpha})'' & = \alpha(\alpha-1)|{y_{j-i}^\theta}(\xi)-\xi|^{-\alpha-1}(\xi^{1/r-1}(\theta y_{j-i-1}^{1-1/r}(\xi) + (1-\theta) y_{j-i}^{1-1/r}(\xi))-1)^2                       \\
-                                                 & \quad + (1-\alpha)|{y_{j-i}^\theta}(\xi)-\xi|^{-\alpha}\frac{1-r}{r} \xi^{1/r-2}|\theta y_{j-i-1}^{1-2/r}(\xi)Z_{j-i-1} + (1-\theta) y_{j-i}^{1-2/r}(\xi)Z_{j-i}| \\
+      (|{y_{j-i}^\theta}(\xi)-\xi|^{1-\alpha})'' 
+      & = \alpha(\alpha-1)|{y_{j-i}^\theta}(\xi)-\xi|^{-\alpha-1}((y_{j-i}^\theta(\xi))'-1)^2                       \\
+      & \quad + \text{sign}(j-i-1+\theta)(1-\alpha)|{y_{j-i}^\theta}(\xi)-\xi|^{-\alpha} (y_{j-i}^\theta(\xi))'' \\
     \end{aligned}
   \end{equation}
-  Using the inequalities above ,we have
+  % Using the inequalities above ,we have
+  % \begin{equation}
+  %   \begin{aligned}
+  %      & |{y_{j-i}^\theta}(\xi)-\xi|^{-\alpha-1}(\xi^{1/r-1}(\theta y_{j-i-1}^{1-1/r}(\xi) + (1-\theta) y_{j-i}^{1-1/r}(\xi))-1)^2 \\
+  %      & \quad \le C |y_j^\theta - x_i|^{-\alpha-1} (x_i^{-1}|y_{j}^\theta - x_i|)^2                                               \\
+  %      & \quad = C |y_j^\theta - x_i|^{1-\alpha} x_i^{-2}                                                                          \\
+  %   \end{aligned}
+  % \end{equation}
+  For
   \begin{equation}
     \begin{aligned}
-       & |{y_{j-i}^\theta}(\xi)-\xi|^{-\alpha-1}(\xi^{1/r-1}(\theta y_{j-i-1}^{1-1/r}(\xi) + (1-\theta) y_{j-i}^{1-1/r}(\xi))-1)^2 \\
-       & \quad \le C |y_j^\theta - x_i|^{-\alpha-1} (x_i^{-1}|y_{j}^\theta - x_i|)^2                                               \\
-       & \quad = C |y_j^\theta - x_i|^{1-\alpha} x_i^{-2}                                                                          \\
+      (y_{j-i}^\theta(\xi))'' &= (1-\theta) y_{j-i-1}''(\xi) + \theta y_{j-i}''(\xi)
     \end{aligned}
   \end{equation}
-  And by
+  and
+  \begin{equation}
+    \begin{aligned}
+      y_{j-i}''(\xi) &= \frac{1-r}{r} y_{j-i}^{1-2/r}(x) x^{1/r-2} Z_{j-i} \\
+      & \simeq \frac{1-r}{r} x_j^{1-2/r} x_i^{1/r-2} Z_{j-i}
+    \end{aligned}
+  \end{equation}
+  while by \cref{ineq:a-b-theta}
   \begin{equation}
     |Z_{j-i}| = |x_{j}^{1/r}-x_{i}^{1/r}| \le |x_{j} - x_{i}| x_{i}^{1/r-1}
   \end{equation}
   we have
   \begin{equation}
-    \begin{aligned}
-       & |{y_{j-i}^\theta}(\xi)-\xi|^{-\alpha} \xi^{1/r-2}|\theta y_{j-i-1}^{1-2/r}(\xi)Z_{j-i-1} + (1-\theta) y_{j-i}^{1-2/r}(\xi)Z_{j-i}| \\
-       & \le C |y_{j}^\theta - x_i|^{-\alpha} x_i^{1/r-2} x_i^{1-2/r} |\theta Z_{j-i-1} + (1-\theta) Z_{j-i}|                               \\
-       & \le C |y_{j}^\theta - x_i|^{-\alpha} x_i^{-2} |y_j^\theta - x_i|                                                                   \\
-       & = C |y_{j}^\theta - x_i|^{1-\alpha} x_i^{-2}                                                                                       \\
-    \end{aligned}
+    |y_{j-i}''(\xi)| \le C(r-1) x_i^{-2} |x_j-x_i|
   \end{equation}
+  Therefore
+  \begin{equation}
+    |(y_{j-i}^\theta(\xi))''| \le C (r-1) x_i^{-2} |y_j^\theta - x_i|
+  \end{equation}
+  Then, combine with \cref{eq:yj-it'-1},
+  \begin{equation}
+    |(|{y_{j-i}^\theta}(\xi)-\xi|^{1-\alpha})'' | \le C |y_j^\theta - x_i|^{1-\alpha} x_i^{-2}
+  \end{equation}
+  % \begin{equation}
+  %   \begin{aligned}
+  %      & |{y_{j-i}^\theta}(\xi)-\xi|^{-\alpha} \xi^{1/r-2}|\theta y_{j-i-1}^{1-2/r}(\xi)Z_{j-i-1} + (1-\theta) y_{j-i}^{1-2/r}(\xi)Z_{j-i}| \\
+  %      & \le C |y_{j}^\theta - x_i|^{-\alpha} x_i^{1/r-2} x_i^{1-2/r} |\theta Z_{j-i-1} + (1-\theta) Z_{j-i}|                               \\
+  %      & \le C |y_{j}^\theta - x_i|^{-\alpha} x_i^{-2} |y_j^\theta - x_i|                                                                   \\
+  %      & = C |y_{j}^\theta - x_i|^{1-\alpha} x_i^{-2}                                                                                       \\
+  %   \end{aligned}
+  % \end{equation}
 \end{proof}
 
 \begin{proof}[proof of \cref{lmm:dQj-itle}] \label{prf:dQj-itle}
@@ -3154,7 +3200,7 @@ for some constants \(c_1\) and \(C_1\) that are independent of mesh parameters.
 \textcolor{blue}{
   \begin{lemma} \label{lmm:estimate-hj-i-j>N}
     There exists a constant \(C=C(T, r)\) such that
-    For \(N/2\le i <N\), \(N+2 \le j \le 2N-\lceil\frac{N}{2}\rceil+1\), \(l=3, 4\) , \(\xi \in [x_{i-1}, x_{i+1}]\),  we have
+    For \(N/2\le i <N\), \(N+2 \le j \le 2N-\lceil\frac{N}{2}\rceil+1\), \(l=3, 4\) , \(\xi\in (x_{i-1}, x_{i+1})\),  we have
     \begin{gather}
       h_{j-i}^l(\xi) \le C h_j^l \le  C h^2  h_j^{l-2}     \\
       (h_{j-i-1}^l(\xi))' \le C(r-1) h^2 h_j^{l-2}    \\
@@ -3215,7 +3261,7 @@ for some constants \(c_1\) and \(C_1\) that are independent of mesh parameters.
 \textcolor{blue}{
   \begin{lemma} \label{lmm:estimate-d2uj-i-j>N}
     There exists a constant \(C=C(T, \alpha, r, \|u\|_{\beta+\alpha}^{(-\alpha/2)})\) such that
-    For \(N/2\le i <N\), \(N+2 \le j \le 2N-\lceil\frac{N}{2}\rceil+1\) , \(\xi \in [x_{i-1}, x_{i+1}]\),  we have
+    For \(N/2\le i <N\), \(N+2 \le j \le 2N-\lceil\frac{N}{2}\rceil+1\) , \(\xi\in (x_{i-1}, x_{i+1})\),  we have
     \begin{gather}
       u''(y_{j-i}^\theta(\xi)) \le C \\
       (u''(y_{j-i}^\theta(\xi)))' \le C \\
@@ -3344,9 +3390,6 @@ for some constants \(c_1\) and \(C_1\) that are independent of mesh parameters.
 \end{proof}
 
 
-\begin{equation}
-  a^{1-\theta}|a^{\theta}-b^{\theta}| \le |a-b|, \theta \in [0,1]
-\end{equation}
 
 
 
