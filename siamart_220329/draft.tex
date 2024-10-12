@@ -762,6 +762,14 @@ Now Let's construct a series of functions to represent \(T_{ij}\).
   \begin{equation} \label{def:xi2yj-jlN}
     {y_{j-i}}(x) = (x^{1/r}+ Z_{j-i})^r, \quad Z_{j-i} = T^{1/r}\frac{j-i}{N}
   \end{equation}
+  Particularly, for \(i,j\le N-1\),
+  \begin{equation*}
+    y_{j-i}(x_{i-1}) = x_{j-1}, \quad y_{j-i}(x_{i}) = x_{j}, \quad y_{j-i}(x_{i+1}) = x_{j+1}
+  \end{equation*}
+  \begin{gather} \label{eq:dy-j<N}
+    {y_{j-i}}'(x) = y_{j-i}(x)^{1-1/r} x^{1/r-1}  \\
+    {y_{j-i}}''(x) = \frac{1-r}{r} y_{j-i}(x)^{1-2/r} x^{1/r-2} Z_{j-i}  \\
+  \end{gather}
   \begin{equation} \label{def:xi2yj-jlNt}
     {y_{j-i}^{\theta}}(x) = (1-\theta) {y_{j-1-i}}(x) + \theta {y_{j-i}}(x)
   \end{equation}
@@ -843,8 +851,8 @@ And Finally, we have
   For \(3\le i \le N-1, \lceil\frac{i}{2}\rceil \le j \le \min\{2i, N\}\), \(\xi\in (x_{i-1}, x_{i+1})\),
   \begin{gather}
     |{y_{j-i}^\theta}(\xi)-\xi|^{1-\alpha} \le C | y_j^\theta - x_i|^{1-\alpha} \\
-    (|{y_{j-i}^\theta}(\xi)-\xi|^{1-\alpha})' \le C | y_j^\theta - x_i|^{1-\alpha} x_i^{-1} \\
-    (|{y_{j-i}^\theta}(\xi)-\xi|^{1-\alpha})'' \le C | y_j^\theta - x_i|^{1-\alpha} x_i^{-2}
+    \left|(|{y_{j-i}^\theta}(\xi)-\xi|^{1-\alpha})'\right| \le C | y_j^\theta - x_i|^{1-\alpha} x_i^{-1} \\
+    \left| (|{y_{j-i}^\theta}(\xi)-\xi|^{1-\alpha})'' \right| \le C | y_j^\theta - x_i|^{1-\alpha} x_i^{-2}
   \end{gather}
   where \(y_j^\theta = \theta x_{j-1} + (1-\theta) x_{j}\)
 \end{lemma}
@@ -1059,12 +1067,12 @@ For \(N/2\le i < N, k=\lceil\frac{i}{2}\rceil\), we have
 \end{equation}
 
 We have estimate \(I_1\) in \cref{lmm:Ri-I1} and  \(I_2\) in \cref{lmm:Ri-I2-I4-ilN/2}.
-We can control \(I_3\) in similar with \cref{Ri-I3-2lN/2} by \cref{lmm:Vijleh2xma22r} where \(2i-1 \ge N-1\)
+We can control \(I_3^1\) similar with \cref{Ri-I3-2lN/2} by \cref{lmm:Vijleh2xma22r} where \(2i-1 \ge N-1\)
 \begin{lemma} \label{lmm:Ri-I3-i<N}
   There exists a constant \(C=C(T, \alpha, r, \|u\|_{\beta+\alpha}^{(-\alpha/2)})\) such that for \(N/2\le i < N, k=\lceil\frac{i}{2}\rceil\),
   \begin{equation}
     \begin{aligned}
-      I_3 & = \sum_{j=k+1}^{N-1} V_{ij} \le C h^2 \int_{x_{k}}^{x_{N-1}} \frac{|y-x_i|^{1-\alpha}}{\Gamma(2-\alpha)} x_i^{\alpha/2-2-2/r} dy                   \\
+      I_3^1 & = \sum_{j=k+1}^{N-1} V_{ij} \le C h^2 \int_{x_{k}}^{x_{N-1}} \frac{|y-x_i|^{1-\alpha}}{\Gamma(2-\alpha)} x_i^{\alpha/2-2-2/r} dy                   \\
           & = C h^2 \left( \frac{|x_{k} - x_i|^{2-\alpha}}{\Gamma(3-\alpha)} + \frac{|x_{N-1} - x_i|^{2-\alpha}}{\Gamma(3-\alpha)}\right) x_i^{\alpha/2-2-2/r} \\
           & \le C h^2 x_{i}^{2-\alpha} x_i^{\alpha/2-2-2/r} = C h^2 x_i^{-\alpha/2-2/r}
     \end{aligned}
@@ -1072,18 +1080,23 @@ We can control \(I_3\) in similar with \cref{Ri-I3-2lN/2} by \cref{lmm:Vijleh2xm
 \end{lemma}
 
 
-Let's study \(I_5\) before \(I_4\).
+Let's study \(I_3^3\) before \(I_3^2\).
 
 \begin{equation}
-  I_5 = \sum_{j=N+2}^{2N-\lceil\frac{N}{2}\rceil} V_{ij}
+  I_3^3 = \sum_{j=N+2}^{2N-\lceil\frac{N}{2}\rceil} V_{ij}
 \end{equation}
 Similarly, Let's define a new series of functions
 \begin{definition} \label{def:yi2j-jgN}
-  For \(i<N, j\ge N\), with no confusion, we also denote in this section
+  For \(i\le N-1, j\ge N+1\), with no confusion, we also denote in this section
   \textcolor{blue}{
   \begin{equation}
     y_{j-i}(x) = 2T - (Z_{2N-j+i} - x^{1/r})^r, \quad Z_{2N-j+i} = T^{1/r} \frac{2N-j+i}{N}
   \end{equation}
+  Particularly
+  \begin{equation*}
+    y_{j-i}(x_{i-1}) = x_{j-1}, \quad y_{j-i}(x_{i}) = x_{j}, \quad y_{j-i}(x_{i+1}) = x_{j+1}
+  \end{equation*}
+  \textcolor{red}{\(y\to z\)?}
   }
   \begin{gather} \label{eq:dy-j>N}
     {y_{j-i}}'(x) = (2T-y_{j-i}(x))^{1-1/r} x^{1/r-1}  \\
@@ -1103,17 +1116,17 @@ Similarly, Let's define a new series of functions
   \end{equation}
 \end{definition}
 
-Now we have, for \(i<N, j \ge N+2\),
-\begin{equation} \label{eq:Vij-j>N}
-  \begin{aligned}
-    V_{ij} & = \frac{2}{h_{i} + h_{i+1}}  \left( \frac{1}{h_{i+1}} T_{i+1, j+1} - \left(\frac{1}{h_{i}}+\frac{1}{h_{i+1}}\right)  T_{i,j} + \frac{1}{h_{i}} T_{i-1, j-1} \right)                                                      \\
-           & = \int_{0}^{1} -\frac{\theta (1-\theta)}{2} D_h^2 P_{j-i}^\theta(x_i)  d\theta                                                                                                                                           \\
-           & \quad +  \int_{0}^1 \frac{\theta^3 (1-\theta)}{3!} \frac{2}{h_{i} + h_{i+1}}\left( \frac{{Q_{j-i}^\theta}(x_{i+1}) u'''(\eta_{j+1,1}^\theta) - {Q_{j-i}^\theta}(x_{i}) u'''(\eta_{j,1}^\theta)}{h_{i+1}}\right)  d\theta \\
-           & \quad -  \int_{0}^1 \frac{\theta^3 (1-\theta)}{3!} \frac{2}{h_{i} + h_{i+1}}\left( \frac{{Q_{j-i}^\theta}(x_{i}) u'''(\eta_{j,1}^\theta) - {Q_{j-i}^\theta}(x_{i-1}) u'''(\eta_{j-1,1}^\theta)}{h_{i}}\right)  d\theta   \\
-           & \quad -  \int_{0}^1 \frac{\theta (1-\theta)^3}{3!} \frac{2}{h_{i} + h_{i+1}}\left( \frac{{Q_{j-i}^\theta}(x_{i+1}) u'''(\eta_{j+1,2}^\theta) - {Q_{j-i}^\theta}(x_{i}) u'''(\eta_{j,2}^\theta)}{h_{i+1}}\right)  d\theta \\
-           & \quad +  \int_{0}^1 \frac{\theta (1-\theta)^3}{3!} \frac{2}{h_{i} + h_{i+1}}\left( \frac{{Q_{j-i}^\theta}(x_{i}) u'''(\eta_{j,2}^\theta) - {Q_{j-i}^\theta}(x_{i-1}) u'''(\eta_{j-1,2}^\theta)}{h_{i}}\right)  d\theta
-  \end{aligned}
-\end{equation}
+Now we have the same formula \cref{lmm:Vij-int} for \(i\le N-1, j \ge N+2\),
+% \begin{equation} \label{eq:Vij-j>N}
+%   \begin{aligned}
+%     V_{ij} & = \frac{2}{h_{i} + h_{i+1}}  \left( \frac{1}{h_{i+1}} T_{i+1, j+1} - \left(\frac{1}{h_{i}}+\frac{1}{h_{i+1}}\right)  T_{i,j} + \frac{1}{h_{i}} T_{i-1, j-1} \right)                                                      \\
+%            & = \int_{0}^{1} -\frac{\theta (1-\theta)}{2} D_h^2 P_{j-i}^\theta(x_i)  d\theta                                                                                                                                           \\
+%            & \quad +  \int_{0}^1 \frac{\theta^3 (1-\theta)}{3!} \frac{2}{h_{i} + h_{i+1}}\left( \frac{{Q_{j-i}^\theta}(x_{i+1}) u'''(\eta_{j+1,1}^\theta) - {Q_{j-i}^\theta}(x_{i}) u'''(\eta_{j,1}^\theta)}{h_{i+1}}\right)  d\theta \\
+%            & \quad -  \int_{0}^1 \frac{\theta^3 (1-\theta)}{3!} \frac{2}{h_{i} + h_{i+1}}\left( \frac{{Q_{j-i}^\theta}(x_{i}) u'''(\eta_{j,1}^\theta) - {Q_{j-i}^\theta}(x_{i-1}) u'''(\eta_{j-1,1}^\theta)}{h_{i}}\right)  d\theta   \\
+%            & \quad -  \int_{0}^1 \frac{\theta (1-\theta)^3}{3!} \frac{2}{h_{i} + h_{i+1}}\left( \frac{{Q_{j-i}^\theta}(x_{i+1}) u'''(\eta_{j+1,2}^\theta) - {Q_{j-i}^\theta}(x_{i}) u'''(\eta_{j,2}^\theta)}{h_{i+1}}\right)  d\theta \\
+%            & \quad +  \int_{0}^1 \frac{\theta (1-\theta)^3}{3!} \frac{2}{h_{i} + h_{i+1}}\left( \frac{{Q_{j-i}^\theta}(x_{i}) u'''(\eta_{j,2}^\theta) - {Q_{j-i}^\theta}(x_{i-1}) u'''(\eta_{j-1,2}^\theta)}{h_{i}}\right)  d\theta
+%   \end{aligned}
+% \end{equation}
 
 Similarly, we first estimate
 \begin{equation}
@@ -1122,17 +1135,17 @@ Similarly, we first estimate
 
 
 \textcolor{blue}{
-  Combine lemmas \cref{lmm:estimate-hj-i-j>N}, \cref{lmm:estimate-d2uj-i-j>N} and \cref{lmm:estimate-|yj-i-xi|^1-a-j>N} , we have
+  Combine \cref{def:yi2j-jgN}, \cref{lmm:estimate-hj-i-j>N}, \cref{lmm:estimate-d2uj-i-j>N} and \cref{lmm:estimate-|yj-i-xi|^1-a-j>N}, using Leibniz formula, we have
   \begin{lemma} \label{lmm:estimate-Pij-theta-j>N}
     There exists a constant \(C=C(T, \alpha, r, \|u\|_{\beta+\alpha}^{(-\alpha/2)})\) such that
-    For \(N/2\le i <N\), \(N+2 \le j \le 2N-\lceil\frac{N}{2}\rceil+1\) , \(\xi\in (x_{i-1}, x_{i+1})\),  we have
+    For \(N/2\le i \le N-1\), \(N+2 \le j \le 2N-\lceil\frac{N}{2}\rceil+1\) ,,  we have
     \begin{equation}
       \begin{aligned}
-        |{P_{j-i}^\theta}''(\xi)| & \le C h_j h^2 (|y_j^\theta - x_i|^{1-\alpha}                            \\
+        |D_h^2 P_{j-i}^\theta(\xi)| & \le C h_j h^2 \Big(|y_j^\theta - x_i|^{1-\alpha}                            \\
                                   & \quad + |y_j^\theta - x_i|^{-\alpha}(|2T - x_i - y_j^\theta| + h_N)     \\
                                   & \quad + |y_j^\theta - x_i|^{-1-\alpha}(|2T - x_i - y_j^\theta| + h_N)^2 \\
                                   & \quad + (r-1) |y_j^\theta - x_i|^{-\alpha}
-        )
+        \Big)
       \end{aligned}
     \end{equation}
   \end{lemma}
@@ -1142,15 +1155,14 @@ And
 \textcolor{blue}{
   \begin{lemma} \label{lmm:estimate-Qij-theta-j>N}
     There exists a constant \(C=C(T, \alpha, r, \|u\|_{\beta+\alpha}^{(-\alpha/2)})\) such that
-    For \(N/2\le i <N\),  , \(\xi\in (x_{i-1}, x_{i+1})\),  we have
-    for \(N+1 \le j \le 2N-\lceil\frac{N}{2}\rceil\)
+    For \(N/2\le i \le N-1\), \(N+2 \le j \le 2N-\lceil\frac{N}{2}\rceil\), \(\xi\in (x_{i-1}, x_{i+1})\) , we have
     \begin{equation}
       \begin{aligned}
-        \frac{2}{h_{i} + h_{i+1}} & \left( \frac{{Q_{j-i}^\theta}(x_{i+1}) u'''(\eta_{j+1}^\theta) - {Q_{j-i}^\theta}(x_{i}) u'''(\eta_{j}^\theta)}{h_{i+1}}\right) \\
-                                  & \le C h^2 h_j ( |y_j^\theta - x_i|^{1-\alpha}  + |y_j^\theta - x_i|^{-\alpha}(|2T - x_i - y_j^\theta| + h_N) )
+        \frac{2}{h_{i} + h_{i+1}} & \left| \frac{{Q_{j-i}^\theta}(x_{i+1}) u'''(\eta_{j+1}^\theta) - {Q_{j-i}^\theta}(x_{i}) u'''(\eta_{j}^\theta)}{h_{i+1}}\right| \\
+                                  & \le C h^2 h_j \left( |y_j^\theta - x_i|^{1-\alpha}  + |y_j^\theta - x_i|^{-\alpha}(|2T - x_i - y_j^\theta| + h_N) \right)
       \end{aligned}
     \end{equation}
-    for \(N+2 \le j \le 2N-\lceil\frac{N}{2}\rceil+1\)
+    and
     \begin{equation}
       \begin{aligned}
         \frac{2}{h_{i} + h_{i+1}} & \left( \frac{{Q_{j-i}^\theta}(x_{i}) u'''(\eta_{j}^\theta) - {Q_{j-i}^\theta}(x_{i-1}) u'''(\eta_{j-1}^\theta)}{h_{i+1}}\right) \\
@@ -1159,77 +1171,93 @@ And
     \end{equation}
   \end{lemma}
 }
-The proof see \cref{prf:estimate-Qij-theta-j>N}.
-
-
-
-Combine \eqref{eq:Vij-j>N}, \cref{lmm:estimate-Pij-theta-j>N} and \cref{lmm:estimate-Qij-theta-j>N}, we have
-\begin{theorem}
-  There exists a constant \(C=C(T, \alpha, r, \|u\|_{\beta+\alpha}^{(-\alpha/2)})\) such that
-  For \(N/2\le i <N\), \(N+2 \le j \le 2N-\lceil\frac{N}{2}\rceil+1\)
+\begin{proof} \label{prf:estimate-Qij-theta-j>N}
+  From \cref{def:yi2j-jgN}, by \cref{lmm:estimate-hj-i-j>N} and \cref{lmm:estimate-|yj-i-xi|^1-a-j>N},
+  for \(\xi \in (x_{i}, x_{i+1})\), by Leibniz formula, we have
+  \begin{equation}
+    \left|{Q_{j-i}^\theta}'(\xi)\right| \le C h^2 h_j^2 ((r-1)|y_j^\theta - x_i|^{1-\alpha}  + |y_j^\theta - x_i|^{-\alpha}(|2T - x_i - y_j^\theta| + h_N))
+  \end{equation}
+  \begin{equation}
+    \left|Q_{j-i}^\theta(\xi)\right| \le C h^2 h_j^2 |y_j^\theta - x_i|^{1-\alpha}
+  \end{equation}
+  So use the skill in \cref{prf:dQj-itle} with \cref{lmm:estimate-d2uj-i-j>N}
   \begin{equation}
     \begin{aligned}
-      V_{ij} \le & C h^2 \int_{x_{j-1}}^{x_{j}} (|y-x_i|^{1-\alpha} \\
-                 & + |y-x_i|^{-\alpha}(|2T - x_i - y| + h_N)
-      + |y-x_i|^{-1-\alpha}(|2T - x_i - y| + h_N)^2                 \\
-                 & + (r-1) |y-x_i|^{-\alpha}) dy
+      \frac{2}{h_{i} + h_{i+1}} & \left( \frac{{Q_{j-i}^\theta}(x_{i+1}) u'''(\eta_{j+1}^\theta) - {Q_{j-i}^\theta}(x_{i}) u'''(\eta_{j}^\theta)}{h_{i+1}}\right) \\
+                                & \le C h^2 h_j ( |y_j^\theta - x_i|^{1-\alpha}  + |y_j^\theta - x_i|^{-\alpha}(|2T - x_i - y_j^\theta| + h_N) )                  \\
     \end{aligned}
   \end{equation}
-\end{theorem}
+\end{proof}
+
+
+
+Combine \cref{lmm:estimate-Pij-theta-j>N}, \cref{lmm:estimate-Qij-theta-j>N} and formula \cref{lmm:Vij-int} for \(i\le N-1, j \ge N+2\), we have
+\begin{lemma}
+  There exists a constant \(C=C(T, \alpha, r, \|u\|_{\beta+\alpha}^{(-\alpha/2)})\) such that
+  For \(N/2\le i \le N-1\), \(N+2 \le j \le 2N-\lceil\frac{N}{2}\rceil+1\)
+  \begin{equation}
+    \begin{aligned}
+      V_{ij} \le & C h^2 \int_{x_{j-1}}^{x_{j}} \Big(  |y-x_i|^{1-\alpha} \\
+                 & + |y-x_i|^{-\alpha}(|2T - x_i - y| + h_N)
+      + |y-x_i|^{-1-\alpha}(|2T - x_i - y| + h_N)^2                 \\
+                 & + (r-1) |y-x_i|^{-\alpha}  \Big) dy
+    \end{aligned}
+  \end{equation}
+\end{lemma}
 
 
 
 
 \textcolor{blue}{
-  We can esitmate \(I_5\) Now.
-  \begin{theorem} \label{thm:Ri-I5-i<N}
+  We can esitmate \(I_3^3\) Now.
+  \begin{lemma} \label{thm:Ri-I5-i<N}
     There exists a constant \(C=C(T, \alpha, r, \|u\|_{\beta+\alpha}^{(-\alpha/2)})\) such that
-    For \(N/2\le i <N\),  we have
+    For \(N/2\le i \le N-1\),  we have
     \begin{equation}
-      I_5 = \sum_{j=N+2}^{2N-\lceil\frac{N}{2}\rceil} V_{ij} \le C h^2 + C(r-1) h^2 |T-x_{i-1}|^{1-\alpha}
+      I_3^3 = \sum_{j=N+2}^{2N-\lceil\frac{N}{2}\rceil} V_{ij} \le C h^2 + C(r-1) h^2 \textcolor{red}{|T-x_{i-1}|^{1-\alpha}}
     \end{equation}
-  \end{theorem}
+  \end{lemma}
 }
 \begin{proof}
   \begin{equation}
     \begin{aligned}
-      I_5 = & \sum_{j=N+2}^{2N-\lceil\frac{N}{2}\rceil} V_{ij}                                   \\
-      \le   & C h^2 \int_{x_{N+1}}^{x_{2N-i}} + \int_{x_{2N-i}}^{x_{2N-\lceil\frac{N}{2}\rceil}}
-      (|y-x_i|^{1-\alpha}                                                                        \\
+      I_3^3 = & \sum_{j=N+2}^{2N-\lceil\frac{N}{2}\rceil} V_{ij}                                   \\
+      \le   & C h^2 \int_{x_{N+1}}^{x_{2N-\lceil\frac{N}{2}\rceil}}
+      \Big(|y-x_i|^{1-\alpha} \\
             & + |y-x_i|^{-\alpha}(|2T - x_i - y| + h_N)
-      + |y-x_i|^{-1-\alpha}(|2T - x_i - y| + h_N)^2                                              \\
-            & + (r-1) |y-x_i|^{-\alpha}) dy                                                      \\
-      =     & J_1 + J_2
+      + |y-x_i|^{-1-\alpha}(|2T - x_i - y| + h_N)^2   \\
+            & + (r-1) |y-x_i|^{-\alpha}\Big) dy    \\
     \end{aligned}
   \end{equation}
-  While \(x_{N+1}\le y \le x_{2N-i}=2T-x_i\),
+  % For \(x_{N+1}\le y \le x_{2N-i}=2T-x_i\),
+  % \begin{equation}
+  %   y-x_i \simeq T-x_{i} \simeq T-x_{i-1}
+  % \end{equation}
+  % and
+  % \begin{equation}
+  %   2T-x_{i} - y + h_N \le 2T-x_i - x_{N+1} + h_N = T-x_i \le T-x_{i-1}
+  % \end{equation}
+  % So
+  % \begin{equation}
+  %   \begin{aligned}
+  %     J_1 & \le C h^2 (x_{2N-i} - x_{N+1}) (|T-x_{i-1}|^{1-\alpha} + (r-1)|T-x_{i-1}|^{-\alpha}) \\
+  %         & \le C h^2 (|T-x_{i-1}|^{2-\alpha} + (r-1)|T-x_{i-1}|^{1-\alpha})                     \\
+  %         & \le C h^2 + C(r-1)  h^2 |T-x_{i-1}|^{1-\alpha}
+  %   \end{aligned}
+  % \end{equation}
+  % Otherwise, when \(x_{2N-i} \le y \le x_{2N-\lceil\frac{N}{2}\rceil}\)
+  Since
   \begin{equation}
-    T-x_{i-1} \le x_{N+1} - x_i \le y-x_i \le x_{2N-i} - x_i \le 2(T-x_{i-1})
+    |2T - x_i - y| + h_{N} \le y-x_i
   \end{equation}
-  and
-  \begin{equation}
-    2T-x_{i} - y + h_N \le 2T-x_i - x_{N+1} + h_N = T-x_i \le T-x_{i-1}
-  \end{equation}
-  So
   \begin{equation}
     \begin{aligned}
-      J_1 & \le C h^2 (x_{2N-i} - x_{N+1}) (|T-x_{i-1}|^{1-\alpha} + (r-1)|T-x_{i-1}|^{-\alpha}) \\
-          & \le C h^2 (|T-x_{i-1}|^{2-\alpha} + (r-1)|T-x_{i-1}|^{1-\alpha})                     \\
-          & \le C h^2 T^{2-\alpha} + C(r-1)  h^2 |T-x_{i-1}|^{1-\alpha}
+      I_3^3 & \le C h^2 \int_{x_{N+1}}^{x_{2N-\lceil\frac{N}{2}\rceil}} |y-x_i|^{1-\alpha} + (r-1)|y-x_i|^{-\alpha}    \\
+          & \le C h^2 ( T^{2-\alpha} + (r-1)|x_{N+1}-x_i|^{1-\alpha})                             \\
+          & \le C h^2 + C(r-1) h^2 |T-x_{i-1}|^{1-\alpha}
     \end{aligned}
   \end{equation}
-  Otherwise, when \(x_{2N-i} \le y \le x_{2N-\lceil\frac{N}{2}\rceil}\)
-  \begin{equation}
-    x_i + y - 2T + h_{N} \le y-x_i
-  \end{equation}
-  \begin{equation}
-    \begin{aligned}
-      J_2 & \le C h^2 \int_{x_{2N-i}}^{(2-2^{-r})T} |y-x_i|^{1-\alpha} + (r-1)|y-x_i|^{-\alpha}    \\
-          & \le C h^2 ( T^{2-\alpha} + (r-1)|x_{2N-i}-x_i|^{1-\alpha})                             \\
-          & =  C h^2 + C(r-1) h^2 |T-x_i|^{1-\alpha} \le C h^2 + C(r-1) h^2 |T-x_{i-1}|^{1-\alpha}
-    \end{aligned}
-  \end{equation}
-  Summarizes two cases, we get the result.
+  % Summarizes two cases, we get the result.
 \end{proof}
 
 
@@ -1245,7 +1273,7 @@ Combine \eqref{eq:Vij-j>N}, \cref{lmm:estimate-Pij-theta-j>N} and \cref{lmm:esti
 
 
 \newpage
-For \(I_4\), we have
+For \(I_3^2\), we have
 \textcolor{red}{
   \begin{theorem} \label{thm:Ri-I4-i<N}
     There exists a constant \(C=C(T, \alpha, r, \|u\|_{\beta+\alpha}^{(-\alpha/2)})\) such that, for \(N/2\le i\le N-1\)
@@ -1354,12 +1382,12 @@ For \(I_4\), we have
   }
   \begin{proof}
     \begin{equation}
-      {_L}h_{N-i}(\xi) \le 2h_N, \quad {_R}h_{N+1-i}(\xi) \le 2h_N
+      {_L}h_{N-i}(\xi) \le \textcolor{red}{2(C?)} h_N, \quad {_R}h_{N+1-i}(\xi) \le 2h_N
     \end{equation}
     \begin{equation}
       \begin{aligned}
         ({_L}h_{N-i}^l(\xi))' & = l {_L}h_{N-i}^{l-1}(\xi) ({{_0}y_{N-i}}'(\xi) - {{_L}y_{N-1-i}}'(\xi))                           \\
-                             & = l {_L}h_{N-i}^{l-1}(\xi) x_i^{1/r-1} (\frac{1}{r}\frac{h_N}{Z_1}  - {_L}y_{N-1-i}^{1-1/r}(\xi)) \\
+                             & = l {_L}h_{N-i}^{l-1}(\xi) \xi^{1/r-1} (\frac{1}{r}\frac{h_N}{Z_1}  - {_L}y_{N-1-i}^{1-1/r}(\xi)) \\
       \end{aligned}
     \end{equation}
     while
@@ -1378,21 +1406,21 @@ For \(I_4\), we have
       \end{aligned}
     \end{equation}
 
-    \begin{equation}
-      \begin{aligned}
-        ({_R}h_{N+1-i}^l(\xi))' & = l {_R}h_{N+1-i}^{l-1}(\xi) ({{_R}y_{N+1-i}}'(\xi) - {{_0}y_{N-i}}'(\xi))                                \\
-                               & = l {_R}h_{N+1-i}^{l-1}(\xi) x_i^{1/r-1} ( (2T-{_R}y_{N+1-i}(\xi))^{1-1/r}  -\frac{1}{r}\frac{h_N}{Z_1}) \\
-      \end{aligned}
-    \end{equation}
-    Similarly,
-    \begin{equation}
-      \begin{aligned}
-        | (2T-{_R}y_{N+1-i})^{1-1/r} - \frac{1}{r}\frac{h_N}{Z_1} |
-         & = |\eta^{1-1/r} - \frac{1}{r}\frac{x_N-(x_N^{1/r}-Z_1)^r}{Z_1} | \quad \eta \in [x_{N-2}, x_{N}] \\
-         & = T^{1-1/r} |(\frac{N-s}{N})^{r-1} - (\frac{N-t}{N})^{r-1} |  \quad t\in[0, 1], s\in [0, 2]      \\
-         & \le T^{1-1/r} |(\frac{N-2}N)^{r-1}-1| \le C T^{1-1/r} (r-1)\frac{2}{N}
-      \end{aligned}
-    \end{equation}
+    % \begin{equation}
+    %   \begin{aligned}
+    %     ({_R}h_{N+1-i}^l(\xi))' & = l {_R}h_{N+1-i}^{l-1}(\xi) ({{_R}y_{N+1-i}}'(\xi) - {{_0}y_{N-i}}'(\xi))                                \\
+    %                            & = l {_R}h_{N+1-i}^{l-1}(\xi) x_i^{1/r-1} ( (2T-{_R}y_{N+1-i}(\xi))^{1-1/r}  -\frac{1}{r}\frac{h_N}{Z_1}) \\
+    %   \end{aligned}
+    % \end{equation}
+    % Similarly,
+    % \begin{equation}
+    %   \begin{aligned}
+    %     | (2T-{_R}y_{N+1-i})^{1-1/r} - \frac{1}{r}\frac{h_N}{Z_1} |
+    %      & = |\eta^{1-1/r} - \frac{1}{r}\frac{x_N-(x_N^{1/r}-Z_1)^r}{Z_1} | \quad \eta \in [x_{N-2}, x_{N}] \\
+    %      & = T^{1-1/r} |(\frac{N-s}{N})^{r-1} - (\frac{N-t}{N})^{r-1} |  \quad t\in[0, 1], s\in [0, 2]      \\
+    %      & \le T^{1-1/r} |(\frac{N-2}N)^{r-1}-1| \le C T^{1-1/r} (r-1)\frac{2}{N}
+    %   \end{aligned}
+    % \end{equation}
 
 
     And
@@ -3198,7 +3226,7 @@ for some constants \(c_1\) and \(C_1\) that are independent of mesh parameters.
 \textcolor{blue}{
   \begin{lemma} \label{lmm:estimate-hj-i-j>N}
     There exists a constant \(C=C(T, r)\) such that
-    For \(N/2\le i <N\), \(N+2 \le j \le 2N-\lceil\frac{N}{2}\rceil+1\), \(l=3, 4\) , \(\xi\in (x_{i-1}, x_{i+1})\),  we have
+    For \(N/2\le i \le N-1\), \(N+2 \le j \le 2N-\lceil\frac{N}{2}\rceil+1\), \(l=3, 4\) , \(\xi\in (x_{i-1}, x_{i+1})\),  we have
     \begin{gather}
       h_{j-i}^l(\xi) \le C h_j^l \le  C h^2  h_j^{l-2}     \\
       (h_{j-i-1}^l(\xi))' \le C(r-1) h^2 h_j^{l-2}    \\
@@ -3259,7 +3287,7 @@ for some constants \(c_1\) and \(C_1\) that are independent of mesh parameters.
 \textcolor{blue}{
   \begin{lemma} \label{lmm:estimate-d2uj-i-j>N}
     There exists a constant \(C=C(T, \alpha, r, \|u\|_{\beta+\alpha}^{(-\alpha/2)})\) such that
-    For \(N/2\le i <N\), \(N+2 \le j \le 2N-\lceil\frac{N}{2}\rceil+1\) , \(\xi\in (x_{i-1}, x_{i+1})\),  we have
+    For \(N/2\le i \le N-1\), \(N+2 \le j \le 2N-\lceil\frac{N}{2}\rceil+1\) , \(\xi\in (x_{i-1}, x_{i+1})\),  we have
     \begin{gather}
       u''(y_{j-i}^\theta(\xi)) \le C \\
       (u''(y_{j-i}^\theta(\xi)))' \le C \\
@@ -3314,78 +3342,78 @@ for some constants \(c_1\) and \(C_1\) that are independent of mesh parameters.
   \begin{lemma}
     \label{lmm:estimate-|yj-i-xi|^1-a-j>N}
     There exists a constant \(C=C(T, \alpha, r)\) such that
+    For \(N/2\le i \le N-1\), \(N+2 \le j \le 2N-\lceil\frac{N}{2}\rceil+1\) , \(\xi\in (x_{i-1}, x_{i+1})\)
     \begin{gather}
       |y_{j-i}^\theta(\xi) - \xi|^{1-\alpha} \le C |y_j^\theta - x_i|^{1-\alpha} \\
-      (|y_{j-i}^\theta(\xi) - \xi|^{1-\alpha})' \le C |y_j^\theta - x_i|^{-\alpha} (|2T - x_i - y_j^\theta| + h_N) \\
-      (|y_{j-i}^\theta(\xi) - \xi|^{1-\alpha})'' \le C (r-1) |y_j^\theta - x_i|^{-\alpha} + C |y_j^\theta - x_i|^{-1-\alpha}(|2T - x_i - y_j^\theta| + h_{N})^2
+      \left| (|y_{j-i}^\theta(\xi) - \xi)^{1-\alpha}|'\right| \le C |y_j^\theta - x_i|^{-\alpha} (|2T - x_i - y_j^\theta| + h_N) \\
+      \left|(|y_{j-i}^\theta(\xi) - \xi)^{1-\alpha}|''\right| \le C (r-1) |y_j^\theta - x_i|^{-\alpha} + C |y_j^\theta - x_i|^{-1-\alpha}(|2T - x_i - y_j^\theta| + h_{N})^2
     \end{gather}
   \end{lemma}
 }
 \begin{proof}
-  \begin{equation}
-    (y_{j-i}^\theta(\xi) - \xi)' = \theta {y_{j-1-i}}'(\xi) + (1-\theta) {y_{j-i}}'(\xi) - 1
+  Since \(y_{j-i-1}(\xi) > x_{j-2} \ge x_N > \xi\)
+  \begin{equation} \label{yj-it-xiR}
+    y_{j-i}^\theta(\xi) - \xi = (1-\theta) ({y_{j-1-i}}(\xi) - \xi) + \theta ({y_{j-i}}(\xi) - \xi) > 0
   \end{equation}
   \begin{equation}
     \begin{aligned}
-      |{y_{j-i}}'(\xi) - 1| & = \xi^{1/r-1} | (2T-y_{j-i}(\xi))^{1-1/r} - \xi^{1-1/r} | \\
-                            & \le \xi^{1/r-1} | 2T- \xi -y_{j-i}(\xi) | \xi^{-1/r}
-    \end{aligned}
-  \end{equation}
-  \begin{equation}
-    \begin{aligned}
-      |2T - \xi - y_{j-i}(\xi) | & \le
-      \max \begin{cases}
-             |2T - x_{i-1} - x_{j-1}| \\
-             |2T - x_{i+1} - x_{j+1}|
-           \end{cases}                                 \\
-                                 & \le |2T-x_i-x_j| + h_{i+1} + h_j
-    \end{aligned}
-  \end{equation}
-  \begin{equation}
-    \begin{aligned}
-      (y_{j-i}^\theta(\xi) - \xi)'' & = \theta {y_{j-1-i}}''(\xi) + (1-\theta) {y_{j-i}}''(\xi)                                                                                     \\
-                                    & = \frac{1-r}{r} \xi^{1/r-2} (\theta  (2T-y_{j-i}(\xi))^{1-2/r} Z_{2N-(j-i)}  + (1-\theta)  (2T-y_{j-i-1}(\xi))^{1-2/r} Z_{2N-(j-i-1)} ) \le 0 \\
+      (y_{j-i}(\xi) - \xi)'' & = {y_{j-i}}''(\xi)   \\
+      & = \frac{1-r}{r} \xi^{1/r-2}  (2T-y_{j-i}(\xi))^{1-2/r} Z_{2N-(j-i)} \le 0 \\
     \end{aligned}
   \end{equation}
   It's concave, so
   \begin{equation}
-    y_{j-i}(\xi) - \xi \ge \min\{x_{j+1}-x_{i+1}, x_{j-1}-x_{i-1}\} \ge C (x_j - x_i)
+    y_{j-i}(\xi) - \xi \ge\min_{\xi\in\{x_{i-1}, x_{i+1}\}} y_{j-i}(\xi) - \xi =\min\{x_{j+1}-x_{i+1}, x_{j-1}-x_{i-1}\} \ge C (x_j - x_i)
   \end{equation}
-  We have
+  With \eqref{yj-it-xiR}, we have
   \begin{equation}
     |y_{j-i}^\theta(\xi) - \xi|^{1-\alpha} \le C |y_j^\theta - x_i|^{1-\alpha}
   \end{equation}
+  By \cref{ineq:a-b-theta}
   \begin{equation}
     \begin{aligned}
-      (|y_{j-i}^\theta(\xi) - \xi|^{1-\alpha})' & = (1-\alpha)|y_{j-i}^\theta(\xi) - \xi|^{-\alpha} (y_{j-i}^\theta(\xi) - \xi)'   \\
-                                                & \le C |y_j^\theta - x_i|^{-\alpha} (|2T - x_i - y_j^\theta| + h_{i+1} + h_{j-1})
+      |{y_{j-i}}'(\xi) - 1| & = \xi^{1/r-1} | (2T-y_{j-i}(\xi))^{1-1/r} - \xi^{1-1/r} | \\
+                            & \le \xi^{-1} | 2T -y_{j-i}(\xi)- \xi | 
     \end{aligned}
   \end{equation}
   \begin{equation}
     \begin{aligned}
-      (|y_{j-i}^\theta(\xi) - \xi|^{1-\alpha})'' & = (1-\alpha)|y_{j-i}^\theta(\xi) - \xi|^{-\alpha} (y_{j-i}^\theta(\xi) - \xi)''  + \alpha(\alpha-1) |y_{j-i}^\theta(\xi) - \xi|^{-1-\alpha} ({y_{j-i}^\theta}'(\xi) - 1)^2 \\
-                                                 & \le C (r-1) |y_j^\theta - x_i|^{-\alpha} + C |y_j^\theta - x_i|^{-1-\alpha}(|2T - x_i - y_j^\theta| + h_{i+1} + h_{j-1})^2
+      |2T - \xi - y_{j-i}(\xi) | 
+      & \le |2T - x_i - x_j| + |x_i - \xi| + |x_j - y_{j-i}(\xi)|   \\
+      & \le |2T-x_i-x_j| + h_{i+1} + h_j  \\
+      & \le C \left( |2T-x_i-x_j| + h_{N}  \right)
+    \end{aligned}
+  \end{equation}
+  With \(\xi\simeq x_i \simeq 1\),
+  \begin{equation}
+    |{y_{j-i}}'(\xi) - 1| \le C \left( |2T-x_i-x_j| + h_{N}  \right)
+  \end{equation}
+  Thus,
+  \begin{equation}
+    \begin{aligned}
+      |({y_{j-i}^\theta}(\xi))' - 1| 
+      &\le (1-\theta)|{y_{j-i-1}}'(\xi) - 1| + \theta |{y_{j-i}}'(\xi) - 1| \\
+      &\le C \left( (1-\theta)|2T-x_i-x_{j-1}| + \theta |2T-x_i-x_j| +  h_{N}  \right) \\
+      &= C \left( |2T-x_i-y_j^\theta| + h_{N}  \right)
+    \end{aligned}
+  \end{equation}
+  So
+  \begin{equation}
+    \begin{aligned}
+      \left|(|y_{j-i}^\theta(\xi) - \xi|^{1-\alpha})'\right| & = |1-\alpha||y_{j-i}^\theta(\xi) - \xi|^{-\alpha} |({y_{j-i}^\theta}(\xi))' - 1|   \\
+      & \le C |y_j^\theta - x_i|^{-\alpha} (|2T - x_i - y_j^\theta| + h_{N} )
+    \end{aligned}
+  \end{equation}
+  \begin{equation}
+    \begin{aligned}
+      \left|(|y_{j-i}^\theta(\xi) - \xi|^{1-\alpha})''\right| 
+      & \le |1-\alpha||y_{j-i}^\theta(\xi) - \xi|^{-\alpha} |(y_{j-i}^\theta(\xi) - \xi)''|  + \alpha(\alpha-1) |y_{j-i}^\theta(\xi) - \xi|^{-1-\alpha} ({y_{j-i}^\theta}'(\xi) - 1)^2 \\
+      & \le C (r-1) |y_j^\theta - x_i|^{-\alpha} + C |y_j^\theta - x_i|^{-1-\alpha}(|2T - x_i - y_j^\theta| + h_{N})^2
     \end{aligned}
   \end{equation}
 \end{proof}
 
-\begin{proof} \label{prf:estimate-Qij-theta-j>N}
-  From \eqref{def:yi2j-jgN}, by \cref{lmm:estimate-hj-i-j>N} and \cref{lmm:estimate-|yj-i-xi|^1-a-j>N}, we have
-  \(\xi \in [x_{i}, x_{i+1}]\)
-  \begin{equation}
-    {Q_{j-i}^\theta}'(\xi) \le C h^2 h_j^2 ((r-1)|y_j^\theta - x_i|^{1-\alpha}  + |y_j^\theta - x_i|^{-\alpha}(|2T - x_i - y_j^\theta| + h_N))
-  \end{equation}
-  \begin{equation}
-    Q_{j-i}^\theta(\xi) \le C h^2 h_j^2 |y_j^\theta - x_i|^{1-\alpha}
-  \end{equation}
-  So use the skill in \cref{prf:dQj-itle} with \cref{lmm:estimate-d2uj-i-j>N}
-  \begin{equation}
-    \begin{aligned}
-      \frac{2}{h_{i} + h_{i+1}} & \left( \frac{{Q_{j-i}^\theta}(x_{i+1}) u'''(\eta_{j+1}^\theta) - {Q_{j-i}^\theta}(x_{i}) u'''(\eta_{j}^\theta)}{h_{i+1}}\right) \\
-                                & \le C h^2 h_j ( |y_j^\theta - x_i|^{1-\alpha}  + |y_j^\theta - x_i|^{-\alpha}(|2T - x_i - y_j^\theta| + h_N) )                  \\
-    \end{aligned}
-  \end{equation}
-\end{proof}
+
 
 
 
