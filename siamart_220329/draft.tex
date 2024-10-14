@@ -82,8 +82,14 @@ where
 
 
 
+
+
+
 % Chapter 2:
 \section{Preliminaries: Numeric scheme and main results}
+
+
+
 
 % Section 2.1: Numerical scheme
 \subsection{Numeric Format}
@@ -129,17 +135,6 @@ Now, we discretise \cref{eq:equation} by replacing \(u(x)\) by a continuous piec
   u_h(x) := \sum_{j=1}^{2N-1} u_j \phi_j (x)
 \end{equation}
 whose nodal values \(u_j\) are to be determined by collocation at each mesh point \(x_i\) for \(i = 1, 2,...,2N - 1\):
-
-% And now, we can approximate the operator \eqref{def:operator} at $x_i$ with
-% \begin{equation} \label{def:Dhalpha}
-%   \begin{aligned}
-%     D_h^{\alpha} u(x_i) & := D_h^2 I_h^{2-\alpha}u(x_i) \\
-%                           & =\frac{2}{h_{i} + h_{i+1}}
-%     \left( \frac{1}{h_{i}} I_h^{2-\alpha}u(x_{i-1}) - \left( \frac{1}{h_{i}} + \frac{1}{h_{i+1}} \right) I_h^{2-\alpha}u(x_{i}) + \frac{1}{h_{i+1}} I_h^{2-\alpha}u(x_{i+1}) \right)
-%   \end{aligned}
-% \end{equation}
-
-% Finally, we approximate the equation \eqref{eq:equation} with
 \begin{equation} \label{def:discrete_equation}
   -\kappa_\alpha D_h^{\alpha} u_h(x_i) := -\kappa_\alpha D_h^2 I^{2-\alpha} u_h(x_i) = f(x_i) =: f_i
 \end{equation}
@@ -153,15 +148,6 @@ where
 \begin{equation} \label{def:aij}
   a_{ij} = -\kappa_\alpha  D_h^2 I^{2-\alpha} \phi_j(x_i) \quad\text{for}\quad i,j = 1, 2,...,2N-1
 \end{equation}
-% \begin{equation}
-%   \begin{aligned}
-%     \tilde{a}_{ij} &:= I^{2-\alpha} \phi_j(x_i) \\
-%     &= \frac{1}{\Gamma(2-\alpha)} \int_{x_{j-1}}^{x_{j+1}} |x_i-y|^{1-\alpha} \phi_j(y) dy \\
-%     &= \frac{1}{\Gamma(4-\alpha)}
-%     \left( \frac{|x_{i}-x_{j-1}|^{3-\alpha}}{h_{j}} -\frac{h_{j} + h_{j+1}}{h_{j}h_{j+1}}|x_i-x_{j}|^{3-\alpha} +  \frac{|x_{i}-x_{j+1}|^{3-\alpha}}{h_{j+1}} \right) \\
-%   \end{aligned}
-% \end{equation}
-% and
 
 We have replaced \((-\Delta)^{\alpha/2} u(x_i ) = f (x_i )\) in \cref{eq:equation} by \(-\kappa_\alpha D_h^\alpha u_h(x_i ) = f (x_i )\) in \cref{def:discrete_equation}, 
 with truncation error 
@@ -175,20 +161,6 @@ The discrete equation \eqref{def:discrete_equation} can be written in matrix for
   AU = F
 \end{equation}
 where $A=(a_{ij}) \in \mathbb{R}^{(2N-1) \times (2N-1)}$, $U=(u_1, \cdots, u_{2N-1})^T$ is unknown and $F=(f_1, \cdots, f_{2N-1})^T$.
-% The matrix $A$ is constructed as follows:
-% Since
-% \begin{equation}
-%   \begin{aligned} \label{eq:Ih}
-%     I_h^{2-\alpha}u(x_i) & = \frac{1}{\Gamma(2-\alpha)} \int_{\Omega} |x_i-y|^{1-\alpha} \Pi_hu(y) dy                                                                     \\
-%                         & = \sum_{j=1}^{2N-1} \frac{1}{\Gamma(2-\alpha)} \int_{\Omega} |x_i-y|^{1-\alpha} u(x_j) \phi_j(y) dy                                         \\
-%                         & = \sum_{j=1}^{2N-1} u(x_j)  \frac{1}{\Gamma(2-\alpha)} \int_{x_{j-1}}^{x_{j+1}} |x_i-y|^{1-\alpha} \phi_j(y) dy                             \\
-%                         & = \sum_{j=1}^{2N-1} \frac{u(x_j)}{\Gamma(4-\alpha)}
-%     \left( \frac{|x_{i}-x_{j-1}|^{3-\alpha}}{h_{j}} -\frac{h_{j} + h_{j+1}}{h_{j}h_{j+1}}|x_i-x_{j}|^{3-\alpha} +  \frac{|x_{i}-x_{j+1}|^{3-\alpha}}{h_{j+1}} \right) \\
-%                         & =: \sum_{j=1}^{2N-1} \tilde{a}_{ij} \; u(x_j), \quad 0 \le i \le 2N
-%   \end{aligned}
-% \end{equation}
-% Then, substitute in \eqref{def:Dhalpha}, we have
-% where
 
 We can deduce \(a_{ij}\),
 \begin{equation} \label{eq:aij}
@@ -205,16 +177,48 @@ where
     &= \frac{1}{\Gamma(4-\alpha)}
     \left( \frac{|x_{i}-x_{j-1}|^{3-\alpha}}{h_{j}} -\left( \frac{1}{h_{i}} + \frac{1}{h_{i+1}} \right)|x_i-x_{j}|^{3-\alpha} +  \frac{|x_{i}-x_{j+1}|^{3-\alpha}}{h_{j+1}} \right)
   \end{aligned}
-  \end{equation}
+\end{equation}
 
 
 
+
+We shall finally introduce some notation.
+
+For  convenience, we use the notation \( \simeq \)  . 
+That \(x_1\simeq y_1\),
+means that \(c_1 x_1 \le y_1 \le C_1 x_1\) 
+for some constants \(c_1\) and \(C_1\) that are independent of \(N\).
+
+Meanwhile, let
+\textcolor{red}{
+\begin{equation} \label{def:Kyx}
+  K_y(x) := \frac{|y-x|^{1-\alpha}}{\Gamma(2-\alpha)}
+\end{equation}
+}
+We define the difference quotients
+\begin{equation} \label{def:Dhgxi}
+  D_h g(x_i) := \frac{g(x_{i+1}) - g(x_i)}{h_{i+1}}, \quad D_{\bar{h}}g(x_i) := \frac{g(x_{i})-g(x_{i-1})} {h_{i}}
+\end{equation}
+Thus
+\begin{gather*}
+  D_h g(x_i) = D_{\bar{h}}g(x_{i+1})  \\
+  D_h^2 g(x_i) 
+  = \frac{2}{h_i + h_{i+1}} \left( D_{h} g(x_i) - D_{\bar{h}} g(x_i) \right) 
+  = \frac{2}{h_i + h_{i+1}} \left( D_{h} g(x_i) - D_{h} g(x_{i-1}) \right)
+\end{gather*}
+
+And for \(j=1, 2,...,2N\), we define
+\begin{equation} \label{def:yjt}
+  y_j^\theta = (1-\theta)x_{j-1} + \theta x_{j-1}, \quad \theta \in (0,1)
+\end{equation}
 
 
 
 % Section 2.2: Regularity
 \subsection{Regularity of the true solution}
 \label{sec:regularity}
+
+
 For any \(\beta > 0\), 
 we use the standard notation \(C^\beta(\bar{\Omega}),  C^\beta(\mathbb{R})\), etc., for Hölder spaces
 and their norms and seminorms.
@@ -232,14 +236,14 @@ where \(C^k(\Omega)\) is the set of all \(k\)-times continuously differentiable 
 }
 
 \textcolor{blue}{
-  \begin{theorem} \label{thm:regularity-f}
+  \begin{lemma} \label{thm:regularity-f}
     Let \(f\in C^\beta(\Omega), \beta>2\) be such that \(\|f\|_{\beta}^{(\alpha/2)}<\infty\), then for \(l=0, 1, 2\)
     \begin{equation}
       |f^{(l)}(x)| \le \|f\|_{\beta}^{(\alpha/2)} \begin{cases}
         x^{-l-\alpha/2}, & \text{if } 0 < x \le T \\ (2T-x)^{-l-\alpha/2}, & \text{if } T\le x < 2T
       \end{cases}
     \end{equation}
-  \end{theorem}
+  \end{lemma}
 }
 
 \textcolor{purple}{
@@ -248,6 +252,7 @@ where \(C^k(\Omega)\) is the set of all \(k\)-times continuously differentiable 
     \begin{equation}
       \|u\|_{\beta+\alpha}^{(-\alpha/2)} \le C \left( \|u\|_{C^{\alpha/2}(\mathbb{R})} + \|f\|_{\beta}^{(\alpha/2)} \right)
     \end{equation}
+    where \(C\) is a constant depending only on \(\Omega\), \(\alpha\), and \(\beta\).
   \end{theorem}
   \begin{corollary} \label{cor:regularity-u}
     Let $u$ be a solution of \eqref{eq:equation} where $f\in L^\infty(\Omega)$ and $\|f\|_{\beta}^{(\alpha/2)} < \infty$. Then, for any $x\in\Omega$ and \(l=0, 1, 2, 3, 4\)
@@ -263,13 +268,6 @@ And in this paper bellow, without special instructions, we allways assume that
 \begin{equation} \label{cond:regularity}
   f \in L^\infty(\Omega)\cap C^{\beta}(\Omega) \quad \text{and} \quad \|f\|_{\beta}^{(\alpha/2)} < \infty, \text{  with  } \alpha + \beta > 4
 \end{equation}
-% The outline is not required, but we show an example here.
-
-% The paper is organized as follows. Our main results are in
-% \cref{sec:main},  experimental
-% results are in \cref{sec:experiments}.
-% Readers would better see \cref{sec:proof-convergence} before \cref{sec:proof-truncation-error} to avoid details.
-
 
 
 % section 3: Main results
@@ -317,16 +315,17 @@ deferred to \cref{sec:proof-truncation-error} and \cref{sec:proof-convergence}.
   \end{theorem}
 }
 
-
+\textcolor{red}{
+\begin{remark}
+  ...
+\end{remark}
+}
 
 \section{Local Truncation Error}
 \label{sec:proof-truncation-error}
 
 \subsection{Proof of \cref{thm:truncation-error}}
-% For convience, let's denote
-% \begin{equation}
-%   I^{2-\alpha}(x) = \frac{1}{\Gamma(2-\alpha)} \int_{\Omega} |x-y|^{1-\alpha} u(y) dy
-% \end{equation}
+
 The truncation error of the discrete format can be written as
 \begin{equation} \label{eq:truncerrordepart}
   \begin{aligned}
@@ -343,63 +342,41 @@ The truncation error of the discrete format can be written as
   \begin{theorem} \label{lmm:trunerror2}
     There exits a constant $C=C(T,\alpha, r, \|f\|_{\beta}^{(\alpha/2)})$ such that
     \begin{equation}
-      \left|-\kappa_\alpha (D_h^2 - \frac{d^2}{dx^2}) I^{2-\alpha} (x_i) \right| 
+      \left|-\kappa_\alpha (D_h^2 - \frac{d^2}{dx^2}) I^{2-\alpha}u (x_i) \right| 
       \le C h^2 \begin{cases}
         x_i^{-\alpha/2-2/r} ,     & 1\le i\le N    \\
         (2T-x_i)^{-\alpha/2-2/r}, & N\le i\le 2N-1
       \end{cases}
     \end{equation}
   \end{theorem}
+}
   \begin{proof}
     Since \(f\in C^2(\Omega)\) and
     \begin{equation}
-      \frac{d^2}{dx^2} ( - \kappa_\alpha I^{2-\alpha}(x)) = f(x),  \quad x \in \Omega,
+      \frac{d^2}{dx^2} ( - \kappa_\alpha I^{2-\alpha}u(x)) = f(x),  \quad x \in \Omega,
     \end{equation}
-    we have \(I^{2-\alpha} \in C^4(\Omega)\).
+    we have \(I^{2-\alpha}u \in C^4(\Omega)\).
     Therefore, using equation \eqref{eq:Dh2simd4} of \cref{lmm:Dh2simd2}, for \(1\le i\le 2N-1\), we have
     \begin{equation}
       \begin{aligned}
-        -\kappa_\alpha (D_h^2 - \frac{d^2}{dx^2}) I^{2-\alpha} (x_i)
-         & = \frac{h_{i+1}-h_{i}}{3} f'(x_i) \\
+        &-\kappa_\alpha (D_h^2 - \frac{d^2}{dx^2}) I^{2-\alpha}u (x_i)
+         = \frac{h_{i+1}-h_{i}}{3} f'(x_i) \\
          & \quad + \frac{2}{h_i + h_{i+1}}\left(\frac{1}{h_i} \int_{x_{i-1}}^{x_{i}} f''(y) \frac{(y-x_{i-1})^3}{3!} dy + \frac{1}{h_{i+1}} \int_{x_{i}}^{x_{i+1}} f''(y) \frac{(y-x_{i+1})^3}{3!} dy\right) \\
       \end{aligned}
     \end{equation}
-    where \(\eta_1 \in [x_{i-1}, x_{i}], \eta_2 \in [x_{i}, x_{i+1}]\).
-    By \cref{lmm:hi1-hi} and \cref{thm:regularity-f}  we have
-    1.
-    \begin{equation}
-      \left| \frac{h_{i+1}-h_{i}}{3} f'(x_i) \right| \le \frac{C(r-1)\|f\|_{\beta}^{(\alpha/2)}}{3}  h^2 \begin{cases}
-        x_i^{-\alpha/2-2/r} ,     & 1\le i\le N-1 \\
-        0,                        & i=N           \\
-        (2T-x_i)^{-\alpha/2-2/r}, & N<i\le 2N-1
-      \end{cases}
-    \end{equation}
-    2.
-    See \cref{prf:trucerr2d2f}, there is a constant \(C=C(T, \alpha, r, \|f\|_{\beta}^{\alpha/2})\) such that
-    \begin{equation}
-      \begin{aligned}
-        %  & \left| \frac{1}{4!} \frac{2}{h_i + h_{i+1}} (h_i^3 f''(\eta_1) + h_{i+1}^3 f''(\eta_2)) \right| \\
-        & \frac{2}{h_i + h_{i+1}}\left(\frac{1}{h_i} \int_{x_{i-1}}^{x_{i}} f''(y) \frac{(y-x_{i-1})^3}{3!} dy + \frac{1}{h_{i+1}} \int_{x_{i}}^{x_{i+1}} f''(y) \frac{(y-x_{i+1})^3}{3!} dy\right) \\
-         & \quad \le C h^2 \begin{cases}
-                             x_i^{-\alpha/2-2/r} ,     & 1\le i\le N    \\
-                             (2T-x_i)^{-\alpha/2-2/r}, & N\le i\le 2N-1
-                           \end{cases}
-      \end{aligned}
-    \end{equation}
-    Summarizes, we get the result.
+    By \cref{lmm:hi1-hi}, \cref{thm:regularity-f} and \cref{lmm:trucerr2d2f},  we get the result.
   \end{proof}
-}
+
 
 
 % \subsection{Estimate of $R_i$}
 \label{subsec:Ri}
 
 
-And define
+And now define
 \begin{equation} \label{eq:Ri}
   \begin{aligned}
-    R_i & := D_h^2 I^{2-\alpha}(u-\Pi_h u)(x_i)         \\
-        % & = \frac{2}{h_{i} + h_{i+1}}  \sum_{j=1}^{2N}  \left( \frac{1}{h_{i}}  T_{i-1,j} - \left(\frac{1}{h_{i}} + \frac{1}{h_{i+1}}\right)  T_{i,j} + \frac{1}{h_{i+1}} T_{i+1,j} \right), \quad 1\le i \le 2N-1
+    R_i & := D_h^2 I^{2-\alpha}(u-\Pi_h u)(x_i) 
   \end{aligned}
 \end{equation}
 
@@ -485,11 +462,15 @@ the proof of \cref{thm:truncation-error} completed.
 
 We prove \cref{thm:Ri-ilessN/2} and \cref{thm:Ri-N/2le-i-leN} in next subsections below.
 
-\subsection{Mesh Transport Functions}
+\subsection{\textcolor{purple}{Mesh Transport Functions}}
 \label{subsec:mesh-transport-functions}
 
+
+
+
+\textcolor{purple}{
 \begin{definition} [Mesh Transport Functions]
-  \begin{equation}
+  \begin{equation} \label{def:yij}
     y_{i,j}(x) = \begin{cases}
       (x^{1/r} + Z_{j-i})^r               & i< N, j< N \\
       \dfrac{x^{1/r} - Z_i}{Z_1} h_N + x_N  & i< N, j=N \\
@@ -500,25 +481,49 @@ We prove \cref{thm:Ri-ilessN/2} and \cref{thm:Ri-N/2le-i-leN} in next subsection
     \end{cases}
   \end{equation}
   where
-  \begin{equation}
+  \begin{equation} \label{def:Zj}
     Z_{j} := T^{1/r}\frac{j}{N}
   \end{equation}
+  And
+  \begin{equation} \label{def:hij}
+    h_{i,j}(x) = y_{i,j}(x) - y_{i,j-1}(x)
+  \end{equation}
+  \begin{equation} \label{def:yijt}
+    y_{i,j}^\theta(x) = (1-\theta) y_{i,j-1}(x) + \theta y_{i,j-1}(x), \quad \theta \in (0, 1)
+  \end{equation}
 \end{definition}
+}
 
 We give some properties of mesh transport functions.
 \begin{lemma}
-  y
+  Obviously,
+  \begin{gather}
+    y_{i,j}(x_{i-1}) = x_{j-1}, \quad y_{i,j}(x_{i}) = x_{j}, \quad y_{i,j}(x_{i+1}) = x_{j+1} \\
+    h_{i,j}(x_{i-1}) = h_{j-1}, \quad h_{i,j}(x_{i}) = h_j, \quad h_{i,j}(x_{i+1}) = h_{j+1} \\
+    y_{i,j}^\theta(x_{i-1}) = y_{j-1}^\theta, \quad y_{i,j}^\theta(x_{i}) = y_{j}^\theta, \quad y_{i,j}^\theta(x_{i+1}) = y_{j+1}^\theta
+  \end{gather}
+\end{lemma}
+
+\begin{lemma}
+  For \(1\le i \le 2N-1, 2\le j \le 2N-1\),
+  \begin{equation}
+    h_{i,j}(\xi) \simeq h_j, \quad \text{for  } \xi \in (x_{i-1}, x_{i+1})
+  \end{equation}
+  For \(1\le i, j \le 2N-1\),
+  \begin{equation}
+    |y_{i,j}(\xi) - \xi| \simeq |x_j - x_i| \quad \text{for  } \xi \in (x_{i-1}, x_{i+1})
+  \end{equation}
 \end{lemma}
 
 
 \subsection{Proof of \cref{thm:Ri-ilessN/2}}
 
-\begin{equation}
-  \begin{aligned}
-    D_h^2 I^{2-\alpha}(u-\Pi_h u)(x_i)
-     & = D_h^2(\int_{0}^{2T}(u(y)-\Pi_hu(y)) \frac{|y-x_i|^{1-\alpha}}{\Gamma(2-\alpha)} dy) \\
-  \end{aligned}
-\end{equation}
+% \begin{equation}
+%   \begin{aligned}
+%     D_h^2 I^{2-\alpha}(u-\Pi_h u)(x_i)
+%      & = D_h^2(\int_{0}^{2T}(u(y)-\Pi_hu(y)) \frac{|y-x_i|^{1-\alpha}}{\Gamma(2-\alpha)} dy) \\
+%   \end{aligned}
+% \end{equation}
 For convience, let's denote
 \begin{equation} \label{def:Tij}
   T_{ij} = \int_{x_{j-1}}^{x_{j}} (u(y) - \Pi_hu(y)) \frac{|y-x_i|^{1-\alpha}}{\Gamma(2-\alpha)} dy, \quad i=0, \cdots ,2N,\; j=1, \cdots , 2N
@@ -543,13 +548,8 @@ Also for simplicity, we denote
       \end{aligned}
     \end{equation}
   \end{lemma}
+}
   \begin{proof}
-    Let
-    \textcolor{red}{
-    \begin{equation*}
-      K_y(x) = \frac{|y-x|^{1-\alpha}}{\Gamma(2-\alpha)}
-    \end{equation*}
-    }
     For  \(\max\{2i+1, i+3\} \le j \le N\), by \cref{lmm:Dyjleh2ya/2m2/r} and \cref{lmm:Dh2ymx1malecy1ma}
     \begin{equation}
       \begin{aligned}
@@ -569,7 +569,6 @@ Also for simplicity, we denote
       \end{aligned}
     \end{equation}
   \end{proof}
-}
 
 \textcolor{blue}{
   \begin{lemma} \label{lmm:sumSi-ilessN/2-Np1-2N}
@@ -764,7 +763,7 @@ For \(3\le i < N/2\), we have a new separation of \(R_i\), Let's denote \(k=\lce
 To estimete \(V_{ij}\), we need some preparations.
 \begin{lemma} 
   For \(y\in (x_{j-1}, x_{j})\), we can rewrite 
-  \begin{equation}\label{def:yjt}
+  \begin{equation}
     y = x_{j-1} + \theta h_j = (1-\theta) x_{j-1} + \theta x_j =: y_j^\theta , \; \theta\in (0,1)
   \end{equation}
   by \cref{lmm:Dyj},
@@ -2342,26 +2341,23 @@ Remarks:
   there exists \(\xi\in (x_{i-1}, x_{i+1})\) such that
   \begin{equation} \label{eq:Dh2simd2}
     \begin{aligned}
-      D_h^2 g(x_i) & := \frac{2}{h_i + h_{i+1}} \left( \frac{1}{h_{i+1}} g(x_{i+1}) - (\frac{1}{h_{i}}+\frac{1}{h_{i+1}})g(x_{i}) + \frac{1}{h_{i}} g(x_{i-1}) \right) \\
-      % &= \frac{h_i}{h_i + h_{i+1}} g''(\xi_1) + \frac{h_{i+1}}{h_i + h_{i+1}} g''(\xi_2)  \\
-                   & = g''(\xi), \quad \xi \in (x_{i-1}, x_{i+1})
+      D_h^2 g(x_i) & = g''(\xi), \quad \xi \in (x_{i-1}, x_{i+1})
     \end{aligned}
   \end{equation}
-  \begin{equation} \label{eq:Dh2Cauchy2}
-    \begin{aligned}
-       & \frac{2}{h_i + h_{i+1}} \left( \frac{1}{h_{i+1}} g(x_{i+1}) - (\frac{1}{h_{i}}+\frac{1}{h_{i+1}})g(x_{i}) + \frac{1}{h_{i}} g(x_{i-1}) \right)                          \\
-      % &= \frac{h_i}{h_i + h_{i+1}} g''(\xi_1) + \frac{h_{i+1}}{h_i + h_{i+1}} g''(\xi_2)  \\
-       & \quad = \frac{2}{h_i + h_{i+1}} \left( \frac{1}{h_{i}}\int_{x_{i-1}}^{x_i} g''(y) (y-x_{i-1}) dy + \frac{1}{h_{i+1}} \int_{x_i}^{x_{i+1}} g''(y) (x_{i+1}-y) dy \right)
-    \end{aligned}
-  \end{equation}
+  % \begin{equation} \label{eq:Dh2Cauchy2}
+  %   \begin{aligned}
+  %      & \frac{2}{h_i + h_{i+1}} \left( \frac{1}{h_{i+1}} g(x_{i+1}) - (\frac{1}{h_{i}}+\frac{1}{h_{i+1}})g(x_{i}) + \frac{1}{h_{i}} g(x_{i-1}) \right)                          \\
+  %     % &= \frac{h_i}{h_i + h_{i+1}} g''(\xi_1) + \frac{h_{i+1}}{h_i + h_{i+1}} g''(\xi_2)  \\
+  %      & \quad = \frac{2}{h_i + h_{i+1}} \left( \frac{1}{h_{i}}\int_{x_{i-1}}^{x_i} g''(y) (y-x_{i-1}) dy + \frac{1}{h_{i+1}} \int_{x_i}^{x_{i+1}} g''(y) (x_{i+1}-y) dy \right)
+  %   \end{aligned}
+  % \end{equation}
   And if \(g(x) \in C^4(\Omega)\), then
   \begin{equation} \label{eq:Dh2simd4}
     \begin{aligned}
-      \frac{2}{h_i + h_{i+1}} & \left( \frac{1}{h_{i+1}} g(x_{i+1}) - (\frac{1}{h_{i}}+\frac{1}{h_{i+1}})g(x_{i}) + \frac{1}{h_{i}} g(x_{i-1}) \right)                   \\
-                              & = g''(x_{i}) + \frac{h_{i+1}-h_{i}}{3} g'''(x_{i}) + \frac{1}{4!} \frac{2}{h_i + h_{i+1}}(h_i^3 g''''(\eta_1) + h_{i+1}^3 g''''(\eta_2))
+      D_h^2 g(x_i) &= g''(x_{i}) + \frac{h_{i+1}-h_{i}}{3} g'''(x_{i}) \\
+      &\quad  +  \frac{2}{h_i + h_{i+1}}\left( \frac{1}{h_{i}}\int_{x_{i-1}}^{x_i} g''''(y) \frac{(y-x_{i-1})^3}{3!} dy + \frac{1}{h_{i+1}} \int_{x_i}^{x_{i+1}} g''''(y) \frac{(x_{i+1}-y)^3}{3!} dy \right)  \\
     \end{aligned}
   \end{equation}
-  where \(\eta_1 \in [x_{i-1}, x_{i}], \eta_2 \in [x_{i}, x_{i+1}]\).
 \end{lemma}
 \begin{proof}
   \begin{gather*}
@@ -2371,19 +2367,19 @@ Remarks:
   Subsitute them in the left side of \eqref{eq:Dh2simd2}, we have
   \begin{equation*}
     \begin{aligned}
-      \frac{2}{h_i + h_{i+1}} & \left( \frac{1}{h_{i+1}} g(x_{i+1}) - (\frac{1}{h_{i}}+\frac{1}{h_{i+1}})g(x_{i}) + \frac{1}{h_{i}} g(x_{i-1}) \right) \\
-                              & = \frac{h_i}{h_i + h_{i+1}} g''(\xi_1) + \frac{h_{i+1}}{h_i + h_{i+1}} g''(\xi_2)
+      D_h^2 g(x_i) & = \frac{2}{h_i + h_{i+1}} \left( \frac{1}{h_{i+1}} (g(x_{i+1})-g(x_i)  + \frac{1}{h_{i}} (g(x_{i-1})-g(x_i)) \right) \\
+      &= \frac{h_i}{h_i + h_{i+1}} g''(\xi_1) + \frac{h_{i+1}}{h_i + h_{i+1}} g''(\xi_2)
     \end{aligned}
   \end{equation*}
-  Now, using \textcolor{red}{intermediate value theorem} , there exists \(\xi \in [\xi_1, \xi_2]\) such that
+  Now, using \textcolor{red}{intermediate value theorem}, there exists \(\xi \in [\xi_1, \xi_2]\) such that
   \begin{equation*}
     \frac{h_i}{h_i + h_{i+1}} g''(\xi_1) + \frac{h_{i+1}}{h_i + h_{i+1}} g''(\xi_2) = g''(\xi)
   \end{equation*}
-  For the second equation, similarly
-  \begin{gather*}
-    g(x_{i-1}) = g(x_{i}) - (x_{i}-x_{i-1}) g'(x_{i}) + \int_{x_{i-1}}^{x_i} g''(y) (y-x_{i-1}) dy \\
-    g(x_{i+1}) = g(x_{i}) + (x_{i+1}-x_{i}) g'(x_{i}) + \int_{x_i}^{x_{i+1}} g''(y) (x_{i+1}-y) dy
-  \end{gather*}
+  % For the second equation, similarly
+  % \begin{gather*}
+  %   g(x_{i-1}) = g(x_{i}) - (x_{i}-x_{i-1}) g'(x_{i}) + \int_{x_{i-1}}^{x_i} g''(y) (y-x_{i-1}) dy \\
+  %   g(x_{i+1}) = g(x_{i}) + (x_{i+1}-x_{i}) g'(x_{i}) + \int_{x_i}^{x_{i+1}} g''(y) (x_{i+1}-y) dy
+  % \end{gather*}
   And the last equation can be obtained by
   \begin{gather*}
     g(x_{i-1}) = g(x_{i}) - h_{i} g'(x_{i}) + \frac{h_{i}^2}{2} g''(x_{i}) - \frac{h_{i}^3}{3!} g'''(x_{i}) +  \int_{x_{i-1}}^{x_{i}} g''''(y) \frac{(y-x_{i-1})^3}{3!} dy        \\
@@ -2397,7 +2393,6 @@ Remarks:
     \end{aligned}
   \end{equation}
   where \(\eta_1 \in (x_{i-1}, x_{i}), \eta_2 \in (x_{i}, x_{i+1})\).
-  Subsitute them to the left side of \eqref{eq:Dh2simd4}, we can get the result.
 \end{proof}
 
 
@@ -2473,65 +2468,34 @@ Remarks:
   \end{equation}
 \end{lemma}
 
-\section{Inequality}
 
-For  convenience, we use the notation and \( \simeq \)  . 
-That \(x_1\simeq y_1\),
-means that \(c_1 x_1 \le y_1 \le C_1 x_1\) 
-for some constants \(c_1\) and \(C_1\) that are independent of mesh parameters.
 
-\textcolor{blue}{
-  \begin{lemma} \label{lmm:hilexi}
-    \begin{equation}
-      h_i \simeq \begin{cases}
-        hx_i^{1-1/r}, & 1\le i \le N   \\
-        h(2T-x_{i})^{1-1/r}, & N < i \le 2N-1
-      \end{cases}
-    \end{equation}
-    % \begin{equation}
-    %   h_i \le r T^{1/r} h \begin{cases}
-    %     x_i^{1-1/r},          & 1\le i \le N   \\
-    %     (2T-x_{i-1})^{1-1/r}, & N < i \le 2N-1
-    %   \end{cases}
-    % \end{equation}
-    % \begin{equation}
-    %   h_i \ge r T^{1/r} h \begin{cases}
-    %     x_{i-1}^{1-1/r},    & 1\le i \le N   \\
-    %     (2T-x_{i})^{1-1/r}, & N < i \le 2N-1
-    %   \end{cases}
-    % \end{equation}
-  \end{lemma}
-  Since, 
-  \( i^r -(i-1)^r \simeq i^{r-1}, \text{  for  } i\ge 1 \)
-}
-  % \begin{proof}
-  %   For \(1\le i \le N\),
-  %   \begin{displaymath}
-  %     \begin{aligned}
-  %       h_i & = T \left( \left(\frac{i}{N}\right)^r - \left(\frac{i-1}{N}\right)^r \right)  \\
-  %           & \le rT \frac{1}{N} \left(\frac{i}{N}\right)^{r-1} = r T^{1/r} h x_{i}^{1-1/r} \\
-  %     \end{aligned}
-  %   \end{displaymath}
-  %   \begin{displaymath}
-  %     h_i \ge r T \frac{1}{N} \left(\frac{i-1}{N}\right)^{r-1} = r T^{1/r} h x_{i-1}^{1-1/r}
-  %   \end{displaymath}
-  %   For \(N < i \le 2N\),
-  %   \begin{displaymath}
-  %     \begin{aligned}
-  %       h_i & = T\left(  \left(\frac{2N-i+1}{N}\right)^r - \left(\frac{2N-i}{N}\right)^r \right)        \\
-  %           & \le rT \frac{1}{N} \left(\frac{2N-i+1}{N}\right)^{r-1} = r T^{1/r} h (2T-x_{i-1})^{1-1/r} \\
-  %     \end{aligned}
-  %   \end{displaymath}
-  %   \begin{displaymath}
-  %     h_i \ge r T \frac{1}{N} \left(\frac{2N-i}{N}\right)^{r-1} = r T^{1/r} h (2T-x_{i})^{1-1/r}
-  %   \end{displaymath}
-  % \end{proof}
-% }
+
+\section{Proofs of some technical details}
+
+Review that \(h=\frac{1}{N}\) and the defination of \(\simeq\) in \cref{sec:numformat}
+
+
+\begin{lemma} \label{lmm:hilexi}
+  \begin{equation}
+    h_i \simeq \begin{cases}
+      hx_i^{1-1/r}, & 1\le i \le N   \\
+      h(2T-x_{i-1})^{1-1/r}, & N < i \le 2N
+    \end{cases}
+  \end{equation}
+  Since \( i^r -(i-1)^r \simeq i^{r-1}, \text{  for  } i\ge 1 \).
+  
+  And
+  \begin{equation}
+    h_i \simeq h_{i+1}, \quad x_i \simeq x_{i+1},  \quad \text{  for  } 1\le i\le 2N-1
+  \end{equation}
+\end{lemma}
+
 
 
 \textcolor{blue}{
   \begin{lemma} \label{lmm:hi1-hi}
-    There is a constant \(C=2^{|r-2|}r(r-1)T^{2/r}\) such that for all \(i\in\{1,2,\cdots,2N-1\}\)
+    There is a constant \(C\) such that for \(i=1,2,\cdots,2N-1\)
     \begin{equation}
       |h_{i+1} - h_{i}| \le C h^2 \begin{cases}
         x_i^{1-2/r} ,     & 1\le i\le N-1 \\
@@ -2541,150 +2505,84 @@ for some constants \(c_1\) and \(C_1\) that are independent of mesh parameters.
     \end{equation}
   \end{lemma}
   \begin{proof}
-    \begin{equation*}
+    By \cref{def:hj},
+    \begin{equation}
       \begin{aligned}
         h_{i+1} - h_{i} =
         \begin{cases}
           T \left( \left(\frac{i+1}{N}\right)^r - 2\left(\frac{i}{N}\right)^r + \left(\frac{i-1}{N}\right)^r  \right) ,           & 1\le i\le N-1    \\
-          0,                                                                                                                      & i=N              \\
+          0,    & i=N    \\
           -T \left( \left(\frac{2N-i-1}{N}\right)^r - 2\left(\frac{2N-i}{N}\right)^r + \left(\frac{2N-i+1}{N}\right)^r  \right) , & N+1\le i\le 2N-1 \\
         \end{cases}
       \end{aligned}
-    \end{equation*}
-    % if \(r=2\), 
-    % \begin{equation*}
-    %   h_{i+1}-h_{i} = 2T N^{-2}, \quad 1-2/r=0
-    % \end{equation*}
-    For \(i=1\),
-    \begin{equation*}
-      \begin{aligned}
-        h_2-h_1 & = T(2^{r}-2)\left(\frac{1}{N}\right)^r = (2^{r}-2)T^{2/r} h^2 x_1^{1-2/r}
-      \end{aligned}
-    \end{equation*}
-    For \(2\le i\le N-1\), by \cref{lmm:Dh2simd2}, we have
-    \begin{equation*}
-      \begin{aligned}
-        h_{i+1} - h_{i} & =  r(r-1) T \; N^{-2} \eta^{r-2}, \quad \eta \in [\frac{i-1}{N}, \frac{i+1}{N}]  \\
-        &= C (r-1) h^2 x_i^{1-2/r}
-      \end{aligned}
-    \end{equation*}
-    % If \(r\in[1, 2]\),
-    % \begin{equation*}
-    %   \begin{aligned}
-    %     h_{i+1} - h_{i} & =  r(r-1) T \; N^{-2} \eta^{r-2}
-    %     \le r(r-1) T \; h^2 \left( \frac{i-1}{N} \right)^{r-2}                         \\
-    %                     & \le r(r-1) T \; h^2 2^{2-r} \left( \frac{i}{N} \right)^{r-2} \\
-    %                     & = 2^{2-r} r(r-1) T^{2/r} h^2 x_i^{1-2/r}
-    %   \end{aligned}
-    % \end{equation*}
-    % else if \(r>2\),
-    % \begin{equation*}
-    %   \begin{aligned}
-    %     h_{i+1} - h_{i} & =  r(r-1) T \; N^{-2} \eta^{r-2}
-    %     \le r(r-1) T \; h^2 \left( \frac{i+1}{N} \right)^{r-2}                         \\
-    %                     & \le r(r-1) T \; h^2 2^{r-2} \left( \frac{i}{N} \right)^{r-2} \\
-    %                     & = 2^{r-2} r(r-1) T^{2/r} h^2 x_i^{1-2/r}
-    %   \end{aligned}
-    % \end{equation*}
-    % Since
-    % \begin{equation*}
-    %   2^r-2 \le 2^{|r-2|}r(r-1), \quad r\ge 1
-    % \end{equation*}
-    % we have
-    % \begin{equation*}
-    %   h_{i+1} - h_{i} \le 2^{|r-2|}r(r-1)T^{2/r} h^2 x_i^{1-2/r},  \quad 1\le i\le N-1
-    % \end{equation*}
-    % For \(i=N\), \( h_{N+1}-h_{N} = 0\).
-    % For \(N<i\le 2N-1\), it's central symmetric to the first half of the proof, which is
-    % % \begin{equation*}
-    % %   \begin{aligned}
-    % %     h_{2N-1} - h_{2N} & =
-    % %       T(2^{r}-2)\left(\frac{1}{N}\right)^r = (2^{r}-2)T^{2/r} h^2 (2T-x_{2N-1})^{1-2/r}
-    % %   \end{aligned}
-    % % \end{equation*}
-    % % and
-    % \begin{equation*}
-    %   h_{i}-h_{i+1} \le 2^{|r-2|}r(r-1)T^{2/r} h^2 (2T-x_{i})^{1-2/r}
-    % \end{equation*}
-    Summarizes the inequalities, we can get
-    \begin{equation}
-      |h_{i+1} - h_{i}| \le 2^{|r-2|}r(r-1)T^{2/r} h^2 \begin{cases}
-        x_i^{1-2/r} ,     & 1\le i\le N-1 \\
-        0,                & i=N           \\
-        (2T-x_i)^{1-2/r}, & N<i\le 2N-1
-      \end{cases}
     \end{equation}
+    Since
+    \begin{equation}
+      (i+1)^r - 2i^r + (i-1)^r \simeq r(r-1)i^{r-2}, \quad \text{for  } i\ge 1
+    \end{equation}
+    We get the result.
   \end{proof}
 }
 
 
 
 
-\section{Proofs of some technical details}
-
-\begin{proof}[Additional proof of \cref{lmm:trunerror2}] \label{prf:trucerr2d2f}
-  For \(2\le i \le N-1\),
+\begin{lemma} \label{lmm:trucerr2d2f}
+  there is a constant \(C=C(T, \alpha, r, \|f\|_{\beta}^{\alpha/2})\) such that
+    \begin{equation}
+      \begin{aligned}
+        & \frac{2}{h_i + h_{i+1}} \left| \frac{1}{h_i} \int_{x_{i-1}}^{x_{i}} f''(y) \frac{(y-x_{i-1})^3}{3!} dy + \frac{1}{h_{i+1}} \int_{x_{i}}^{x_{i+1}} f''(y) \frac{(y-x_{i+1})^3}{3!} dy \right| \\
+         & \quad \le C h^2 \begin{cases}
+                             x_i^{-\alpha/2-2/r} ,     & 1\le i\le N    \\
+                             (2T-x_i)^{-\alpha/2-2/r}, & N\le i\le 2N-1
+                           \end{cases}
+      \end{aligned}
+    \end{equation}
+\end{lemma}
+\begin{proof} \label{prf:trucerr2d2f}
+  By \cref{thm:regularity-f}, we have for \(1 \le i \le N\)
+  \begin{equation}
+    \begin{aligned}
+      \left|\int_{x_{i-1}}^{x_{i}} f''(y)\frac{(y-x_{i-1})^3}{3!} dy \right|  \le \frac{\|f\|_{\beta}^{(\alpha/2)}}{3!} \int_{x_{i-1}}^{x_{i}} y^{-\alpha/2-2} (y-x_{i-1})^3 dy
+    \end{aligned}
+  \end{equation}
+  For \(i=1\),
+  \begin{equation*}
+    \int_{x_{i-1}}^{x_{i}} y^{-\alpha/2-2} (y-x_{i-1})^3 dy
+    = \int_{0}^{x_{1}} y^{1-\alpha/2} dy
+    = \frac{1}{2-\alpha/2} x_1^{2-\alpha/2} = \frac{1}{2-\alpha/2} x_1^{-\alpha/2-2} h_1^4
+  \end{equation*}
+  And for \(2\le i \le N\), since \(x_i\simeq x_{i-1}\le y\le x_i\), we have
   \begin{equation*}
     \begin{aligned}
-      \frac{2}{h_i + h_{i+1}} & (h_i^3 f''(\eta_1) + h_{i+1}^3 f''(\eta_2))                                                \\
-                              & \le C\frac{2}{h_i + h_{i+1}} (h_i^3 x_{i-1}^{-2-\alpha/2} + h_{i+1}^3 x_{i}^{-2-\alpha/2}) \\
-                              & \le 2C (h_i^2 x_{i-1}^{-2-\alpha/2} + h_{i+1}^2 x_{i}^{-2-\alpha/2})
+      \int_{x_{i-1}}^{x_{i}} y^{-\alpha/2-2} (y-x_{i-1})^3 dy
+      \simeq \int_{x_{i-1}}^{x_{i}} x_i^{-\alpha/2-2} (y-x_{i-1})^3 dy
+      = \frac{1}{4!} x_i^{-\alpha/2-2} h_i^4
     \end{aligned}
   \end{equation*}
-  % Since \cref{lmm:hilexi}, we have
-  % \begin{gather*}
-  %   h_i \le r T^{1/r} h x_{i}^{1-1/r}, \quad 1\le i\le N \\
-  %   h_{i+1} \le r T^{1/r} h x_{i+1}^{1-1/r}, \quad 1\le i\le N-1
-  % \end{gather*}
-  % and
-  % \begin{gather*}
-  %   x_{i-1}^{-2-\alpha/2} \le 2^{-r(-2-\alpha/2)} x_i^{-2-\alpha/2}  \quad 2\le i\le N-1 \\
-  %   x_{i+1}^{1-1/r} \le 2^{r-1} x_i^{1-1/r} \quad 1\le i \le N-1
-  % \end{gather*}
-  There is a constant \(C=C(T, \alpha, r, \|f\|_{\beta}^{\alpha/2})\) such that
-  \begin{equation*}
-    \frac{2}{h_i + h_{i+1}} (h_i^3 f''(\eta_1) + h_{i+1}^3 f''(\eta_2)) \le C h^2 x_i^{-\alpha/2-2/r}, \quad 2\le i\le N-1
-  \end{equation*}
-  For \(i=1\), by \eqref{eq:Dh2Cauchy4}
-  \begin{equation*}
+  So for  \(1\le i\le N\), we have 
+  \begin{equation}
+    \left|\int_{x_{i-1}}^{x_{i}} f''(y)\frac{(y-x_{i-1})^3}{3!} dy \right| \le C x_i^{-\alpha/2-2} h_i^4
+  \end{equation}
+  and similarly,
+  \begin{equation}
+    \left|\int_{x_{i}}^{x_{i+1}} f''(y)\frac{(x_{i+1}-y)^3}{3!} dy \right| \le C x_i^{-\alpha/2-2} h_{i+1}^4
+  \end{equation}
+  Thus for \(1\le i\le N\), with \cref{lmm:hilexi} we have
+  \begin{equation}
     \begin{aligned}
-       & \frac{1}{4!}\frac{2}{h_1 + h_{2}} (h_1^3 f''(\eta_1) + h_{2}^3 f''(\eta_2))                  \\
-       & \quad =  \frac{2}{h_1 + h_{2}} \left( \frac{1}{h_1}\int_{0}^{x_1} f''(y) \frac{y^3}{3!} dy +
-      \frac{1}{4!} h_2^3 f''(\eta_2) \right)                                                          \\
+      & \frac{2}{h_i + h_{i+1}} \left| \frac{1}{h_i} \int_{x_{i-1}}^{x_{i}} f''(y) \frac{(y-x_{i-1})^3}{3!} dy + \frac{1}{h_{i+1}} \int_{x_{i}}^{x_{i+1}} f''(y) \frac{(y-x_{i+1})^3}{3!} dy \right| \\
+       & \quad \le C x_i^{-\alpha/2-2} \frac{2}{h_i + h_{i+1}} (h_i^3 + h_{i+1}^3)
+       \simeq x_i^{-\alpha/2-2} h_i^2 \simeq x_i^{-\alpha/2-2} h^2 x_i^{2-2/r} \\
+       &\quad = C h^2 x_i^{-\alpha/2-2/r}
     \end{aligned}
-  \end{equation*}
-  We have proved above that
-  \begin{equation*}
-    \frac{2}{h_1 + h_{2}} h_2^3 f''(\eta_2) \le C h^2 x_1^{-\alpha/2-2/r}
-  \end{equation*}
-  and we can get
-  \begin{equation*}
-    \begin{aligned}
-      \int_{0}^{x_1} f''(y) \frac{y^3}{3!} dy & \le C \frac{1}{3!}\int_{0}^{x_1} y^{1-\alpha/2} dy \\
-                                              & = C\frac{1}{3!(2-\alpha/2)} x_1^{2-\alpha/2}       \\
-    \end{aligned}
-  \end{equation*}
-  so
-  \begin{equation*}
-    \frac{2}{h_1 + h_{2}} \frac{1}{h_1}\int_{0}^{x_1} f''(y) \frac{y^3}{3!} dy = \frac{C 2^{1-r}}{3!(2-\alpha/2)}x_1^{-\alpha/2} = \frac{C 2^{1-r}}{3!(2-\alpha/2)} T^{2/r} h^2 x_1^{-\alpha/2-2/r}
-  \end{equation*}
-  And for \(i=N\), we have
-  \begin{equation*}
-    \begin{aligned}
-      \frac{2}{h_N + h_{N+1}} & (h_N^3 f''(\eta_1) + h_{N+1}^3 f''(\eta_2))                       \\
-                              & = h_N^{2} (f''(\eta_1) + f''(\eta_2))                             \\
-                              & \le r^2 T^{2/r} h^2 x_N^{2-2/r} \; 2C x_{N-1}^{-2-\alpha/2}       \\
-                              & \le 2 r^2 T^{2/r} C 2^{-r(-2-\alpha/2)}\; h^2 x_N^{-\alpha/2-2/r} \\
-    \end{aligned}
-  \end{equation*}
-  Finally, \(N+1 \le i \le 2N-1\) is symmetric to the first half of the proof, so we can conclude that
-  \begin{equation*}
-    \frac{2}{h_i + h_{i+1}} (h_i^3 f''(\eta_1) + h_{i+1}^3 f''(\eta_2)) \le C h^2
-    \begin{cases}
-      x_i^{-\alpha/2-2/r}, & 1\le i\le N \\ (2T-x_i)^{-\alpha/2-2/r}, & N\le i\le 2N-1
-    \end{cases}
-  \end{equation*}
+  \end{equation}
+  It's symmetric for \(N < i \le 2N-1\).
 \end{proof}
+
+
+
+
 
 \begin{lemma} \label{lmm:Dyjleh2ya/2m2/r}
   By a standard error estimate for linear interpolation, and \cref{cor:regularity-u},
