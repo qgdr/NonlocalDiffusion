@@ -619,7 +619,11 @@ We give some properties of mesh transport functions.
   \end{equation}
   And
   \begin{equation}
-    \left|(y_{i,j}(\xi) - \xi)'\right| \le C (r-1) |y_{i,j}(\xi) - \xi| \xi^{-1} \simeq (r-1) |x_j - x_i|x_i^{-1}
+    \left|(y_{i,j}(\xi) - \xi)'\right| \le C (r-1) \xi^{-1}
+    \begin{cases}
+      |y_{i,j}(\xi) - \xi|      & j\le N \\
+      |2T - y_{i,j}(\xi) - \xi| & j> N \\
+    \end{cases}
   \end{equation}
 \end{lemma}
 % }
