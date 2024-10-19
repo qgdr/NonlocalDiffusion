@@ -803,7 +803,7 @@ We give some properties of mesh transport functions.
 
 
 
-\subsection{Proof of \cref{thm:Ri-ilessN/2}}
+\subsection{Proof of Theorems}
 
 Then we esrimate each part of \eqref{eq:depart-Ri}. And We take
 \(m = 2i\) for \(3 \le i < N/2\), and \(m = N-\lceil N/2 \rceil +1\) for \(N/2 \le i\le N\).
@@ -903,7 +903,7 @@ For \(I_5\)
 For \(i=1, 2\).
 
 \begin{lemma} \label{lmm:R1R2}
-  From \eqref{eq:departR1R2},  by \cref{lmm:sumSij13}, \cref{lmm:Ri-I5-1}  and \cref{lmm:Ri-I5-2}   we get for \(i=1, 2\)
+  From \eqref{eq:departR1R2},  by \cref{lmm:sumSij13}, \cref{lmm:Ri-I5-1} Case 1 2,  we get for \(i=1, 2\)
   \begin{equation}
     \begin{aligned}
       |R_i| \le C h^2 x_i^{-\alpha/2-2/r} +
@@ -1113,55 +1113,111 @@ For \(i=1, 2\).
     
     
     \textcolor{blue}{
-  \begin{lemma} \label{lmm:Vijleh2xma22r}
-    There exists a constant \(C=C(T, \alpha, r, \|u\|_{\beta+\alpha}^{(-\alpha/2)})\)  such that for \(3\le i \le N-1, \lceil\frac{i}{2}\rceil+1 \le j \le \min\{2i-1, N-1\}\),
-    \begin{equation} \label{eq:estimateVij-int}
+  \begin{lemma} \label{lmm:estimate-Sij}
+    There exists a constant \(C=C(T, \alpha, r, \|u\|_{\beta+\alpha}^{(-\alpha/2)})\)  such that 
+    \paragraph{Case 1}
+    For \(3\le i \le N-1, \lceil\frac{i}{2}\rceil+1 \le j \le \min\{2i-1, N-1\}\),
+    \begin{equation} \label{eq:estimate-Sij-int}
       \begin{aligned}
-        |S_{ij}| & \le C h^2 \int_{0}^{1}  \frac{|y_j^\theta - x_i|^{1-\alpha}}{\Gamma(2-\alpha)} x_i^{\alpha/2-2-2/r} h_j d\theta \\
-        & =  C h^2 \int_{x_{j-1}}^{x_{j}}  \frac{|y - x_i|^{1-\alpha}}{\Gamma(2-\alpha)} x_i^{\alpha/2-2-2/r} dy
+        |S_{ij}| & \le C h_j^2 x_i^{\alpha/2-4} \int_{0}^{1}  \frac{|y_j^\theta - x_i|^{1-\alpha}}{\Gamma(2-\alpha)}  h_j d\theta \\
+        & =  C h^2 x_i^{\alpha/2-2-2/r} \int_{x_{j-1}}^{x_{j}}  \frac{|y - x_i|^{1-\alpha}}{\Gamma(2-\alpha)}  dy
       \end{aligned}
     \end{equation}
-  \end{lemma}
-  }
-  \begin{proof}
-    Since \cref{lmm:Vij-int}, by \(x_i \simeq x_j\), \cref{lmm:hilexi}, \cref{lmm:d2Pj-itle}, \cref{lmm:dQj-itle}, we get the result immediately.
-  \end{proof}
-  
-  
-\textcolor{blue}{
-  \begin{theorem} \label{Ri-I3-2lN/2}
-    There exists a constant \(C=C(T, \alpha, r, \|u\|_{\beta+\alpha}^{(-\alpha/2)})\) such that for \(3\le i \le N-1, k=\lceil\frac{i}{2}\rceil\),
+    Thus,
     \begin{equation}
        \sum_{j=k+1}^{\min\{2i-1, N-1\}} \left|S_{ij} \right| \le C h^2 x_i^{-\alpha/2-2/r}
     \end{equation}
-  \end{theorem}
-}
-\begin{proof}
-  By \cref{lmm:Vijleh2xma22r}, while \(x_k \simeq x_i \simeq x_{\min\{2i-1, N-1\}}\), we have
-  \begin{equation}
-  \begin{aligned}
-    \sum_{k+1}^{\min\{2i-1, N-1\}} |S_{ij}|
-    &\le C h^2 \int_{x_{k}}^{x_{\min\{2i-1, N-1\}}} \frac{|y - x_i|^{1-\alpha}}{\Gamma(2-\alpha)} x_i^{\alpha/2-2-2/r} dy    \\
-        % & = C h^2 \left( \frac{|x_{k} - x_i|^{2-\alpha}}{\Gamma(3-\alpha)} + \frac{|x_{\min\{2i-1, N-1\}} - x_i|^{2-\alpha}}{\Gamma(3-\alpha)}\right) x_i^{\alpha/2-2-2/r} \\
-        & \le C h^2 x_{i}^{2-\alpha} x_i^{\alpha/2-2-2/r} = C h^2 x_i^{-\alpha/2-2/r}
-      \end{aligned}
+    \paragraph{Case 2}
+    For \(N/2 \le i \le N\), \(j=N, N+1\),
+    since \(\theta(1-\theta) h_j \le |y_j^\theta - x_i|\), we have
+    \begin{equation}
+      |S_{ij}| \le C (h^3 + (r-1)h^2) (T-x_i+h_N)^{1-\alpha}
     \end{equation}
+    \paragraph{Case 3}
+    For \(N/2 \le i \le N\), \(N+2 \le j \le 2N-\lceil\frac{N}{2}\rceil\),
+    \begin{equation}
+      |S_{ij}| \le C h^2 \int_{x_{j-1}}^{x_{j}} |y - x_i|^{1-\alpha} + (r-1)|y - x_i|^{-\alpha} dy
+    \end{equation}
+    Thus,
+    \begin{equation}
+      \sum_{j=N+2}^{2N-\lceil\frac{N}{2}\rceil} \left|S_{ij} \right| 
+      \le C h^2 + C (r-1) h^2 (T-x_i + h_N)^{1-\alpha}
+    \end{equation}
+    Expecially, for \(i=N\), the estimate of \(\lceil\frac{N}{2}\rceil+1 \le j \le N-1\) is symmetric with \(N+2 \le j \le 2N-\lceil\frac{N}{2}\rceil\).
+  \end{lemma}
+  }
+\begin{proof}
+  Since \cref{lmm:Vij-int}, by \(x_i \simeq x_j\), \cref{lmm:hilexi}, \cref{lmm:d2Pj-itle}, \cref{lmm:dQj-itle}
+
+  For Case 1,
+  we get the first result immediately.
+  While \(x_k \simeq x_i \simeq x_{\min\{2i-1, N-1\}}\), we have
+  \begin{equation}
+    \begin{aligned}
+      \sum_{k+1}^{\min\{2i-1, N-1\}} |S_{ij}|
+      &\le C h^2 x_i^{\alpha/2-2-2/r} \int_{x_{k}}^{x_{\min\{2i-1, N-1\}}} \frac{|y - x_i|^{1-\alpha}}{\Gamma(2-\alpha)}  dy    \\
+        % & = C h^2 \left( \frac{|x_{k} - x_i|^{2-\alpha}}{\Gamma(3-\alpha)} + \frac{|x_{\min\{2i-1, N-1\}} - x_i|^{2-\alpha}}{\Gamma(3-\alpha)}\right) x_i^{\alpha/2-2-2/r} \\
+        & \le C h^2  x_i^{\alpha/2-2-2/r}x_{i}^{2-\alpha} = C h^2 x_i^{-\alpha/2-2/r}
+    \end{aligned}
+  \end{equation}
+
+  For Case 2,
+  \begin{equation}
+    \begin{aligned}
+      |S_{ij}| &\le C (h_j^3 + (r-1)h_j^2) \int_{0}^1 |y_j^\theta - x_i|^{1-\alpha} d\theta \\
+      &= C (h_j^2 + (r-1)h_j) \int_{x_{j-1}}^{x_{j}} |y - x_i|^{1-\alpha} dy \\
+    \end{aligned}
+  \end{equation}
+  however, 
+  \begin{equation}
+    \begin{aligned}
+      \int_{x_{j-1}}^{x_{j}} |y - x_i|^{1-\alpha} dy 
+      &= \frac{1}{2-\alpha} \left((x_j-x_i)^{2-\alpha} - (x_{j-1}-x_i)^{2-\alpha}\right) \\
+      &\simeq h_N (|x_j - x_i + h_N)^{1-\alpha}
+    \end{aligned}
+  \end{equation}
+
+  For Case 3,
+  \begin{equation}
+    \begin{aligned}
+      |S_{ij}| &\le C h_j^2 \int_{0}^1 \left(|y_j^\theta - x_i|^{1-\alpha}+ (r-1)|y_j^\theta - x_i|^{-\alpha}\right) h_j d\theta  \\
+      &\le C h^2 \int_{x_{j-1}}^{x_{j}} |y - x_i|^{1-\alpha} + (r-1)|y - x_i|^{-\alpha} dy \\
+    \end{aligned}
+  \end{equation}
+  Thus,
+  \begin{equation}
+    \begin{aligned}
+      \sum_{j=N+2}^{2N-\lceil\frac{N}{2}\rceil} |S_{ij}| 
+      &= C h^2 \int_{x_{N+1}}^{x_{2N-\lceil\frac{N}{2}\rceil}} |y - x_i|^{1-\alpha} + (r-1)|y - x_i|^{-\alpha} dy \\
+      & \le C h^2 ( T^{2-\alpha} + (r-1) (T-x_i + h_N)^{1-\alpha} )  
+    \end{aligned}
+  \end{equation}
 \end{proof}
 
 Now we study \(I_2, I_4\).
 
   \begin{lemma} \label{lmm:Ri-I2-I4-ilN/2}
-    There exists a constant \(C=C(T, \alpha, r, \|u\|_{\beta+\alpha}^{(-\alpha/2)})\) such that for \(3\le i \le N, k=\lceil\frac{i}{2}\rceil\),
+    There exists a constant \(C=C(T, \alpha, r, \|u\|_{\beta+\alpha}^{(-\alpha/2)})\) such that
+    \paragraph{Case 1}
+    For \(3\le i \le N, k=\lceil\frac{i}{2}\rceil\),
     \begin{equation}
       I_2 = \frac{2}{h_i + h_{i+1}}
       \left( \frac{1}{h_{i+1}} (T_{i+1, k} +  T_{i+1, k+1})
       - (\frac{1}{h_{i}}+\frac{1}{h_{i+1}}) T_{i,k} \right) \le C h^2 x_i^{-\alpha/2-2/r}
     \end{equation}
-    And for \(3\le i < N/2\),
+    \paragraph{Case 2}
+    For \(3\le i < N/2\),
     \begin{equation}
       I_4 = \frac{2}{h_i + h_{i+1}}
       \left( \frac{1}{h_{i}} (T_{i-1, 2i} +  T_{i-1, 2i-1})
       - (\frac{1}{h_{i}}+\frac{1}{h_{i+1}}) T_{i,2i} \right) \le C h^2 x_i^{-\alpha/2-2/r}
+    \end{equation}
+    \paragraph{Case 3}
+    For \(N/2 \le i \le N\), \(m=N-\lceil\frac{N}{2}\rceil+1\),
+    \begin{equation}
+      I_4 = \frac{2}{h_i + h_{i+1}}
+      \left( \frac{1}{h_{i}} (T_{i-1, m} +  T_{i-1, m-1})
+      - (\frac{1}{h_{i}}+\frac{1}{h_{i+1}}) T_{i,m} \right) \le C h^2
     \end{equation}
   \end{lemma}
   \begin{proof}
@@ -1187,7 +1243,7 @@ Now we study \(I_2, I_4\).
     \begin{equation}
       \frac{2}{h_i + h_{i+1}} \frac{1}{h_{i+1}} |T_{i+1, k} -  T_{i, k}| \le C h^2 x_i^{-\alpha/2-2/r}
     \end{equation}
-    From \cref{def:Tij}, \cref{lmm:Dyj} and normalizzation, we have
+    From \cref{def:Tij}, \cref{lmm:Dyj} and normalization, we have
     \begin{equation}
       \begin{aligned}
         \frac{1}{h_{i+1}} (T_{i+1, k+1} -  T_{i, k})
@@ -1215,237 +1271,37 @@ Now we study \(I_2, I_4\).
   \end{proof}
 
 
-Now combine \cref{lmm:R1R2}, \cref{lmm:Ri-I1}, \cref{lmm:Ri-I2-I4-ilN/2}, \cref{Ri-I3-2lN/2}, \cref{lmm:Ri-I5-1} and \cref{lmm:Ri-I5-2}, we get \cref{thm:Ri-ilessN/2}.
 
-% For \(3\le i < N/2\)
-% \begin{equation}
-%   \begin{aligned}
-%     R_i & = I_1 + I_2 + I_3 + I_4 + I_5 \\
-%         & \le C h^2 x_i^{-\alpha/2-2/r}
-%     + \begin{cases}
-%         C h^2 x_i^{-\alpha/2-2/r} ,              & r\alpha/2 + r -2 > 0 \\
-%         C h^2 (x_i^{-1-\alpha} \ln(i) + \ln(N)), & r\alpha/2 + r -2 = 0 \\
-%         C h^{r\alpha/2+r} x_i^{-1-\alpha},       & r\alpha/2 + r -2 < 0
-%       \end{cases}
-%   \end{aligned}
-% \end{equation}
+Now we have study everr part to prove \cref{thm:Ri-ilessN/2} and \cref{thm:Ri-N/2le-i-leN}.
 
-% Combine with \(i=1, 2\), 
-% we get for \(1\le i< N/2\)
-% \begin{equation}
-%   R_i \le \begin{cases}
-%     C h^2 x_i^{-\alpha/2-2/r} ,              & r\alpha/2 + r -2 > 0 \\
-%     C h^2 (x_i^{-1-\alpha} \ln(i) + \ln(N)), & r\alpha/2 + r -2 = 0 \\
-%     C h^{r\alpha/2+r} x_i^{-1-\alpha},       & r\alpha/2 + r -2 < 0
-%   \end{cases}
-% \end{equation}
+For \(1\le i < N/2\), combine 
+\cref{lmm:R1R2}, 
+\cref{lmm:Ri-I1}, 
+\cref{lmm:Ri-I2-I4-ilN/2} Cases 1 2, 
+\cref{lmm:estimate-Sij} Case 1, 
+\cref{lmm:Ri-I5-1} Case 1 2, 
+we get \cref{thm:Ri-ilessN/2}.
 
 
-
-
-For \(N/2 \le i < N \), we take \(m=2N - \lceil\frac{N}{2}\rceil+1\).
+For \(N/2 \le i \le N \), we take \(m=2N - \lceil\frac{N}{2}\rceil+1\).
 And depart \(I_3\) to three parts:
- 
-\begin{equation} \label{eq:I3-depart}
+ \begin{equation} \label{eq:I3-depart}
   \begin{aligned}
     I_3 &= \sum_{j=k+1}^{m} S_{ij}
          = \sum_{j=k+1}^{N-1} + \sum_{j=N}^{N+1} + \sum_{j=N+2}^{m-1}  S_{ij}  \\
-        &= I_3^1 + I_3^2 + I_3^3
   \end{aligned}
 \end{equation}
-
-
-We have estimated \(I_3^1\) in \cref{Ri-I3-2lN/2}.
-
-
-
-
-
-
-
-
-Combine \cref{lmm:estimate-Pij-theta-j>N}, \cref{lmm:estimate-Qij-theta-j>N} and formula \cref{lmm:Vij-int} for \(i\le N-1, j \ge N+2\), we have
-\begin{lemma}
-  There exists a constant \(C=C(T, \alpha, r, \|u\|_{\beta+\alpha}^{(-\alpha/2)})\) such that
-  For \(N/2\le i \le N-1\), \(N+2 \le j \le 2N-\lceil\frac{N}{2}\rceil+1\)
-  \begin{equation}
-    \begin{aligned}
-      S_{ij} \le & C h^2 \int_{x_{j-1}}^{x_{j}} \Big(  |y-x_i|^{1-\alpha} + (r-1) |y-x_i|^{-\alpha}  \Big) dy
-    \end{aligned}
-  \end{equation}
-\end{lemma}
+combine 
+\cref{lmm:Ri-I1}, 
+\cref{lmm:Ri-I2-I4-ilN/2} Cases 1 3, 
+\cref{lmm:estimate-Sij}, 
+\cref{lmm:Ri-I5-1} Case 1 2, 
+we get \cref{thm:Ri-N/2le-i-leN}.
 
 
 
 
-\textcolor{blue}{
-  We can esitmate \(I_3^3\) Now.
-  \begin{lemma} \label{thm:Ri-I5-i<N}
-    There exists a constant \(C=C(T, \alpha, r, \|u\|_{\beta+\alpha}^{(-\alpha/2)})\) such that
-    For \(N/2\le i \le N-1\),  we have
-    \begin{equation}
-      I_3^3 = \sum_{j=N+2}^{2N-\lceil\frac{N}{2}\rceil} S_{ij} \le C h^2 + C(r-1) h^2 \textcolor{red}{|T-x_{i-1}|^{1-\alpha}}
-    \end{equation}
-  \end{lemma}
-}
-\begin{proof}
-  \begin{equation}
-    \begin{aligned}
-      I_3^3 = & \sum_{j=N+2}^{2N-\lceil\frac{N}{2}\rceil} S_{ij}                                   \\
-      \le   & C h^2 \int_{x_{N+1}}^{x_{2N-\lceil\frac{N}{2}\rceil}}
-      \Big(|y-x_i|^{1-\alpha} + (r-1) |y-x_i|^{-\alpha}\Big) dy    \\
-    \end{aligned}
-  \end{equation}
-  % For \(x_{N+1}\le y \le x_{2N-i}=2T-x_i\),
-  % \begin{equation}
-  %   y-x_i \simeq T-x_{i} \simeq T-x_{i-1}
-  % \end{equation}
-  % and
-  % \begin{equation}
-  %   2T-x_{i} - y + h_N \le 2T-x_i - x_{N+1} + h_N = T-x_i \le T-x_{i-1}
-  % \end{equation}
-  % So
-  % \begin{equation}
-  %   \begin{aligned}
-  %     J_1 & \le C h^2 (x_{2N-i} - x_{N+1}) (|T-x_{i-1}|^{1-\alpha} + (r-1)|T-x_{i-1}|^{-\alpha}) \\
-  %         & \le C h^2 (|T-x_{i-1}|^{2-\alpha} + (r-1)|T-x_{i-1}|^{1-\alpha})                     \\
-  %         & \le C h^2 + C(r-1)  h^2 |T-x_{i-1}|^{1-\alpha}
-  %   \end{aligned}
-  % \end{equation}
-  % Otherwise, when \(x_{2N-i} \le y \le x_{2N-\lceil\frac{N}{2}\rceil}\)
-  \begin{equation}
-    \begin{aligned}
-      I_3^3 & \le C h^2 \int_{x_{N+1}}^{x_{2N-\lceil\frac{N}{2}\rceil}} |y-x_i|^{1-\alpha} + (r-1)|y-x_i|^{-\alpha}    \\
-          & \le C h^2 ( T^{2-\alpha} + (r-1)|x_{N+1}-x_i|^{1-\alpha})                             \\
-          & = C h^2 + C(r-1) h^2 |T-\delta(x_{i}) + h_N|^{1-\alpha}
-    \end{aligned}
-  \end{equation}
-  % Summarizes two cases, we get the result.
-\end{proof}
-
-
-
-
-
-
-
-
-
-
-
-
-
-\newpage
-For \(I_3^2\), we have
-\textcolor{red}{
-  \begin{theorem} \label{thm:Ri-I4-i<N}
-    There exists a constant \(C=C(T, \alpha, r, \|u\|_{\beta+\alpha}^{(-\alpha/2)})\) such that, for \(N/2\le i\le N-1\)
-    \begin{equation}
-      \begin{aligned}
-        V_{iN} & = \frac{2}{h_i + h_{i+1}}
-        \left( \frac{1}{h_{i+1}} T_{i+1, N+1}
-        - (\frac{1}{h_{i}}+\frac{1}{h_{i+1}}) T_{i,N}
-        +  \frac{1}{h_{i}} T_{i-1, N-1} \right)                   \\
-               & \le C h^2 + C (r-1) h^2 |T - x_{i-1}|^{1-\alpha}
-      \end{aligned}
-    \end{equation}
-  \end{theorem}
-}
-
-
-
-\newpage
-\(I_4, I_5\) is easy. Similar with \cref{lmm:Ri-I2-I4-ilN/2} and \cref{lmm:Ri-I5-2}, we have
-
-
-Now we can conclude a part of  the theorem \cref{thm:Ri-N/2le-i-leN}  at the beginning of this section.
-
-By
-\cref{lmm:Ri-I1},
-\cref{lmm:Ri-I2-I4-ilN/2},
-\cref{lmm:Ri-I3-i<N},
-\cref{thm:Ri-I4-i<N},
-\cref{thm:Ri-I5-i<N},
-\cref{thm:Ri-I6-ileN},
-\cref{lmm:Ri-I5-2},
-we have
-\begin{theorem}
-  \label{thm:estimate-Ri-i<N}
-  there exists a constant \(C=C(T, \alpha, r, \|u\|_{\beta+\alpha}^{(-\alpha/2)})\) such that
-  for \(N/2\le i\le N-1\),
-  \begin{equation}
-    \begin{aligned}
-      R_i & = I_1 + I_2 + I_3^1 + I_3^2 + I_3^3 + I_4 + I_5      \\
-          & \le C(r-1) h^2|T-x_{i-1}|^{1-\alpha}  + \begin{cases}
-                                                      C h^2,             & \alpha/2-2/r+1 > 0 \\
-                                                      C h^2 \ln(N) ,     & \alpha/2-2/r+1 = 0 \\
-                                                      C h^{r\alpha/2+r}, & \alpha/2-2/r+1 < 0
-                                                    \end{cases}
-    \end{aligned}
-  \end{equation}
-\end{theorem}
-
-
-and with
-\cref{thm:estimate-Ri-i<N}
-we prove the \cref{thm:Ri-N/2le-i-leN}
-
-
-
-% \subsection{Truncation error}
-
-% combine \cref{lmm:trunerror2}, \cref{thm:Ri-ilessN/2} and \cref{thm:Ri-N/2le-i-leN} we get
-% For \(1\le i \le N\)
-% \begin{equation}
-%   \begin{aligned}
-%     R_i \le C_2(r-1)h^2 |T-x_{i-1}|^{1-\alpha} + \begin{cases}
-%                                                    C_1 h^2 x_i^{-\alpha/2-2/r},             & r\alpha/2+r-2 > 0 \\
-%                                                    C_1 h^2 (x_i^{-1-\alpha}\ln(i)+ \ln(N)), & r\alpha/2+r-2 = 0 \\
-%                                                    C_1 h^{r\alpha/2+r} x_i^{-1-\alpha/2},   & r\alpha/2+r-2 < 0
-%                                                  \end{cases}
-%   \end{aligned}
-% \end{equation}
-
-% But,
-% \begin{gather}
-%   h^2 x_i^{-\alpha/2-2/r}
-%   \le T^{\alpha/2-2/r} \begin{cases}
-%     h^2 x_i^{-\alpha},           & \text{if} \quad  r\alpha/2-2 \ge 0 \\
-%     h^{r\alpha/2} x_i^{-\alpha}, & \text{if} \quad  r\alpha/2-2 \le 0
-%   \end{cases}    \\
-%   h^{r\alpha/2+r} x_i^{-1-\alpha} \le T^{-1} h^{r\alpha/2} x_i^{-\alpha}, \quad \text{if} \quad  r\alpha/2-2 \le 0    \\
-% \end{gather}
-
-% And when \(r\alpha/2 - 2 = -r < 0\),
-% \begin{equation}
-%   \begin{aligned}
-%     h^2 x_i^{-1-\alpha} \ln(i) h^{-r\alpha/2} x_i^{\alpha}
-%      & = h^r x_i^{-1} \ln(i)                   \\
-%      & = T^{-1} \frac{\ln(i)}{i^r} \le C(T, r)
-%   \end{aligned}
-% \end{equation}
-% and
-% \begin{equation}
-%   h^2 \ln(N) h^{-r\alpha/2} x_i^{\alpha} = h^r \ln(N) x_i^{\alpha} \le T^{\alpha} \frac{\ln(N)}{N^r} \le C(T, \alpha, r)
-% \end{equation}
-
-% So for \(1\le i \le N\),
-% \begin{equation}
-%   \begin{aligned}
-%     R_i \le C_2(r-1)h^2 |T-x_{i-1}|^{1-\alpha} + C_1 h^{\min\{\frac{r\alpha}{2}, 2\}} x_i^{-\alpha}
-%   \end{aligned}
-% \end{equation}
-% And for \(i\ge N\), it is symmetric for \(i\) and \(2N-i\).
-
-% The proof of \cref{thm:truncation-error} completed.
-
-
-
-
-
-
-
-\newpage
+% \newpage
 \section{Convergence analysis}
 \label{sec:proof-convergence}
 
@@ -1541,12 +1397,12 @@ Now we have
 
 
 Let
-\begin{equation} \label{def:hat}
-  \delta(x) = \begin{cases}
-    x, & 0<x\le T \\ 2T-x , & T<x<2T
-  \end{cases}
-\end{equation}
-And define
+% \begin{equation} \label{def:hat}
+%   \delta(x) = \begin{cases}
+%     x, & 0<x\le T \\ 2T-x , & T<x<2T
+%   \end{cases}
+% \end{equation}
+% And define
 \begin{equation}
   G = \text{diag}(\delta(x_1), ..., \delta(x_{2N-1}))
 \end{equation}
