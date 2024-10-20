@@ -67,14 +67,14 @@
 For \(\Omega=(0,2T)\), \(1<\alpha<2\),
 \begin{equation} \label{eq:equation}
   \begin{cases}
-    (-\Delta)^{\frac{\alpha}{2}} u(x) = f(x), & x \in \Omega                      \\
-    u(x) = 0,                                 & x \in \mathbb{R} \setminus \Omega
+    (-\Delta)^{\frac{\alpha}{2}} u(x) = f(x) & x \in \Omega,                    \\
+    u(x) = 0                                 & x \in \mathbb{R} \setminus \Omega,
   \end{cases}
 \end{equation}
 where
 \begin{equation} \label{def:operator}
   (-\Delta)^{\frac{\alpha}{2}} u(x) = -\frac{\partial^\alpha u}{\partial |x|^\alpha}
-  = -\kappa_\alpha \frac{d^2}{dx^2} \int_\Omega \frac{|x-y|^{1-\alpha}}{\Gamma(2-\alpha)}u(y) dy
+  =  \frac{-\kappa_\alpha}{\Gamma(2-\alpha)} \frac{d^2}{dx^2} \int_\Omega |x-y|^{1-\alpha}u(y) dy
 \end{equation}
 \begin{equation} \label{def:kappa}
   \kappa_\alpha = -\frac{1}{2\cos(\alpha\pi/2)} > 0
@@ -98,8 +98,8 @@ where
 
 \begin{equation} \label{def:xj}
   x_i = \begin{cases}
-    T \left(\frac{i}{N}\right)^r   ,      & 0 \le i \le N  \\
-    2T - T \left(\frac{2N-i}{N}\right)^r, & N \le i \le 2N
+    T \left(\frac{i}{N}\right)^r      & 0 \le i \le N,  \\
+    2T - T \left(\frac{2N-i}{N}\right)^r & N \le i \le 2N,
   \end{cases}
 \end{equation}
 where $r\ge 1$ .
@@ -197,55 +197,127 @@ we use the standard notation \(C^\beta(\bar{\Omega}),  C^\beta(\mathbb{R})\), et
 and their norms and seminorms.
 When no confusion is possible, 
 we use the notation \(C^\beta (\Omega)\) to refer to \(C^{k,\beta'} (\Omega)\), where \(k\) is the greatest integer such that \(k<\beta\) and where \(\beta' = \beta - k\).
-The Hölder spaces \(C^{k, \beta'}(\Omega)\) are defined as the subspaces of \(C^k(\Omega)\) consisting of functions whose \(k\)-th order partial derivatives are locally Hölder continuous\cite{Gilbarg1977} with exponent \(\beta'\) in \(\Omega\),
+The Hölder spaces \(C^{k, \beta'}(\Omega)\) are defined as the subspaces of \(C^k(\Omega)\) consisting of functions whose \(k\)-th order partial derivatives are locally Hölder continuous \cite[p.\,52]{MR473443} with exponent \(\beta'\) in \(\Omega\),
 where \(C^k(\Omega)\) is the set of all \(k\)-times continuously differentiable functions on open set \(\Omega\).
 
 
-
-\textcolor{red}{
-\begin{definition}[delta dependent norm \cite{ROSOTON2014275}]
-  \begin{equation} \label{def:delta}
-    \delta(x) = dist(x, \partial \Omega) = \begin{cases}
-      x, & 0 < x \le T \\ 2T-x, &  T < x < 2T
-    \end{cases} , \quad x \in \Omega
-  \end{equation}
-  \begin{equation}
-    \delta(x, y) = \min\{\delta(x), \delta(y)\}, \quad x,y \in \Omega
-  \end{equation}
+For \(x\in \Omega=(0,2T)\), define
+\begin{equation} \label{def:delta}
+  \delta(x) = \text{dist}(x, \partial \Omega) = 
+  \begin{cases}
+    x    & 0 < x \le T, \\ 
+    2T-x & T < x < 2T, \\
+  \end{cases},
+\end{equation} 
+and \( \delta(x, y) = \min\{\delta(x), \delta(y)\}\). 
+Then we have the following \(\delta\)-dependent H\"older norms.
+\begin{definition}[\(\delta\)-dependent H\"older norms \cite{ROSOTON2014275}]
+  \label{def:delta-Holder-norm}
+  % Let \(\beta>0\)  
+  Let \(\beta = k + \beta'>0\) and \(\sigma\ge -\beta\), with \(k\) integer and \(\beta' \in (0, 1]\).
+  For \(w \in C^\beta(\Omega) = C^{k,\beta'}(\Omega)\), define the seminorm
+  \begin{equation*}
+    |w|_{\beta}^{(\sigma)} 
+    = \sup_{x,y\in \Omega} \left( \delta(x,y)^{\beta+\sigma}\frac{|w^{(k)}(x)-w^{(k)}(y)|}{|x-y|^{\beta'}} \right).
+  \end{equation*}
+  For \(\sigma > -1\), we also define the norm \(\|\cdot\|_{\beta}^{(\sigma)}\) as follows: 
+  in case that \(\sigma \ge 0\),
+  \begin{equation*}
+    \|w\|_{\beta}^{(\sigma)} 
+    = \sum_{l=0}^{k} \sup_{x\in \Omega} \left( \delta(x)^{l+\sigma} |w^{(l)}(x)| \right) + |w|_{\beta}^{(\sigma)},
+  \end{equation*}
+  while for \(-1 < \sigma<0\),
+  \begin{equation*}
+    \|w\|_{\beta}^{(\sigma)}
+    = \|w\|_{C^{-\sigma}(\bar{\Omega})} + \sum_{l=1}^{k} \sup_{x\in \Omega} \left( \delta(x)^{l+\sigma} |D^l w(x)| \right) + |w|_{\beta}^{(\sigma)}.
+  \end{equation*}
 \end{definition}
-}
 
-\textcolor{blue}{
-  \begin{lemma} \label{thm:regularity-f}
-    Let \(f\in C^\beta(\Omega), \beta>2\) be such that \(\|f\|_{\beta}^{(\alpha/2)}<\infty\), then for \(l=0, 1, 2\)
-    \begin{equation}
-      |f^{(l)}(x)| \le \|f\|_{\beta}^{(\alpha/2)}
-        \delta(x)^{-l-\alpha/2}
-    \end{equation}
-  \end{lemma}
-}
+
+\begin{lemma} \cite[pp.\,276-277]{ROSOTON2014275}
+  \label{thm:Xacier1.2}
+  Assume \(f\in L^\infty(\Omega)\). Let \(u\) be a solution of \cref{eq:equation}.
+  Then, \(u\in C^{\alpha/2}(\mathbb{R})\) and  \(u/\delta^{\alpha/2}\in C^\sigma(\bar{\Omega})\) for some \(\sigma \in (0, 1-\alpha/2)\), with
+  \begin{equation*}
+    \|u\|_{C^{\alpha/2}(\mathbb{R})}\le C\|f\|_{L^\infty(\Omega)}
+    \quad \text{and} \quad 
+    \|u/\delta^{\alpha/2}\|_{C^\sigma(\bar{\Omega})} \le C \|f\|_{L^\infty(\Omega)},
+  \end{equation*}
+  for some positive constant \(C=C(\Omega, \alpha)\).
+\end{lemma}
+
+In particular, if \(f\in L^\infty(\Omega)\), then
+\begin{equation} \label{eq:reg-u-0}
+  |u(x)| \le C \delta(x)^{\alpha/2} \quad \text{for all } x\in \Omega.
+\end{equation}
 
 \textcolor{purple}{
-  \begin{theorem}[Regularity up to the boundary \cite{ROSOTON2014275}] \label{thm:regularity}
-    Let \(\Omega\) be a bounded domain, and \(\beta>0\) be such that neither \(\beta\) nor \(\beta+\alpha\) is an integer. Let \(f \in C^\beta (\Omega)\) be such that \( \|f\|_{\beta}^{(\alpha/2)} < \infty\), and \(u \in C^{\alpha/2} (\mathbb{R}^n)\) be a solution of \cref{eq:equation}. Then, \(u \in C^{\beta+\alpha} (\Omega)\) and
+  \begin{lemma}\cite[Proposition 1.4]{ROSOTON2014275} \label{thm:regularity}
+    Let \(\Omega\) be a bounded domain, and \(\beta>0\) be such that neither \(\beta\) nor \(\beta+\alpha\) is an integer. Let \(f \in C^\beta (\Omega)\) be such that \( \|f\|_{\beta}^{(\alpha/2)} < \infty\), and \(u \in C^{\alpha/2} (\mathbb{R})\) be a solution of \cref{eq:equation}. Then, \(u \in C^{\beta+\alpha} (\Omega)\) and
     \begin{equation}
-      \|u\|_{\beta+\alpha}^{(-\alpha/2)} \le C \left( \|u\|_{C^{\alpha/2}(\mathbb{R})} + \|f\|_{\beta}^{(\alpha/2)} \right)
+      \|u\|_{\beta+\alpha}^{(-\alpha/2)} \le C \left( \|u\|_{C^{\alpha/2}(\mathbb{R})} + \|f\|_{\beta}^{(\alpha/2)} \right),
     \end{equation}
-    where \(C\) is a constant depending only on \(\Omega\), \(\alpha\), and \(\beta\).
-  \end{theorem}
-  \begin{corollary} \label{cor:regularity-u}
-    Let $u$ be a solution of \eqref{eq:equation} where $f\in L^\infty(\Omega)$ and $\|f\|_{\beta}^{(\alpha/2)} < \infty$. Then, for any $x\in\Omega$ and \(l=0, 1, 2, 3, 4\)
-    \begin{equation}
-      |u^{(l)}(x)| \le \|u\|_{\beta+\alpha}^{(-\alpha/2)} 
-        \delta(x)^{\alpha/2-l}
-    \end{equation}
-  \end{corollary}
+    for some positive constant \(C=C(\Omega, \alpha, \beta)\).
+  \end{lemma}
 }
+% \begin{corollary} \label{cor:regularity-u}
+%   Assume that $f\in L^\infty(\Omega) \cap C^\beta(\Omega)$, where $\beta>0$ be such that neither \(\beta\) nor \(\beta+\alpha\) is an integer.
+%   Let $u$ be a solution of \eqref{eq:equation}. 
+%   Then \(u\in C^{\beta+\alpha}(\Omega)\), with 
+%   \begin{equation*}
+%     \|u\|_{\beta+\alpha}^{(-\alpha/2)} \le C \left( \|f\|_{L^\infty(\Omega)} + \|f\|_{\beta}^{(\alpha/2)}  \right),
+%   \end{equation*}
+%   for some positive constant \(C=C(\Omega, \alpha, \beta)\).
+% \end{corollary}
+
+By defination of \(\delta\)-dependent H\"older norms, we have following result obviusly.
+\begin{lemma} \label{thm:regularity-u}
+  Let $\beta=4-\alpha+\gamma$ with \(0<\gamma<\alpha-1\).
+  Assume that $f\in C^\beta(\Omega)$ be such that \( \|f\|_{\beta}^{(\alpha/2)} < \infty\),
+  % be such that neither \(\beta\) nor \(\beta+\alpha\) is an integer.
+  and $u\in C^{\alpha/2}(\mathbb{R})$ be a solution of \eqref{eq:equation}. 
+  Then 
+  for \(l=0, 1, 2, 3, 4\)
+  \begin{equation}
+    |u^{(l)}(x)| \le C 
+    \delta(x)^{\alpha/2-l}.
+  \end{equation}
+  where \(C=C(\Omega, \alpha, \beta, f)\).
+\end{lemma}
+\begin{proof}
+  Our hypotheses imply that \(2<\beta<3\), and \(4<\beta+\alpha<5\).
+  By \cref{thm:regularity}, we have
+  \begin{equation*}
+    \|u\|_{\beta+\alpha}^{(-\alpha/2)} \le C \left( \|u\|_{C^{\alpha/2}(\mathbb{R})} + \|f\|_{\beta}^{(\alpha/2)}  \right).
+  \end{equation*}
+  And by \cref{def:delta-Holder-norm}
+  \begin{equation*}
+    \sum_{l=1}^{4} \sup_{x\in \Omega} \left( \delta(x)^{l-\alpha/2} |w^{(l)}(x)| \right) \le C \left( \|u\|_{C^{\alpha/2}(\mathbb{R})} + \|f\|_{\beta}^{(\alpha/2)}  \right),
+  \end{equation*}
+  which is desired result \(l=1, 2, 3, 4\). 
+  The case \(l = 0\) is covered by \cref{eq:reg-u-0}.
+\end{proof}
+
+\begin{lemma} \label{thm:regularity-f}
+  Let $\beta=4-\alpha+\gamma$ with \(0<\gamma<\alpha-1\).
+  Assume that $f\in C^\beta(\Omega)$ be such that \( \|f\|_{\beta}^{(\alpha/2)} < \infty\), then for \(l=0, 1, 2\)
+  \begin{equation}
+    |f^{(l)}(x)| \le C
+    \delta(x)^{-l-\alpha/2}.
+  \end{equation}
+  where \(C=C(\Omega, \alpha, \beta, f)\).
+\end{lemma}
+\begin{proof}
+  By \cref{def:delta-Holder-norm}, with \(2<\beta<3\)
+  \begin{equation*}
+    \sum_{l=0}^{2} \sup_{x\in \Omega} \left( \delta(x)^{l+\alpha/2} |f^{(l)}(x)| \right) \le \|f\|_{\beta}^{(\alpha/2)}.
+  \end{equation*}
+\end{proof}
+ 
 
 And in this paper bellow, without special instructions, we allways assume that
-\begin{equation} \label{cond:regularity}
-  f \in L^\infty(\Omega)\cap C^{\beta}(\Omega) \quad \text{and} \quad \|f\|_{\beta}^{(\alpha/2)} < \infty, \text{  with  } \alpha + \beta > 4
-\end{equation}
+$\beta=4-\alpha+\gamma$ with \(0<\gamma<\alpha-1\),
+$f\in C^\beta(\Omega)$ be such that \( \|f\|_{\beta}^{(\alpha/2)} < \infty\), and solution \(u\in C^{\alpha/2}(\mathbb{R})\). 
 
 
 
