@@ -273,14 +273,13 @@ In particular, if \(f\in L^\infty(\Omega)\), then
 By defination of \(\delta\)-dependent H\"older norms, we have following result obviusly.
 \begin{lemma} \label{thm:regularity-u}
   Let $\beta=4-\alpha+\gamma$ with \(0<\gamma<\alpha-1\).
-  Assume that $f\in C^\beta(\Omega)$ be such that \( \|f\|_{\beta}^{(\alpha/2)} < \infty\),
+  Assume that $f\in L^\infty(\Omega) \cap C^\beta(\Omega)$ be such that \( \|f\|_{\beta}^{(\alpha/2)} < \infty\),
   % be such that neither \(\beta\) nor \(\beta+\alpha\) is an integer.
-  and $u\in C^{\alpha/2}(\mathbb{R})$ be a solution of \eqref{eq:equation}. 
+  and $u$ be a solution of \eqref{eq:equation}. 
   Then 
-  for \(l=0, 1, 2, 3, 4\)
   \begin{equation}
     |u^{(l)}(x)| \le C 
-    \delta(x)^{\alpha/2-l}.
+    \delta(x)^{\alpha/2-l}, \quad l=0, 1, 2, 3, 4,
   \end{equation}
   where \(C=C(\Omega, \alpha, \beta, f)\).
 \end{lemma}
@@ -290,9 +289,9 @@ By defination of \(\delta\)-dependent H\"older norms, we have following result o
   \begin{equation*}
     \|u\|_{\beta+\alpha}^{(-\alpha/2)} \le C \left( \|u\|_{C^{\alpha/2}(\mathbb{R})} + \|f\|_{\beta}^{(\alpha/2)}  \right).
   \end{equation*}
-  And by \cref{def:delta-Holder-norm}
+  And by \cref{def:delta-Holder-norm} and \cref{thm:Xacier1.2}
   \begin{equation*}
-    \sum_{l=1}^{4} \sup_{x\in \Omega} \left( \delta(x)^{l-\alpha/2} |w^{(l)}(x)| \right) \le C \left( \|u\|_{C^{\alpha/2}(\mathbb{R})} + \|f\|_{\beta}^{(\alpha/2)}  \right),
+    \sum_{l=1}^{4} \sup_{x\in \Omega} \left( \delta(x)^{l-\alpha/2} |w^{(l)}(x)| \right) \le C \left( \|f\|_{L^\infty(\Omega)} + \|f\|_{\beta}^{(\alpha/2)}  \right),
   \end{equation*}
   which is desired result \(l=1, 2, 3, 4\). 
   The case \(l = 0\) is covered by \cref{eq:reg-u-0}.
@@ -300,10 +299,10 @@ By defination of \(\delta\)-dependent H\"older norms, we have following result o
 
 \begin{lemma} \label{thm:regularity-f}
   Let $\beta=4-\alpha+\gamma$ with \(0<\gamma<\alpha-1\).
-  Assume that $f\in C^\beta(\Omega)$ be such that \( \|f\|_{\beta}^{(\alpha/2)} < \infty\), then for \(l=0, 1, 2\)
+  Assume that $f\in C^\beta(\Omega)$ be such that \( \|f\|_{\beta}^{(\alpha/2)} < \infty\), then
   \begin{equation}
     |f^{(l)}(x)| \le C
-    \delta(x)^{-l-\alpha/2}.
+    \delta(x)^{-\alpha/2-l}, \quad l=0, 1, 2,
   \end{equation}
   where \(C=C(\Omega, \alpha, \beta, f)\).
 \end{lemma}
@@ -314,10 +313,10 @@ By defination of \(\delta\)-dependent H\"older norms, we have following result o
   \end{equation*}
 \end{proof}
  
-
+\label{cond:regular}
 And in this paper bellow, without special instructions, we allways assume that
 $\beta=4-\alpha+\gamma$ with \(0<\gamma<\alpha-1\),
-$f\in C^\beta(\Omega)$ be such that \( \|f\|_{\beta}^{(\alpha/2)} < \infty\), and solution \(u\in C^{\alpha/2}(\mathbb{R})\). 
+$f\in L^\infty(\Omega) \cap C^\beta(\Omega)$ be such that \( \|f\|_{\beta}^{(\alpha/2)} < \infty\). 
 
 
 
@@ -334,15 +333,17 @@ deferred to \cref{sec:proof-truncation-error} and \cref{sec:proof-convergence}.
 \textcolor{blue}{
   Let's denote \(h=\frac{1}{N}\), we have
   \begin{theorem}[Local Truncation Error] \label{thm:truncation-error}
-    If $u(x)$ is a solution of the equation \eqref{eq:equation} where $f$ satisfy the regular condition \eqref{cond:regularity}, then there exists 
-    $C_1(T,\alpha, r, \|u\|_{\beta+\alpha}^{(-\alpha/2)}, \|f\|_{\beta}^{(\alpha/2)})$ and 
-    $C_2(T,\alpha, r,  \|u\|_{\beta+\alpha}^{(-\alpha/2)})$, such that
-    the truncation error \cref{def:truncation_error} satisfies
+    Let $\alpha \in (1,2)$ and  $f\in L^\infty(\Omega) \cap C^\beta(\Omega)$ be such that \( \|f\|_{\beta}^{(\alpha/2)} < \infty\), where $\beta=4-\alpha+\gamma$ with \(0<\gamma<\alpha-1\).
+    % and $u$ be a solution of \eqref{eq:equation}. 
+    Then,
+    % there exists 
+    % $C=C(T,\alpha, r, f)$ such that
+    % the truncation error \cref{def:truncation_error} satisfies
     \begin{equation} \label{eq:truncation-error}
       \begin{aligned}
-        |\tau_i| :=& | -\kappa_\alpha D_h^{\alpha} \Pi_hu(x_i) - f(x_i) | \\
-        \le & C_1  h^{\min\{\frac{r\alpha}{2}, 2\}} \delta(x_i)^{-\alpha}
-            + C_2(r-1) h^2 (T-\delta(x_{i}) + h_N)^{1-\alpha}
+        |\tau_i| &= | -\kappa_\alpha D_h^{\alpha} \Pi_hu(x_i) - f(x_i) | \\
+        &\le  C  h^{\min\{\frac{r\alpha}{2}, 2\}} \delta(x_i)^{-\alpha}
+            + C(r-1) h^2 (T-\delta(x_{i}) + h_N)^{1-\alpha}.
       \end{aligned}
     \end{equation}
   \end{theorem}
@@ -351,22 +352,14 @@ deferred to \cref{sec:proof-truncation-error} and \cref{sec:proof-convergence}.
 
 \textcolor{blue}{
   \begin{theorem}[Global Error]\label{thm:convergence}
-    The discrete equation \eqref{def:discrete_equation} has sulotion
-    and there exists a positive constant $C=C(T,\alpha, r, \|u\|_{\beta+\alpha}^{(-\alpha/2)}, \|f\|_{\beta}^{(\alpha/2)})$
-    such that the error between the numerial solution $U$ with the exact solution $u(x_i)$ satisfies
+    Let $\alpha \in (1,2)$ and  $f\in L^\infty(\Omega) \cap C^\beta(\Omega)$ be such that \( \|f\|_{\beta}^{(\alpha/2)} < \infty\), where $\beta=4-\alpha+\gamma$ with \(0<\gamma<\alpha-1\).
+    Let \(u_i\) be the approximate solution of \(u(x_i )\) computed by the discretization scheme \cref{eq:equation_matrix}. Then,
     \begin{equation} \label{eq:error}
-      \max_{1\le i \le 2N-1} |u_i - u(x_i)| \le C h^{\min\{\frac{r\alpha}{2}, 2\}}
+      \max_{1\le i \le 2N-1} |u_i - u(x_i)| \le C h^{\min\{\frac{r\alpha}{2}, 2\}}.
     \end{equation}
-    That means the numerial method has convergence order ${\min\{\frac{r\alpha}{2}, 2\}}$.
+    % That means the numerial method has convergence order ${\min\{\frac{r\alpha}{2}, 2\}}$.
   \end{theorem}
 }
-
-\textcolor{red}{
-\begin{remark}
-  ...
-\end{remark}
-}
-
 
 
 
@@ -512,27 +505,27 @@ the proof of \cref{thm:truncation-error} completed.
 
 We prove \cref{thm:Ri-ilessN/2} and \cref{thm:Ri-N/2le-i-leN} in next subsections.
 
-\subsection{Outlines and \textcolor{purple}{Mesh Transport Functions}}
+\subsection{\textcolor{purple}{Grid Mapping Functions}}
 \label{subsec:mesh-transport-functions}
 
 For convience, let's denote
 \begin{definition}
   \begin{equation} \label{def:Tij}
-    T_{ij} = \int_{x_{j-1}}^{x_{j}} (u(y) - \Pi_hu(y)) \frac{|y-x_i|^{1-\alpha}}{\Gamma(2-\alpha)} dy, \quad i=0, \cdots ,2N,\; j=1, \cdots , 2N
+    T_{ij} = \int_{x_{j-1}}^{x_{j}} (u(y) - \Pi_hu(y)) \frac{|y-x_i|^{1-\alpha}}{\Gamma(2-\alpha)} dy, \quad i=0, \cdots ,2N,\; j=1, \cdots , 2N.
   \end{equation}
   Also, we denote vertical difference quotients of \(T_{ij}\)
   \begin{equation} \label{def:Vij}
     \begin{aligned}
       V_{ij} &=  \frac{2}{h_{i} + h_{i+1}}  \left( \frac{1}{h_{i}}  T_{i-1,j} - \left(\frac{1}{h_{i}} + \frac{1}{h_{i+1}}\right)  T_{i,j} + \frac{1}{h_{i+1}} T_{i+1,j} \right)  \\
-      &= \int_{x_{i-1}}^{x_{i}} (u(y) - \Pi_hu(y)) D_h^2 K_y(x_i) dy
+      &= \int_{x_{i-1}}^{x_{i}} (u(y) - \Pi_hu(y)) D_h^2 K_y(x_i) dy.
     \end{aligned}
   \end{equation}
-  And skew difference quotients of \(T_{ij}\)
+  Then by \cref{eq:Ri} \(R_i = \sum_{j=1}^{2N} V_{ij}\).
+  And define skew difference quotients of \(T_{ij}\)
   \begin{equation} \label{def:Sij}
-    S_{ij} =  \frac{2}{h_{i} + h_{i+1}}  \left( \frac{1}{h_{i}}  T_{i-1,j-1} - \left(\frac{1}{h_{i}} + \frac{1}{h_{i+1}}\right)  T_{i,j} + \frac{1}{h_{i+1}} T_{i+1,j+1} \right)
+    S_{ij} =  \frac{2}{h_{i} + h_{i+1}}  \left( \frac{1}{h_{i}}  T_{i-1,j-1} - \left(\frac{1}{h_{i}} + \frac{1}{h_{i+1}}\right)  T_{i,j} + \frac{1}{h_{i+1}} T_{i+1,j+1} \right).
   \end{equation}
 \end{definition}
-then \(R_i = \sum_{j=1}^{2N} V_{ij}\).
 
 \par
 Our main idea is to depart \(R_i\) by \(V_{ij}\) and \(S_{ij}\).
@@ -594,7 +587,7 @@ Since \(j\) changes with \(i\) at indices of elements in \(S_{ij}\) by \cref{def
 
 
 \textcolor{purple}{
-\begin{definition} [Mesh Transport Functions]
+\begin{definition} [Grid Mapping Functions]
   For \(1\le i, j \le 2N-1\).
   \begin{equation} \label{def:yij}
     y_{i,j}(x) = \begin{cases}
@@ -1647,8 +1640,39 @@ So, we can get
 
 The convergency has been proved.
 
-Remarks:
 
+\begin{remark}[Weaker regularity on the derivatives of \(u\) and \(f\)]
+  Suppose that the bound of \cref{thm:regularity-u} and \cref{thm:regularity-f}
+  is replaced by the more general weaker regularity bound
+  \textcolor{red}{
+    \begin{theorem}[Local Truncation Error]
+    Let $\alpha \in (1,2)$ and  $f\in L^\infty(\Omega) \cap C^\beta(\Omega)$ be such that \( \|f\|_{\beta}^{(\alpha/2)} < \infty\), where $\beta=4-\alpha+\gamma$ with \(0<\gamma<\alpha-1\).
+    % and $u$ be a solution of \eqref{eq:equation}. 
+    Then,
+    % there exists 
+    % $C=C(T,\alpha, r, f)$ such that
+    % the truncation error \cref{def:truncation_error} satisfies
+    \begin{equation} 
+      \begin{aligned}
+        |\tau_i| &= | -\kappa_\alpha D_h^{\alpha} \Pi_hu(x_i) - f(x_i) | \\
+        &\le  C  h^{\min\{\frac{r\alpha}{2}, 2\}} \delta(x_i)^{-\alpha}
+        + C(r-1) h^2 (T-\delta(x_{i}) + h_N)^{1-\alpha}.
+      \end{aligned}
+    \end{equation}
+  \end{theorem}
+  }
+  
+  \textcolor{red}{
+    \begin{theorem}[Global Error]
+    Let $\alpha \in (1,2)$ and  $f\in L^\infty(\Omega) \cap C^\beta(\Omega)$ be such that \( \|f\|_{\beta}^{(\alpha/2)} < \infty\), where $\beta=4-\alpha+\gamma$ with \(0<\gamma<\alpha-1\).
+    Let \(u_i\) be the approximate solution of \(u(x_i )\) computed by the discretization scheme \cref{eq:equation_matrix}. Then,
+    \begin{equation} 
+      \max_{1\le i \le 2N-1} |u_i - u(x_i)| \le C h^{\min\{\frac{r\alpha}{2}, 2\}}.
+    \end{equation}
+    % That means the numerial method has convergence order ${\min\{\frac{r\alpha}{2}, 2\}}$.
+  \end{theorem}
+  }
+\end{remark}
 
 
 
