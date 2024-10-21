@@ -42,21 +42,19 @@
 \contentsline {proof}{{Proof}{13}{}}{20}{proof.213}%
 \contentsline {theorem}{{Theorem}{4.4}{}}{21}{theorem.222}%
 \contentsline {proof}{{Proof}{14}{}}{21}{proof.224}%
-\contentsline {remark}{{Remark}{4.5}{Weaker regularity on the derivatives of \(u\) and \(f\)}}{22}{theorem.233}%
-\contentsline {theorem}{{Theorem}{4.6}{Local Truncation Error}}{22}{theorem.234}%
-\contentsline {theorem}{{Theorem}{4.7}{Global Error}}{22}{theorem.236}%
-\contentsline {lemma}{{Lemma}{A.1}{}}{23}{theorem.242}%
-\contentsline {proof}{{Proof}{15}{}}{23}{proof.245}%
-\contentsline {lemma}{{Lemma}{A.2}{}}{24}{theorem.247}%
-\contentsline {proof}{{Proof}{16}{}}{24}{proof.250}%
-\contentsline {lemma}{{Lemma}{A.3}{}}{24}{theorem.251}%
-\contentsline {lemma}{{Lemma}{A.4}{}}{24}{theorem.253}%
-\contentsline {lemma}{{Lemma}{A.5}{}}{25}{theorem.257}%
-\contentsline {lemma}{{Lemma}{B.1}{}}{25}{theorem.260}%
-\contentsline {proof}{{Proof}{17}{}}{25}{proof.262}%
-\contentsline {lemma}{{Lemma}{B.2}{}}{25}{theorem.265}%
-\contentsline {proof}{{Proof}{18}{}}{25}{proof.267}%
-\contentsline {lemma}{{Lemma}{B.3}{}}{26}{theorem.272}%
-\contentsline {proof}{{Proof}{19}{}}{26}{proof.274}%
-\contentsline {lemma}{{Lemma}{B.4}{}}{26}{theorem.275}%
-\contentsline {proof}{{Proof}{20}{}}{26}{proof.280}%
+\contentsline {remark}{{Remark}{4.5}{Weaker regularity on the derivatives of \(u\)}}{22}{theorem.233}%
+\contentsline {lemma}{{Lemma}{A.1}{}}{24}{theorem.240}%
+\contentsline {proof}{{Proof}{15}{}}{24}{proof.243}%
+\contentsline {lemma}{{Lemma}{A.2}{}}{25}{theorem.245}%
+\contentsline {proof}{{Proof}{16}{}}{25}{proof.248}%
+\contentsline {lemma}{{Lemma}{A.3}{}}{25}{theorem.249}%
+\contentsline {lemma}{{Lemma}{A.4}{}}{25}{theorem.251}%
+\contentsline {lemma}{{Lemma}{A.5}{}}{26}{theorem.255}%
+\contentsline {lemma}{{Lemma}{B.1}{}}{26}{theorem.258}%
+\contentsline {proof}{{Proof}{17}{}}{26}{proof.260}%
+\contentsline {lemma}{{Lemma}{B.2}{}}{26}{theorem.263}%
+\contentsline {proof}{{Proof}{18}{}}{26}{proof.265}%
+\contentsline {lemma}{{Lemma}{B.3}{}}{27}{theorem.270}%
+\contentsline {proof}{{Proof}{19}{}}{27}{proof.272}%
+\contentsline {lemma}{{Lemma}{B.4}{}}{27}{theorem.273}%
+\contentsline {proof}{{Proof}{20}{}}{27}{proof.278}%
