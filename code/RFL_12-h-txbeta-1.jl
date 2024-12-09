@@ -31,24 +31,24 @@ function Gridmesh(Ω, N, r)
     return grid
 end
 
-σ = 4//10
-σ = BigFloat(σ)
+# σ = 4//10
+# σ = BigFloat(σ)
 
-α = 1 + 5 // 10
+α = 1 + 1 // 10000
 α = BigFloat(α)
 
 @show α
 
-β = σ - α
-β = BigFloat(β)
+# β = σ - α
+# β = BigFloat(β)
 function f(x, α)
-    return x^β #* exp(x) 
+    return x^2   #x^β #* exp(x) 
 end
 
 
 
 
-r =  2 / σ
+r =  1 
 Ω = (0, 1)
 
 
@@ -56,7 +56,7 @@ UN = []
 
 
 
-for N ∈ [50, 100, 200, 400, 800]
+for N ∈ [100, 200]
 
 # function num_err(Ω, r, α, N)
 
@@ -110,17 +110,20 @@ end
 # dU1 = maximum(abs.(UN[2][2:2:end] - UN[1]))
 # dU2 = maximum(abs.(UN[3][4:4:end] - UN[2][2:2:end]))
 
-RE = []
-for k=1:length(UN)-1
-    append!(RE, maximum(abs.(UN[k+1][2:2:end] - UN[k])))
-end
+# RE = []
+# for k=1:length(UN)-1
+#     append!(RE, maximum(abs.(UN[k+1][2:2:end] - UN[k])))
+# end
 
+
+RE = UN[2][2:2:end] - UN[1]
+plot(RE .|> abs)
 # log2.(dU1 ./ dU2)
-@show RE
+# @show RE
 
-for k=1:length(RE)-1
-    @show log2(RE[k] / RE[k+1])
-end
+# for k=1:length(RE)-1
+#     @show log2(RE[k] / RE[k+1])
+# end
 
 
 # (abs(UN[2][100]-UN[1][50]) / abs(UN[3][200]-UN[2][100])) |> log2

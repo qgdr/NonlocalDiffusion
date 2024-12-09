@@ -1,0 +1,1284 @@
+
+\RequirePackage{fix-cm}
+%
+%\documentclass{svjour3}                     % onecolumn (standard format)
+%\documentclass[smallcondensed]{svjour3}     % onecolumn (ditto)
+\documentclass[smallextended]{svjour3}       % onecolumn (second format)
+%\documentclass[twocolumn]{svjour3}          % twocolumn
+%
+\smartqed  % flush right qed marks, e.g. at end of proof
+%
+\usepackage{graphicx}
+ \usepackage{mathptmx}      % use Times fonts if available on your TeX system
+% insert here the call for the packages your document requires
+%\usepackage{latexsym}
+% etc.
+% please place your own definitions here and don't use \def but
+% \newcommand{}{}
+% Insert the name of "your journal" with
+\journalname{Advances in Computational Mathematics}
+%
+\def\enorm#1{\|#1\|_2}
+\def\norm#1{\|#1\|}
+
+\graphicspath{{Fig/}}
+
+\usepackage{amsfonts,amssymb} %%%add
+\usepackage{amsmath} %%%add
+\usepackage{color} %%%add
+\usepackage{epsfig,mathrsfs} %%%add
+\usepackage{diagbox}
+\usepackage{multirow}
+
+\newcommand{\tcb}[1]{\textcolor{blue}{#1}}
+\newcommand{\tcr}[1]{\textcolor{red}{#1}}
+\newcommand{\tcm}[1]{\textcolor{magenta}{#1}}
+
+\newcommand{\comm}[1]{\textcolor{red}{#1}}
+\def\d{\,\mathrm{d}}
+\usepackage{booktabs}
+\usepackage{mathtools}
+
+\begin{document}
+
+\title{Error Analysis of A Collocation Method on Graded Meshes for A Fractional Laplacian Problem%\thanks{Grants or other notes
+%about the article that should go on the front page should be
+%placed here. General acknowledgments should be placed at the end of the article.}
+}
+\titlerunning{COLLOCATION METHOD FOR FRACTIONAL LAPLACIAN}        % if too long for running head
+
+\author{Minghua Chen$^1$\and Weihua Deng$^1$\and Chao Min$^1$\and Jiankang Shi$^1$\and
+        Martin Stynes$^2$ %etc.
+}
+
+\authorrunning{M. CHEN, W. DENG, C. MIN, J. SHI AND M. STYNES} % if too long for running head
+
+\institute{Minghua Chen \at
+              \email{chenmh@lzu.edu.cn}        
+           \and
+           Weihua Deng\at
+           \email{dengwh@lzu.edu.cn}
+           \and
+           Chao Min\at
+           \email{minch21@lzu.edu.cn}
+           \and
+           Jiankang Shi\at      
+           \email{shijk20@lzu.edu.cn}
+           \and     
+           Martin Stynes \at
+           \email{m.stynes@csrc.ac.cn}              
+%\address{
+\and \at
+$^1$School of Mathematics and Statistics, Gansu Key Laboratory of Applied Mathematics and Complex Systems, Lanzhou University, Lanzhou 730000, P.R. China %}
+\and \at
+%\address{
+$^2$Applied and Computational Mathematics Division, Beijing Computational Science Research
+Center, Beijing 100094, China %}
+}
+\date{Received: date / Accepted: date}
+
+\maketitle
+
+\begin{abstract}
+The numerical solution of a 1D fractional Laplacian boundary value problem is studied. Although the fractional Laplacian is one of the most important and  prominent nonlocal operators, its numerical analysis is challenging, partly because the problem's solution has in general a weak singularity at the boundary of the domain.  To solve the problem numerically, we use piecewise linear collocation on a mesh that is graded to handle the boundary singularity.  A rigorous analysis yields a bound on the maximum nodal error which shows how the order of convergence of the method depends on the grading of the mesh; hence, one can determine the optimal mesh grading.
+Numerical results are presented that confirm the sharpness of the error analysis.
+\keywords{fractional Laplacian\and collocation method\and graded meshes\and error analysis}
+% \PACS{PACS code1 \and PACS code2 \and more}
+\subclass{65R30}
+\end{abstract}
+
+\section{Introduction}\label{Se:intro}
+	Nonlocal diffusion problems have been used to model a number of scientific phenomena in various applied fields. Evidence of anomalous diffusion processes has been found,  for example, in biology, nerve cells, particle systems, image processing, coagulation models, mathematical finance and ground-water solute transport \cite{Andreu:10}.
+One of the fundamental nonlocal diffusion operators is the fractional Laplacian,
+which from a probabilistic point of view corresponds to the infinitesimal generator of a stable L\'{e}vy process \cite{ABBM2018,Bertoin:96,Getoor1961}.
+	
+	
+ The fractional Laplacian $\left(-\Delta\right)^{\frac{\alpha}{2}}$ with $0<\alpha<2$ can be defined in several equivalent ways \cite{Kwa:17} on the entire space $ \mathbb{R}^n$. For example, 
+ one of its predominant  definitions is as a hypersingular integral operator: 	
+%Our paper analyzes a collocation method on  a graded mesh for the numerical solution of 
+%the fractional Laplacian boundary value problem
+%	\begin{equation*}
+%		{\rm (IFL)}~~~~~~\left\{ \begin{split}	
+%			\left(-\Delta\right)^{\frac{\alpha}{2}}u(x)&=f(x)	\quad	{\rm for}~~x\in \Omega, \\	
+%			u& =0	~~~~~~\,~	{\rm for}~~ x\in \mathbb{R} \setminus\Omega,
+%		\end{split} \right.
+%	\end{equation*}
+%where  $\alpha\in (0,2)$ is constant and the domain $\Omega \subset\mathbb{R}^n$ for some $n\ge 1$. 
+\begin{gather*}
+(-\Delta)^{\frac{\alpha}{2}} u(x)=C_{n,\alpha} \,\,{\rm P.V.} \int_{\mathbb{R}^n}
+		{\frac{u\left( x \right) -u\left( y \right)}{\left| x-y \right|^{n+\alpha}}dy} \tag{$*$}
+\end{gather*}
+with the constant
+\[
+C_{n,\alpha}=\frac{\alpha2^{\alpha-1}\Gamma\left(\frac{n+\alpha}{2}\right)}{\pi^{n/2}\Gamma(1-\alpha/2)}
+ 	= \frac{\alpha}{2\cos(\alpha\pi/2)\Gamma(1-\alpha)}.
+\]
+Alternatively, it can be defined  as a pseudo-differential operator  via the Fourier transform 
+\[\mathcal{F}[\left(-\Delta\right)^{\frac{\alpha}{2}}u](\xi)=|\xi|^\alpha\mathcal{F}[u](\xi),\]
+or in terms of the Riesz (left and right Riemann-Liouville) fractional derivative 
+\[(-\Delta)^{\frac{\alpha}{2}} u(x)=\frac{{_{\tcr{-\infty}}}D_x^\alpha u(x)+{_x}D_{\tcr{+\infty}}^\alpha u(x)}{2\cos(\alpha \pi/2)},~~~\tcr{\alpha\neq 1 }.\]
+%\tcr{
+%Note that another fractional Laplacian is the regional definition:
+%\begin{equation*}
+%(-\Delta_{\rm regional})^{\alpha/2} u(x) = C_{n,\alpha} \,\,{\rm P.V.} \int_{\Omega}
+%		{\frac{u\left( x \right) -u\left( y \right)}{\left| x-y \right|^{n+\alpha}}dy}.
+%\end{equation*}
+%The domain of this operator $(-\Delta_{\rm regional})^{\alpha/2}$ consists of functions defined on $\Omega$, rather than $R^n$, %which is different with the integral fractional Laplacian ($*$), even if $u(x)=0$ for $x\in \mathbb{R}^n\ \Omega$, see Remark 2.3 in %\cite{LPM:20}.
+%}
+%\frac{a_D_x^\alpha u(x)+x_D_b^\alpha u(x)}{2\cos(\alpha \pi/2)}
+	
+\tcr{While the  fractional Laplacian definitions above are equivalent on the domain~$\mathbb{R}^n$, they are not equivalent
+when the domain~$\Omega$ is  a bounded subset of~$\mathbb{R}^n$. In the present paper we shall use the definition ($*$);
+then $x\in\Omega$ but the integral in~($*$) is still over all of~$\mathbb{R}^n$.}
+The integral fractional Laplacian ($*$) is one of the most important and  prominent nonlocal operators, but unfortunately it poses a significant challenge in the numerical analysis~\cite{CSW:21,D'Elia:13,HuangO:14}  of the problem
+	\begin{equation*}
+		{\rm (IFL)}~~~~~~\left\{ \begin{split}	
+			\left(-\Delta\right)^{\frac{\alpha}{2}}u(x)&=f(x)	~~~	{\rm for}~~x\in \Omega, \\	
+			u& =0	~~~~~~\,~~	{\rm for}~~ x\in \mathbb{R} \setminus\Omega.
+		\end{split} \right.
+	\end{equation*}
+	These difficulties arise partly because typical solutions $u$ of (IFL)
+ have a weak singularity at the boundary; for example in the special case where $\Omega$ is a bounded interval $(a,b)\subset\mathbb{R}$ and $f\equiv 1$, the exact solution of (IFL) is \cite{Getoor1961,HuangO:14,RosOtonSerra:14}
+\begin{equation}\label{uf1}
+		u(x)=\frac{2^{-\alpha} \varGamma \left( \frac{1}{2} \right)}{\varGamma \left( 1+\frac{\alpha}{2} \right) \varGamma \left( \frac{1+\alpha}{2} \right)} \left[ (x-a)\left( b-x \right) \right] ^{\frac{\alpha}{2}}.
+\end{equation}
+This leads to a severe order reduction for many numerical  methods \cite{D'Elia:13,HuangO:14}.
+
+Nevertheless, significant progress has been made in the numerical solution of (IFL) using finite element methods (FEMs) based on 
+globally continuous piecewise-linear polynomials, as we now describe.
+On uniform meshes, $\mathcal{O}\left(h^{1/2}\right)$ convergence in $L^2(\mathbb{R}^{n})$ is proved in~\cite{D'Elia:13}.
+On graded meshes, $\mathcal{O}\left(h|\log h|\right)$ convergence in $H^{\frac{\alpha}{2}}(\mathbb{R}^{n})$    is established in~\cite{Acosta:17} for the case $1<\alpha<2$, but---see \cite[Remark~4.13]{Acosta:17}---it is not straightforward to extend this result to $0<\alpha<1$.
+Subsequently, superlinear convergence in $L^2(\mathbb{R}^{n})$  is proved  in~\cite{BLN:21} via an Aubin-Nitsche duality argument. 
+For \emph{local errors} on proper subdomains $\Omega'$ of~$\Omega$, second-order convergence in $L^2(\Omega')$  has been  observed  in numerical experiments~\cite{FKM:22}.
+Furthermore, numerical experiments \cite{CSW:21}  demonstrate second-order accuracy in the discrete $L^\infty(\mathbb{R}^{n})$ norm  on a suitably graded mesh for the 1D case $n=1$, but no proof of this result is known.
+Additionally, we note that $hp$-finite element methods have been investigated in~\cite{FMMS22,FMM22,FM21}. 
+%\tcr{In  \cite{BN:23}, A piecewise-linear approximation on graded bisection meshes which is different meshes with this work.}
+\tcr{A piecewise-linear FEM on adaptive graded meshes obtained by simplex bisection is analysed in~\cite{BN:23}; these meshes are different from our graded mesh below.}
+
+An alternative numerical approach is to develop a finite difference method (FDM) based on numerical quadrature with piecewise-linear polynomials; this natural technique has attracted much interest~\cite{HW:22,HuangO:14}.
+For instance, a quadrature-based FDM for solving the 1D fractional Laplacian problem was proposed in~\cite{HuangO:14}. 
+The numerical solution obtained from this method is $\mathcal{O}\left(h^{2-\alpha}\right)$ accurate in the 
+discrete $L^\infty(\mathbb{R}^{n})$ norm if the solution is  sufficiently smooth, 
+while this accuracy reduces to  $\mathcal{O}\left(h^{\alpha/2}\right)$ for (IFL) 
+in the case $f\equiv 1$ (so $u$ has a boundary singularity as shown in~\eqref{uf1}).
+In \cite{DHZ:18}, an accuracy of  $\mathcal{O}\left(h^{2}\right)$  in the discrete $L^\infty(\mathbb{R}^{n})$ norm has been proved 
+by a novel FDM  while assuming that the true solution is smooth, but the method exhibits a  severe order reduction if  $f\equiv 1$. 
+ Inspired by \cite{HuangO:14},  $\mathcal{O}\left(|\log h|h^{2-\alpha/2}\right)$ convergence  for $0<\alpha<2$ and  $\mathcal{O}\left(h^{\alpha}\right)$ for $\alpha\leq 4/3$ is proved  \cite{HW:22} in the discrete $L^{\infty}(\mathbb{R}^{n})$ norm on graded grids for $n=1,2$ by means of a discrete barrier function.
+	
+To solve numerically an integral equation such as (IFL), collocation methods are the simplest to implement \cite{ZhangGJ:16}. 
+Note that a variant of integral  fractional Laplacian ($*$)  is studied in \cite{ZhangGJ:16}, namely 
+\[L_{\delta}^\alpha(x) = \int_{a-\delta}^{b+\delta}{\frac{u\left( x \right) -u\left( y \right)}{\left| x-y \right|^{1+\alpha}}\,dy}
+\ \text{ for }x\in (a,b),\]
+with a horizon parameter $\delta\in [0,\infty)$.
+Here,  $\mathcal{O}\left( h^{2-\alpha}\right) $  convergence in the discrete $L^\infty$ norm on uniform meshes  is proved
+ \cite[Theorem 10]{ZhangGJ:16} for $0<\alpha<2$ and piecewise linear  collocation, provided that the exact solution belongs to $C^2[a,b]$.
+It is interesting to note that this discrete $L^\infty$ norm convergence order reduces to $\mathcal{O}\left(h\right)$ 
+when $-1<\alpha<0$ and $\delta=0$, even for smooth solutions \cite[Theorem 4.2]{CQSW:2021}.
+Nevertheless, the error analysis is complicated. 
+
+Throughout this paper, we shall consider the 1D case ($n=1$) with $0<\alpha<1$.
+	(In fact our approach can be extended to the case $1<\alpha<2$, but is then much more involved
+	and will be reported  in a separate paper.)
+	For simplicity, we remove the constant coefficient $C_{n,\alpha}$ factor from (IFL).
+	Thus, setting $\Omega = (a,b)$ with $-\infty < a < b <\infty$, the problem that we study is
+	\begin{equation}\label{add1.1}
+		\left\{
+		\begin{split}
+			Lu(x)&=f(x) \quad	{\rm for}~x\in \Omega, \\
+			u\left( x \right) &=0 ~~~~\,\quad {\rm for}~x\in \mathbb{R} \setminus\Omega,
+		\end{split} \right.
+	\end{equation}
+with the nonlocal operator
+\[
+Lu(x) = {\rm P.V.} \int_{\mathbb{R}}{\frac{u\left( x \right) -u\left( y \right)}{\left| x-y \right|^{1+\alpha}}\,dy}.
+\]
+
+Typical solutions of \eqref{add1.1} have weak singularities at $x=a$ and $x=b$ (see Section~\ref{sec:regularity} below), but to the best of our knowledge, no published research takes into account the boundary layer in~$u$ when proving bounds on the errors in 
+collocation solutions.
+This gap in the research is the motivation for our work.
+
+The paper is structured as follows. In Section~\ref{sec:method} we define our collocation method and establish some properties of the associated matrix. Regularity of the true solution is discussed in Section~\ref{sec:regularity}. The truncation error of the method is analysed in detail in Section~\ref{sec:error}, leading to our main convergence result (Theorem~\ref{thm:globalcgce}). Numerical results are presented in Section~\ref{sec:numerical} to confirm the sharpness of our error analysis and to discuss in more detail the behaviour of our method. Finally, Section~\ref{sec:conclusion} gives a brief conclusion.
+
+	
+
+	
+	
+	%
+	%
+	\section{Collocation method and numerical schemes}\label{sec:method}
+Recall that $\Omega=(a,b)$.  Partition $\Omega$ by the graded mesh 
+	\begin{equation*}
+		\pi_h: x_{0}=a<x_{1}<x_{2}<\dots<x_{2N-1}<x_{2N}=b,
+	\end{equation*}
+where we set
+\begin{equation}\label{add2.1}
+x_j=
+\begin{cases}	
+	a+\frac{b-a}{2}\left( \frac{j}{N} \right) ^r &\text{for } j=0,1,\dots ,N,\\	
+	b-\frac{b-a}{2}\left( 2-\frac{j}{N} \right) ^r &\text{for } j=N+1,N+2,\dots ,2N,
+		\end{cases}
+\end{equation}
+with the user-chosen grading exponent $r\geq1$. When $r>1$, the mesh points are clustered near $x=a$ and $x=b$.
+Set $h_j=x_j-x_{j-1}$ for $j=1,2,\dots,2N$ and $h:=\max_j h_j$.
+
+Let $S^{h}$ be the space of globally continuous piecewise linear functions on the mesh~$\pi_h$ that vanish at $x=a,b$.
+In this space we choose as a basis  the standard hat functions $\left\{\phi_{j }(x) \right\}_{j=1}^{2N-1}$ defined by
+\[
+\phi_j(x)= \begin{cases}
+			\displaystyle\frac{x-x_{j-1}}{x_j-x_{j-1}} &\text{for }  x \in \left[x_{j-1}, x_{j}\right],\\
+			\displaystyle\frac{x_{j+1}-x}{x_{j+1}-x_j} &\text{for } x \in \left[x_{j}, x_{j+1}\right],\\
+			\displaystyle 0 &\text{otherwise}.
+		\end{cases}
+\]
+Then define the piecewise-linear interpolant of the true solution~$u$ to be 	
+\[
+\Pi_{h} u(x) :=\sum_{j=1}^{2N-1} u \left(x_{j}\right) \phi_{j}(x).
+\]
+
+We discretise  \eqref{add1.1} by replacing $u(x)$ by a continuous piecewise linear function 
+$u_h(x) := \sum_{j=1}^{2N-1} u_j \phi_{j}(x)$, whose nodal values $u_j$ are to be determined by collocation at each mesh point $x_i$ for $i=1,2,\dots,2N-1$: 
+\begin{equation}\label{coll1}
+L_h u_h(x_i) := \int_{\mathbb{R}} \frac{\sum_{j=1}^{2N-1} u_j\phi_j\left(x_{i}\right)
+	-\sum_{j=1}^{2N-1} u_j\phi_{j}(y)}{\left|x_{i}-y\right|^{1+\alpha}} \,dy
+	= f(x_i) =: f_i.
+\end{equation}
+Here
+\begin{equation}\label{coll2}
+L_h u_h(x_i)  = \sum_{j=1}^{2N-1} u_j \int_{\mathbb{R}}	\frac{\phi_{j}\left(x_{i}\right)-\phi_{j}(y)}
+			{\left|x_{i}-y\right|^{1+\alpha}} \,dy
+	=\sum_{j=1}^{2N-1} a_{i j}u_j,
+\end{equation}
+where   $a_{ij}:=\int_{\mathbb{R}} \left[\phi_{j}\left(x_{i}\right)-\phi_{j}(y)\right]
+	\left|x_{i}-y\right|^{-1-\alpha} \,dy$ for $i,j=1,2,\dots,2N-1$.
+
+We have replaced $Lu(x_i)=f(x_i)$ in~\eqref{add1.1} by $L_hu_h(x_i)=f(x_i)$ in~\eqref{coll1}, 
+with truncation error 
+\begin{equation}\label{trunc}
+R_i:=L_hu(x_i)-Lu(x_i) \ \text{ for } i=1,2,\dots, 2N-1, 
+\end{equation}
+where $L_hu(x_i) := \sum_{j=1}^{2N-1} a_{i j}u(x_j)$; equivalently,
+\begin{equation}\label{Lhu}
+L_hu(x_i) = L(\Pi_h u)(x_i) \ \text{ for } i=1,2,\dots, 2N-1, 
+\end{equation}
+A bound on $|R_i|$ will be derived in Section~\ref{sec:localtrunc}.
+
+The system of discrete equations specified by \eqref{coll1} and \eqref{coll2}
+ has the matrix-vector form
+	\begin{equation}\label{add2.5}
+		A U=F,
+	\end{equation}
+	where  the coefficient matrix $A$ and the vectors $U$ and $F$ are defined by
+	\[
+	A=(a_{ij})\in \mathbb{R}^{\left(2N-1\right)\times \left(2N-1\right)} , 
+	\ U=(u_1,u_2,\dots,u_{2N-1})^T, \ F=(f_1,f_2,\dots,f_{2N-1})^T.
+	\]
+	
+%	
+%	
+	\subsection{Explicit expressions for the $a_{ij}$}
+	For $j\ge i+2$,  one has
+	\begin{equation*}
+		\begin{split}
+			a_{ij}
+			&= \int_{\mathbb{R}}\frac{\phi_j(x_i)-\phi_j(y)}{\left | x_i-y \right |^{1+\alpha } }\,dy
+			= -\int_{x_{j-1}}^{x_{j+1}} \frac{\phi_j(y)}{( y-x_i )^{1+\alpha } }\,dy\\
+			&=\frac{1}{\alpha (1-\alpha )} \left [ \frac{(x_{j-1}-x_i)^{1-\alpha }}{h_{j}}- \frac{(h_{j+1}+h_{j})(x_j-x_i)^{1-\alpha }}{h_{j}h_{j+1}}+\frac{(x_{j+1}-x_i)^{1-\alpha }}{h_{j+1}} \right ].
+		\end{split}
+	\end{equation*}
+Similarly, for $j\le i-2$  we get
+	\begin{equation*}
+		a_{ij}=\frac{1}{\alpha (1-\alpha )} \left [\frac{(x_i-x_{j-1})^{1-\alpha }}{h_{j}} - \frac{(h_{j+1}+h_{j})(x_{i}-x_{j})^{1-\alpha }}{h_{j}h_{j+1}}+\frac{(x_{i}-x_{j+1})^{1-\alpha }}{h_{j+1}} \right ].
+	\end{equation*}
+	
+For $j=i+1$, one has
+	\begin{equation*}
+		\begin{split}
+			a_{ij}
+			&= \int_{\mathbb{R}}\frac{\phi_j(x_i)-\phi_j(y)}{\left | x_i-y \right |^{1+\alpha } }dy= -\int_{x_{j-1}}^{x_{j+1}} \frac{\phi_j(y)}{( y-x_i )^{1+\alpha } }dy\\
+			&=\frac{1}{\alpha (1-\alpha )} \left [  - \frac{(h_{j+1}+h_{j})(x_{j}-x_{i})^{1-\alpha }}{h_{j}h_{j+1}} +\frac{(x_{j+1}-x_i)^{1-\alpha }}{h_{j+1}} \right ],
+		\end{split}
+	\end{equation*}
+and similarly, for $j= i-1$, 
+	\begin{equation*}
+		a_{ij}=\frac{1}{\alpha (1-\alpha )} \left [ \frac{(x_i-x_{j-1})^{1-\alpha }}{h_j} - \frac{(h_{j+1}+h_{j})(x_{i}-x_{j})^{1-\alpha }}{h_{j}h_{j+1}} \right ].
+	\end{equation*}
+	
+Finally, for $j=i$ we get
+\begin{equation*}
+		\begin{split}
+			a_{ii}
+			&= \int_{\mathbb{R}}\frac{\phi_i(x_i)-\phi_i(y)}{\left | x_i-y \right |^{1+\alpha } }dy\\
+			&=\int_{\tcr{-\infty}}^{x_{i-1}} {\frac{1}{\left( x_i-y \right) ^{1+\alpha}}dy}
+				+\int_{x_{i+1}}^{\tcr{+\infty}} {\frac{1}{\left( y-x_i \right) ^{1+\alpha}}dy}
+				+\int_{x_{i-1}}^{x_{i+1}}{\frac{1 -\phi _i\left( y \right)}{\left| x_i-y \right|^{1+\alpha}}dy}\\
+			%&=\int_a^{x_{i-1}} {\frac{1}{\left( x_i-y \right) ^{1+\alpha}}dy}
+%				+\int_{x_{i+1}}^b {\frac{1}{\left( y-x_i \right) ^{1+\alpha}}dy}
+%				+\int_{x_{i-1}}^{x_{i+1}}{\frac{1 -\phi _i\left( y \right)}{\left| x_i-y \right|^{1+\alpha}}dy}\\
+			&=\frac{1}{\alpha \left( 1-\alpha \right)}\left[ \frac{\left( x_i-x_{i-1} \right) ^{1-\alpha}}{h_i}+\frac{\left( x_{i+1}-x_i \right) ^{1-\alpha}}{ h_{i+1} } \right].
+		\end{split}
+\end{equation*}
+	
+Thus, we have shown the following result. 
+	
+	\begin{lemma}\label{addLemma2.1}
+		The entries of the stiffness matrix $A=(a_{ij})\in\mathbb{R}^{\left(2N-1\right)\times \left(2N-1\right)}$ with $\alpha \in (0,1)$ can be explicitly computed by
+		\begin{equation*}
+			a_{ij}=\frac{1}{\alpha(1-\alpha)}C_{j}D_j^i
+		\end{equation*}
+		with
+		\begin{equation*}
+			C_j= \left(\frac{1}{h_{j}},-\frac{1}{h_{j}}-\frac{1}{h_{j+1}},\frac{1}{h_{j+1}}\right)
+			\ ~{\rm and}~ \ D_{j}^{i}=\left( \begin{array}{c}	\left| x_{j-1}-x_i \right|^{1-\alpha}\\	\left| x_j-x_i \right|^{1-\alpha}\\	\left| x_{j+1}-x_i \right|^{1-\alpha}\\\end{array} \right).
+		\end{equation*}
+	\end{lemma}
+	
+	
+	
+	
+\begin{lemma}\label{addLemma2.2}
+The matrix $A$ defined by \eqref{add2.5} is strictly diagonally dominant,  with positive entries on the main diagonal and negative off-diagonal entries.
+\end{lemma}
+\begin{proof}
+Fix $i\in \{1,2,\dots, 2N-1\}$. Clearly 
+		\begin{equation*}
+			a_{ii}=\frac{1}{\alpha \left( 1-\alpha \right)}\left( h_{i}^{-\alpha}+h_{i+1}^{-\alpha} \right) >0.
+		\end{equation*}
+		
+Next, consider $a_{ij}$ for  $j\ne i$.  Recalling Lemma~\ref{addLemma2.1},  one has
+		\begin{equation*}
+			\begin{split}
+				a_{ij}
+				&=\frac{1}{\alpha (1-\alpha )}\left[ \frac{\left| x_{j-1}-x_i \right|^{1-\alpha}}{h_j}- \frac{(h_{j+1}+h_{j})|x_j-x_i|^{1-\alpha }}{h_{j}h_{j+1}}
+				+\frac{\left| x_{j+1}-x_i \right|^{1-\alpha}}{h_{j+1}} \right]\\
+				&=\omega_{j} \left[ \frac{h_{j+1}}{h_{j+1}+h_{j}}\left| x_{j-1}-x_i \right|^{1-\alpha}-\left| x_j-x_i \right|^{1-\alpha}+\frac{h_j}{h_{j+1}+h_{j}}\left| x_{j+1}-x_i \right|^{1-\alpha} \right]
+			\end{split}
+		\end{equation*}
+where $\omega_{j}:=\frac{h_{j+1}+h_{j}}{\alpha (1-\alpha )h_{j}h_{j+1}}>0$.
+Now $x_{j+1}-x_i,x_{j}-x_i$ and $x_{j-1}-x_i$ all  have the same sign ($\ge 0$ or $\le 0$), hence
+		\[\frac{h_{j+1}}{h_{j+1}+h_{j}}\left| x_{j-1}-x_i \right|+\frac{h_j}{h_{j+1}+h_{j}}\left| x_{j+1}-x_i \right|=\left| x_j-x_i \right|.\]
+But $x\mapsto x^{1-\alpha}$ is a concave function  (recall that $0<\alpha<1$), so by Jensen's inequality we have
+		\begin{equation*}
+			\frac{h_{j+1}}{h_{j+1}+h_{j}}\left| x_{j-1}-x_i \right|^{1-\alpha}+\frac{h_j}{h_{j+1}+h_{j}}\left| x_{j+1}-x_i \right|^{1-\alpha}<\left| x_j-x_i \right|^{1-\alpha},
+		\end{equation*}
+and it follows that $a_{ij}<0$ for $j\ne i$.
+		
+Finally, the definition of $a_{ij}$ gives
+\begin{equation*}%\label{eq3.3}
+			\begin{split}
+&\left| a_{ii} \right| - \sum_{j=1,j\ne i}^{2N-1}{\left| a_{ij} \right|} = \sum_{j=1}^{2N-1}{a_{ij}} 
+	= \int_{\mathbb{R}}{\frac{1-\sum_{j=1}^{2N-1}{\phi _j\left( y \right)}}{\left| x_i-y \right|^{1+\alpha}}\,dy}\\
+	&= \frac{1}{\alpha \left( 1-\alpha \right)} 
+\left[  \frac{\left( x_i-a \right) ^{1-\alpha}-\left( x_i-h_1-a \right) ^{1-\alpha}}{h_1}
+	+\frac{\left( b-x_i \right) ^{1-\alpha}-\left( b-h_{2N}-x_i \right) ^{1-\alpha}}
+		{h_{2N}} \right],
+			\end{split}
+\end{equation*}
+i.e.,  $A$ is a strictly diagonally dominant matrix.
+	\end{proof}
+	
+%
+%
+\section{Regularity of the true solution}\label{sec:regularity}
+
+For any $\beta>0$, we use the standard notation $C^\beta(\bar\Omega),C^\beta(\mathbb{R})$, etc.,  for H\"older spaces and their norms and seminorms.
+
+Consider first a simple example.
+
+\begin{example}\label{exa:f=1}
+	Suppose that $f\equiv 1$ in \eqref{add1.1}. That is, consider the problem
+	\[ %begin{equation}\label{eq4.1}
+	\begin{cases}\displaystyle
+		\int_{\mathbb{R}}{\frac{v\left( x \right) -v\left( y \right)}{\left| x-y \right|^{1+\alpha}}\,dy}=1 &\text{for }	x\in \Omega,  \\[3mm]
+		v(x) =0 &\text{for } x\in\mathbb{R} \setminus \Omega,
+	\end{cases}
+	\] %end{equation}
+	where $0<\alpha <1$. The exact solution of this problem is
+	$v(x)=\varpi \left[ (x-a)\left( b-x \right) \right] ^{\alpha/2}$ for $x\in \bar\Omega$,
+	where $\varpi := \frac{\alpha }{2\varGamma \left( 1-\frac{\alpha}{2} \right) \varGamma \left( 1+\frac{\alpha}{2} \right)}$, so $v\in C^{\alpha/2}(\mathbb{R})$.
+	It is easy to see that there exists a constant $C$ such that
+	\[
+	\left|v^{(\ell)}(x)\right|\le C[(x-a)(b-x)]^{(\alpha/2)-\ell} \ \text{ for } x\in\Omega \text{ and } \ell=0,1,2.
+	\]
+\end{example}
+
+Returning now to the general problem~\eqref{add1.1}, the following results from \cite{RosOtonSerra:14} show that given sufficient regularity of the data~$f$, the solution $u$ has regularity properties similar to those of Example~\ref{exa:f=1}.
+
+Define $\delta(x):= \text{dist}(x,\partial\Omega)$ and  $\delta(x,y):= \min\{\delta(x), \delta(y)\}$ for $x,y\in\Omega$.
+
+\begin{theorem}\label{Th1}\cite[Theorem~1.2]{RosOtonSerra:14}
+	Assume that $f \in L^\infty(\Omega)$. Let $u$ be a solution of \eqref{add1.1}. Then for some $\sigma\in (0,\alpha/2)$, the function $u/\delta^{\alpha/2} \in C^\sigma(\bar\Omega)$ with
+	\[
+	\| u/\delta^{\alpha/2} \|_{C^{\sigma}(\bar\Omega)} \le C \|f\|_{L^\infty(\Omega)}
+	\]
+	for some constant $C = C(\Omega,\alpha)$.
+\end{theorem}
+
+In particular this result says that if  $f\in L^\infty(\Omega)$, then
+\begin{equation}\label{add3.1}
+	|u(x)| \le C [(x-a)(b-x)]^{\alpha/2}\  \text{ for all } x\in\bar\Omega.
+\end{equation}
+
+To bound the derivatives of $u$, we introduce some additional definitions \tcr{\cite{RosOtonSerra:14}}. For any $\beta>0$, write $\beta  = k + \beta'$ where $k$ is an integer
+and $0 < \beta' \le 1$. Given $\theta$ satisfying  \tcr{ $ -\beta\le \theta$}, define the seminorm
+\[
+|w|_\beta^{(\theta)} := \sup_{x,y,\in\Omega} \delta(x,y)^{\beta+\theta} \, \frac{\left|w^{(k)}(x) - w^{(k)}(y)\right|}{|x-y|^{\beta'}}.
+\]
+\tcr{The associated norm is defined as
+\[
+\|w\|_\beta^{(\theta)} := 
+ \sum_{\ell=0}^k \sup_{x\in\Omega} 
+\left\{ \delta(x)^{\ell+\theta} \left|w^{(l)}(x)\right|\right\} + |w|_\beta^{(\theta)}\ \text{ if } \theta\geq 0
+\]
+and  
+\[
+\|w\|_\beta^{(\theta)} := 
+ \|w\|_{C^{-\theta}(\Omega)} + \sum_{\ell=1}^k \sup_{x\in\Omega} 
+\left\{ \delta(x)^{\ell+\theta} \left|w^{(l)}(x)\right|\right\} + |w|_\beta^{(\theta)} \ \text{ if }-1<\theta<0.
+\]
+}
+
+\begin{theorem}\label{Th2}\cite[Proposition~1.4]{RosOtonSerra:14}
+	Let $\beta>0$ be such that neither $\beta$ nor $\beta+\alpha$ is an integer.
+	Let $f\in C^\beta(\Omega)$ be such that $\|f\|_\beta^{(\alpha/2)}<\infty$. Let $u\in C^{\alpha/2}(\mathbb{R})$ be a solution of~\eqref{add1.1}.
+	Then $u\in C^{\beta + \alpha}(\Omega)$ and
+	\[
+	\|u\|_{\beta + \alpha}^{(-\alpha/2)} \le C \left(\|u\|_{C^{\alpha/2}(\mathbb{R})} + \|f\|_\beta^{(\alpha/2)}  \right)
+	\]
+	where $C = C(\Omega, \alpha, \beta)$.
+\end{theorem}
+
+\begin{corollary}\label{cor:ubounds}
+	Let $f\in C^\beta(\Omega)$ where  $\beta = 2-\alpha+\sigma$ with $\alpha < \sigma < 1$.
+	Then there exists a constant  $C= C(\Omega, \alpha, \beta, f)$ such that
+	\[
+	\left|u^{(\ell)}(x)\right|\le C[(x-a)(b-x)]^{(\alpha/2)-\ell} \ \text{ for } x\in\Omega \text{ and } \ell=0,1,2.
+	\]
+\end{corollary}
+\begin{proof}
+	Our hypotheses imply that  $2<\beta<3$ and $2<\beta+\alpha<3$.
+	Invoking Theorem~\ref{Th2}, we obtain
+	\[
+	\|u\|_{2+\sigma}^{(-\alpha/2)} \le C \left(\|u\|_{C^{\alpha/2}(\mathbb{R})} + \|f\|_\beta^{(\alpha/2)}  \right).
+	\]
+	In particular this inequality gives
+	\[
+	\sum_{\ell=1}^2 \sup_{x\in\Omega} \left\{ \delta(x)^{\ell-\alpha/2} \left|u^{(l)}(x)\right|\right\}
+	\le C \left(\|u\|_{C^{\alpha/2}(\mathbb{R})} + \|f\|_\beta^{(\alpha/2)}  \right)
+	\ \text{ for } x\in\Omega,
+	\]
+	which is the desired result for $\ell=1,2$. The case $\ell=0$ is covered by~\eqref{add3.1}.
+\end{proof}
+
+
+%
+%
+\section{Error analysis}\label{sec:error}
+For notational convenience, without loss of generality  we take $\Omega=\left( 0,2T \right)$ and  rewrite \eqref{add2.1} as
+\begin{equation}\label{xj}
+	x_j= \begin{cases}
+		T\left( \frac{j}{N} \right) ^r	&\text{for } j=0,1,\dots ,N,\\
+		2T-T\left( 2-\frac{j}{N} \right) ^r &\text{for } j=N+1,N+2,\dots ,2N.
+	\end{cases}
+\end{equation}
+From the mean value theorem and the definition of $\{x_j\}$, it follows that
+\begin{equation}\label{hj}
+	h_j  \le
+	\begin{cases}
+		TN^{-r}r j^{r-1} \le CN^{-r}j^{r-1} \ &\text{ for } j=1,\dots, N, \\
+		CN^{-r}(2N+1-j)^{r-1} \ &\text{ for } j=N+1,\dots, 2N;
+	\end{cases}
+\end{equation}
+we shall use this inequality many times. In particular, $h = \max_j h_j\le CN^{-1}$.
+
+\emph{Notation.} Above and throughout the rest of the paper, $C$ denotes a generic constant that is independent of~$N$ and of any index such as~$i$ or~$j$.
+For any $s\in \mathbb{R}$, $\lceil s \rceil$ denotes the smallest integer that is not less than~$s$.
+
+
+
+
+%
+%
+\subsection{Local truncation error}\label{sec:localtrunc}
+In this section, inspired by \cite{CQSW:2021,Stynes2017}, we give a detailed analysis of the local truncation error $R_i=L_hu(x_i)-Lu(x_i)$ defined in~\eqref{trunc}  while assuming that the hypotheses of  Corollary~\ref{cor:ubounds} are satisfied so that $u\in C^2(0,2T)$.
+
+Let $i\in \{1,2,\dots, 2N-1\}$.
+From \eqref{add1.1} and \eqref{Lhu}, one has
+\begin{equation*}
+	\begin{split}
+		Lu(x_i) - L_hu(x_i)
+		&=\!\int_{0 }^{x_i}{\frac{\Pi_h u(y)-u(y)}{( x_i-y )^{1+\alpha } } \,dy}
+		+ \int_{x_i}^{2T}{\frac{\Pi_h u(y)-u(y)}{( y-x_i )^{1+\alpha } } \,dy}
+		=\sum_{j=1}^{2N}{T_{i,j}}
+	\end{split}
+\end{equation*}
+with
+\begin{equation}\label{add4.1}
+	T_{i,j}
+	:=\int_{x_{j-1}}^{x_{j}}{\frac{\Pi_h u(y)-u(y)}{| x_i-y |^{1+\alpha } } \,dy}\ \text{ for } j=1,\dots, 2N.
+	%=\int_{x_{j-1}}^{x_{j}}{\frac{\frac{u(x_{j})-u(x_{j-1})}{x_{j}-x_{j-1}}(y-x_{j-1})+u(x_{j-1})-u(y)}{|x_i-y|^{1+\alpha}}dy}.
+\end{equation}
+In this subsection we shall  bound $\sum_{j=1}^{2N}{|T_{i,j}|}$ in Lemmas~\ref{lem4.1imp}--\ref{lem4.3imp}.
+
+By a standard error estimate for linear interpolation, since $u\in C^2(0,2T)$  one has
+\begin{equation}\label{add4.2}
+	\left|T_{i,j} \right| \leq  C h_{j}^{2}   \left(\max_{s\in[x_{j-1}, x_{j}]} \left| u''(s)\right|\right)
+	\int_{x_{j-1}}^{x_{j}}  \left| x_{i}-y \right|^{-1-\alpha} dy
+	\ \text{ for }j\ne 1,i, i+1,2N.
+\end{equation}
+
+Furthermore, integrating \eqref{add4.1} by parts yields
+\begin{equation}\label{Tijalt}
+	T_{i,j}
+	= \frac1{\alpha}\int_{x_{j-1}}^{x_{j}}{\frac{(\Pi_h u)'(y)-u'(y)}{| x_i-y |^{\alpha } }
+		[\text{sign}(y-x_i)]\,dy}\ \text{ for } j=1,\dots, 2N.
+	%=\int_{x_{j-1}}^{x_{j}}{\frac{\frac{u(x_{j})-u(x_{j-1})}{x_{j}-x_{j-1}}(y-x_{j-1})+u(x_{j-1})-u(y)}{|x_i-y|^{1+\alpha}}dy}.
+\end{equation}
+This form is sometimes more convenient than \eqref{add4.2} when deriving bounds on $T_{i,j}$.
+From~\eqref{Tijalt}, another standard error estimate for linear interpolation   gives
+
+\begin{equation}\label{Tij2}
+	\left|T_{i,j} \right| \leq  C h_{j} \left( \max_{s\in[x_{j-1}, x_{j}]} \left| u''(s) \right|\right)
+	\int_{x_{j-1}}^{x_{j}}  \left| x_{i}-y \right|^{-\alpha} dy
+	\ \text{ for }j\ne 1, 2N.
+\end{equation}
+
+Our analysis will occasionally use the following interpolation error bound: on any mesh interval 
+$[x_i, x_{i+1}]$, one has 
+\begin{equation}\label{interp}
+|(u-\Pi_hu)(x)| = \left|\frac{x_{i+1}-x}{h_{i+1}} \int_{x_i}^x u'(s)\,ds -  \frac{x-x_i}{h_{i+1}} \int_x^{x_{i+1}} u'(s)\,ds \right|
+	\le \int_{x_i}^{x_{i+1}}  |u'(s)|\,ds.
+\end{equation}
+
+\begin{lemma}\label{lem4.1imp}
+	There exists a constant $C$ such that
+	\[
+	\sum_{j=1}^{i}{|T_{i,j}|} \le C N^{r\alpha/2} i^{-\min \left\{r\frac{\alpha}{2}+2-\alpha, \, r(1+\alpha)\right\} }
+	\]
+	for all $i\in\{1, \dots, N\}$.
+\end{lemma}
+\begin{proof}
+	Let $i\in\{1, \dots, N\}$ be arbitrary but fixed.
+	Consider separately the cases $j=1=i,\ j=1<i, \ 1< j=i$ and  $1<j<i$.
+	%We shall make repeated use of  \eqref{add4.2}, \eqref{Tij2} and Corollary~\ref{cor:ubounds}.
+	
+	\textbf{Case $j=1=i$}:
+	Now \eqref{Tijalt} gives
+	\[
+	T_{1,1} = \frac{-1}{\alpha}\int_{x_0}^{x_1}\left[ \frac{u(x_1)-u(x_0)}{x_1-x_0} - u'(y)\right](x_1-y)^{-\alpha} \,dy.
+	\]
+	Here
+	\begin{equation*}
+		\begin{split}
+			\left| \int_{x_0}^{x_1}{\frac{u(x_1)-u(x_0)}{x_1-x_0}(x_1-y)^{-\alpha}dy} \right|
+			& = \left|\frac{x_1^{-\alpha}}{1-\alpha}\left(u(x_1)-u(x_0)\right)\right|
+			=\left|\frac{x_1^{-\alpha}}{1-\alpha}\int_{x_0}^{x_1}{u'(y)dy}\right|\\
+			& \le Cx_1^{-\alpha}\int_{x_0}^{x_1}{y^{\frac{\alpha}{2}-1}dy}
+			%= C\frac{2}{\alpha(1-\alpha)}x_1^{-\alpha}x_1^{\frac{\alpha}{2}}
+			= CN^{r\alpha/2},
+		\end{split}
+	\end{equation*}
+	while
+	\[
+	\left| \int_{x_0}^{x_1} \! {u'(y)(x_1-y)^{-\alpha}dy} \right|
+	\le  C \int_{x_0}^{x_1} \! {y^{\frac{\alpha}{2}-1}(x_1-y)^{-\alpha}dy}
+	= Cx_1^{-\alpha/2} = CN^{r\alpha/2},
+	\]
+	where we evaluated the integral as a Beta function.
+	Hence
+	\begin{equation}\label{T11imp}
+		|T_{1,1}|\le CN^{r\alpha/2}.
+	\end{equation}
+	
+	
+	\textbf{Case $j=1<i$}:
+	Recalling \eqref{add4.1} then applying \eqref{interp} on $[x_0, x_1]$, we get
+	\begin{align}
+	|T_{i,1}|
+	&= \left|\int_{x_0}^{x_1}\frac{\Pi_hu(y)-u(y)}{(x_i-y)^{1+\alpha}} \,dy \right|
+		\le\frac1{(x_i-x_1)^{1+\alpha}}\int_{x_0}^{x_1} |\Pi_hu(y)-u(y)| \,dy \notag\\
+	&\le Cx_i^{-1-\alpha} \int_{x_0}^{x_1} \left(\int_{x_0}^{x_1} |u'(s)|\,ds\right) \,dy   \notag\\
+	&\le Cx_i^{-1-\alpha}\int_{x_0}^{x_1} \left(\int_{x_0}^{x_1} s^{\frac{\alpha}{2}-1}\,ds\right) \,dy  \notag\\
+	&= Cx_i^{-1-\alpha}  x_1^{\frac{\alpha}{2}+1}  \notag\\
+	&= CN^{r\alpha/2}i^{-r(1+\alpha)}, \label{Ti1imp}
+	\end{align}
+	where we used Corollary~\ref{cor:ubounds} to bound $|u'(s)|$.
+		
+	\textbf{Case $j=i>1$}:
+	By \eqref{Tij2} we have
+	\[
+	|T_{i,i}| \le C h_i \left(\max_{s\in [x_{i-1},x_i]} \left| u''(s)\right|\right) \int_{x_{i-1}}^{x_i}{(x_i-y)^{-\alpha}\,dy}
+	= C h_i  \left(\max_{s\in [x_{i-1},x_i]} \left| u''(s)\right|\right) h_i^{1-\alpha},
+	\]
+	so \eqref{xj}, \eqref{hj} and Corollary~\ref{cor:ubounds} give
+	\begin{equation}\label{Tiiimp}
+		|T_{i,i}|\le C \left(N^{-r}i^{r-1}\right)^{2-\alpha} \left(N^{-r}i^r\right)^{\frac{\alpha}{2}-2}
+		= C N^{r\alpha/2} i^{-r\frac{\alpha}{2}-(2-\alpha)}\ \text{ for } i>1.
+	\end{equation}
+	
+	
+	\textbf{Case $1< j < i$}:
+	From  \eqref{add4.2}, Corollary~\ref{cor:ubounds}, \eqref{xj} and  \eqref{hj},  one has
+	\begin{align}%\label{add4.5}
+		\left| T_{i,j} \right|
+		& \leq Ch_j^2 x_{j-1}^{\frac{\alpha}{2}-2} \int_{x_{j-1}}^{x_{j}}{(x_i-y)^{-1-\alpha}dy}
+		\leq C h_j^3 x_{j-1}^{\frac{\alpha}{2}-2} (x_i-x_j)^{-1-\alpha}  \notag\\
+		%& = C h_{j}^{3} T^{\frac{\alpha}{2}-2}N^{-r(\frac{\alpha}{2}-2)} (j-1)^{r(\frac{\alpha}{2}-2)} T^{-1-\alpha} N^{r(1+\alpha)} (i^r-j^r)^{-1-\alpha} \\
+		%& =C h_{j}^{3} T^{-\frac{\alpha}{2}-3} N^{r(\frac{\alpha}{2}+3)} (j-1)^{r(\frac{\alpha}{2}-2)} (i^r-j^r)^{-1-\alpha} \\
+		& \leq C N^{r\alpha/2} j^{3(r-1)}(j-1)^{r(\frac{\alpha}{2}-2)} (i^r-j^r)^{-1-\alpha}  \notag\\
+		& \leq CN^{r\alpha/2} j^{r\left(\frac{\alpha}{2}+1\right)-3} (i^r-j^r)^{-1-\alpha}.  \label{Tij1jiimp}
+	\end{align}
+	
+From \eqref{Tij1jiimp}, 
+%\tcr{using the series} 
+using well-known \tcr{convergence/divergence properties}  of the series
+$\sum_{j=2}^\infty j^{\mu}$ for 
+constant $\mu\in\mathbb{R}$, we get
+	\begin{align}%\label{add4.6}
+		\sum_{j=2}^{\lceil i/2 \rceil}{\left| T_{i,j} \right|}
+		&\le CN^{r\alpha/2} i^{-r(1+\alpha)} \sum_{j=2}^{\lceil i/2 \rceil} j^{r\left(\frac{\alpha}{2}+1\right)-3} \notag\\
+		&\le \begin{cases}
+			C  N^{r\alpha/2} i^{-r(\alpha+1)}  &\text{if }  r\left(\frac{\alpha}{2}+1\right)<2, \\
+			C  N^{r\alpha/2} i^{-r(\alpha+1)} \ln i &\text{if }  r\left(\frac{\alpha}{2}+1\right)=2, \\
+			C  N^{r\alpha/2} i^{-r\frac{\alpha}{2}-2} &\text{if }  r\left(\frac{\alpha}{2}+1\right)>2.
+		\end{cases} \label{4.7imp}
+	\end{align}
+	
+	For $\lceil i/2 \rceil+1 \le j \le i-1$, using \eqref{Tij1jiimp}, \eqref{add4.2}, \eqref{hj} and Corollary~\ref{cor:ubounds}, $T_{i,j}$ can be bounded by
+	\begin{equation*}%\label{eq5.15}
+		\begin{split}
+			\left| T_{i,j}\right|
+			& \leq C (N^{-r}j^{r-1})^2 (N^{-r}(j-1)^r)^{\frac{\alpha}{2}-2}\int_{x_{j-1}}^{x_j}{(x_i-y)^{-1-\alpha}dy}\\
+			& \leq C (N^{-r}i^{r-1})^2 (N^{-r}i^r)^{\frac{\alpha}{2}-2}\int_{x_{j-1}}^{x_j}{(x_i-y)^{-1-\alpha}dy}\\
+			& \leq C N^{-r\alpha/2} i^{r\frac{\alpha}{2}-2} \int_{x_{j-1}}^{x_j}{(x_i-y)^{-1-\alpha}dy}.
+		\end{split}
+	\end{equation*}
+	Hence, using \eqref{hj},
+	\begin{align}
+		\sum_{j=\lceil i/2\rceil+1}^{i-1} \left| T_{i,j}\right|
+		& \leq C   N^{-r\alpha/2} i^{r\frac{\alpha}{2}-2} \int_{x_{\lceil i/2 \rceil}}^{x_{i-1}}{(x_i-y)^{-1-\alpha}\,dy}  \notag\\
+		& \leq C N^{-r\alpha/2} i^{r\frac{\alpha}{2}-2} (x_i-x_{i-1})^{-\alpha}  \notag\\
+		& \leq CN^{-r\alpha/2} i^{r\frac{\alpha}{2}-2} (N^{-r}i^{r-1})^{-\alpha}  \notag\\
+		&\leq C N^{r\alpha/2} i^{-r\frac{\alpha}{2}-(2-\alpha)}.  \label{4.8imp}
+	\end{align}
+Combine \eqref{4.7imp} and~\eqref{4.8imp}: since $r\left(\frac{\alpha}{2}+1\right)\ge 2$ implies  
+$r(\alpha+1)> r\frac{\alpha}{2}+2-\alpha$, it follows that
+\begin{equation}\label{4.9imp}
+\sum_{j=2}^{i-1}{\left| T_{i,j} \right|} \le C N^{r\alpha/2} 
+	i^{-\min\left\{r\frac{\alpha}{2}+2-\alpha, \, r(\alpha+1)\right\}}
+\end{equation}
+	
+To finish the proof, observe that adding the bounds \eqref{T11imp}, \eqref{Ti1imp}, \eqref{Tiiimp} and \eqref{4.9imp} 
+will bound $\sum_{j=1}^{i}{|T_{i,j}|}$. The desired result follows easily.
+\end{proof}
+
+\begin{lemma}\label{lem4.2imp}
+	There exists a constant $C$ such that
+	\[
+	\sum_{j=i+1}^N |T_{i,j}| \le C N^{r\alpha/2}  i^{-\frac{r\alpha}{2} + \alpha-2}
+	\]
+	for all $i\in\{1, \dots, N-1\}$.
+\end{lemma}
+\begin{proof}
+	Let $i\in\{1, \dots, N-1\}$ be arbitrary but fixed.
+	We first analyze $T_{i,i+1}$. By \eqref{Tij2}, \eqref{xj} and \eqref{hj}  one has
+	\begin{align}
+		\left|T_{i,i+1} \right|
+		& \leq  C h_{i+1}  \left(\max_{s\in[x_{i}, x_{i+1}]} \left| u''(s)\right| \right) \int_{x_{i}}^{x_{i+1}}  \left(y - x_{i}\right)^{-\alpha}   \,dy  \notag\\
+		& \leq C h_{i+1} x_{i}^{\frac{\alpha}{2}-2} \left(x_{i+1} - x_{i}\right)^{1-\alpha}  = C h_{i+1}^{2-\alpha} x_{i}^{\frac{\alpha}{2}-2}  \notag\\
+		&\le C \left(N^{-r} i^{r-1}\right)^{2-\alpha}  \left(N^{-r} i^r\right)^{\frac{\alpha}{2}-2}  \notag\\
+		&= C N^{\frac{r\alpha}{2}}  i^{-r\frac{\alpha}{2}-(2-\alpha)}.  \label{Tii+1}
+	\end{align}
+	
+	Next, set $J = \min\{2i,N\}$. Using \eqref{add4.2}, Corollary~\ref{cor:ubounds}, \eqref{xj} and \eqref{hj}, we have
+	\begin{align}
+		\sum_{j=i+2}^J |T_{i,j}|
+		& \leq C \sum_{j=i+2}^J h_j^2  x_j^{\frac{\alpha}{2}-2} \int_{x_{j-1}}^{x_{j}}  \left(y - x_{i}\right)^{-1-\alpha}  \,dy \notag\\
+		& \leq  C h_i^2  x_i^{\frac{\alpha}{2}-2} \sum_{j=i+2}^J \int_{x_{j-1}}^{x_{j}}  \left(y - x_{i}\right)^{-1-\alpha}  \,dy \notag\\
+		&\le C h_i^2  x_{i}^{\frac{\alpha}{2}-2} (x_{i+1}-x_i)^{-\alpha}
+		\le  C h_i^{2-\alpha}  x_{i}^{\frac{\alpha}{2}-2} \notag\\
+		&\le C \left(N^{-r}i^{r-1}\right)^{2-\alpha} \left(N^{-r}i^r\right)^{\frac{\alpha}{2}-2}
+		= C  N^{r\alpha/2}  i^{-\frac{r\alpha}{2} -(2-\alpha)}.  \label{TijJ}
+	\end{align}
+	
+	The final set of terms is $\{T_{ij}: J < j\le N\}$. Here we can assume that $2i<N$ (i.e., $J=2i$) as otherwise this set is empty.
+	From~\eqref{add4.2} we get
+	\begin{align}
+		\sum_{j=J+1}^N |T_{i,j}|
+		&\le C \sum_{j=2i+1}^N  h_j^2 x_j^{\frac{\alpha}{2}-2} \int_{x_{j-1}}^{x_{j}}  \left| x_{i}-y \right|^{-1-\alpha} \,dy  \notag\\
+		&\le C \sum_{j=2i+1}^N  h_j^2 x_j^{\frac{\alpha}{2}-2} h_j x_j^{-1-\alpha}
+		= C \sum_{j=2i+1}^N  h_j^3 x_j^{-\frac{\alpha}{2}-3}  \notag\\
+		& \leq  C \sum_{j=2i+1}^N   \left(N^{-r} j^{r-1}\right)^3  \left(N^{-r} j^r\right)^{-\frac{\alpha}{2}-3}    \notag\\
+		&=  C  N^{r\alpha/2}  \sum_{j=2i+1}^N j^{-r\frac{\alpha}{2}-3}   \notag\\
+		&\le C N^{r\alpha/2} \int_{2i}^\infty x^{-r\frac{\alpha}{2}-3}\,dx  \notag\\
+		& \leq C  N^{r\alpha/2} i^{-r\frac{\alpha}{2}-2}.  \label{TijJN}
+	\end{align}
+	
+	Adding \eqref{Tii+1}, \eqref{TijJ} and \eqref{TijJN} gives the desired result.
+\end{proof}
+
+\begin{lemma}\label{lem4.3imp}
+	There exists a constant $C$ such that
+	\[
+	\sum_{j=N+1}^{2N} |T_{i,j}| \le C N^{r\alpha/2}  i^{-\min \left\{r\frac{\alpha}{2}+2-\alpha,\, r(1+\alpha)\right\} }
+	\]
+	for all $i\in\{1, \dots, N\}$.
+\end{lemma}
+\begin{proof}
+	Let $i\in\{1, \dots, N\}$ be arbitrary but fixed.
+	First, consider $T_{i,N+1}$. If $i<N$, then \eqref{add4.2} and Corollary~\ref{cor:ubounds} give
+	\begin{align*}
+		\left|T_{i,N+1}\right| &\le Ch_{N+1}^2 \left(\max_{s\in[x_N, x_{N+1}]} \left| u''(s)\right| \right)
+		\int_{x_N}^{x_{N+1}}  \left(y - x_{i}\right)^{-1-\alpha} \,dy \\
+		&\le Ch_{N+1}^3 (x_N-x_i)^{-1-\alpha} \le Ch_{N+1}^3 h_N^{-1-\alpha} \le CN^{\alpha-2},
+	\end{align*}
+	while if $i=N$, then \eqref{Tij2} and Corollary~\ref{cor:ubounds} yield
+	\begin{align*}
+		\left|T_{i,N+1}\right| &\le Ch_{N+1} \left(\max_{s\in[x_N, x_{N+1}]} \left| u''(s)\right| \right)
+		\int_{x_N}^{x_{N+1}}  \left(y - x_{i}\right)^{-\alpha}   \,dy \\
+		&\le Ch_{N+1} (x_{N+1}-x_N)^{1-\alpha} = Ch_{N+1}^{2-\alpha} \le CN^{\alpha-2}.
+	\end{align*}
+	Hence for all $i\in\{1, \dots, N\}$ we obtain
+	\begin{equation}\label{TiN+1imp}
+		\left|T_{i,N+1}\right| \le CN^{\alpha-2}.
+	\end{equation}
+	
+	Next,  \eqref{add4.2} and Corollary~\ref{cor:ubounds} give
+	\begin{align}
+		\sum_{j=N+2}^{\lceil 3N/2\rceil}  |T_{i,j}| &\le C \sum_{j=N+2}^{\lceil 3N/2\rceil} h_j^2
+		\left(\max_{s\in[x_{j-1}, x_j]} \left| u''(s)\right| \right)
+		\int_{x_{j-1}}^{x_j}  \left(y - x_{i}\right)^{-1-\alpha} \,dy \notag\\
+		&\le C \sum_{j=N+2}^{\lceil 3N/2\rceil} N^{-2}
+		\int_{x_{j-1}}^{x_j}  \left(y - x_{i}\right)^{-1-\alpha} \,dy \notag\\
+		&\le CN^{-2} (x_{N+1}-x_i)^{-\alpha}  \notag\\
+		 &\le CN^{\alpha-2}. \label{TiN+2imp}
+	\end{align}
+	
+	Again  invoking \eqref{add4.2} and Corollary~\ref{cor:ubounds}, together with~\eqref{xj} and~\eqref{hj}, we find that
+	\begin{align}
+		\sum_{j=\lceil 3N/2\rceil +1}^{2N-1}  |T_{i,j}| &\le C \sum_{j=\lceil 3N/2\rceil +1}^{2N-1}   h_j^2
+		\left(\max_{s\in[x_{j-1}, x_j]} \left| u''(s)\right| \right)
+		\int_{x_{j-1}}^{x_j}  \left(y - x_{i}\right)^{-1-\alpha} \,dy \notag\\
+		&\le C \sum_{j=\lceil 3N/2\rceil +1}^{2N-1}  h_j^3 (2T-x_j)^{\frac{\alpha}{2}-2} \notag\\
+		&\le C \sum_{j=\lceil 3N/2\rceil +1}^{2N-1} N^{-3r}  (2N+1-j)^{3(r-1)}
+		\left(2-\frac{j}{N}\right)^{r\left(\frac{\alpha}{2}-2\right)} \notag\\	
+		&\le C \sum_{k=1}^{\lceil N/2\rceil} N^{-3r} k^{3(r-1)} \left(\frac{k}{N}\right)^{r\left(\frac{\alpha}{2}-2\right)} 		
+		= C N^{-r\left(1+\frac{\alpha}{2}\right)}
+		\sum_{k=1}^{\lceil N/2\rceil}  k^{r\left(1+\frac{\alpha}{2}\right)-3} \notag\\
+		&\le \begin{cases}
+			C N^{-r\left(1+\frac{\alpha}{2}\right)}  &\text{if } r\left(1+\frac{\alpha}{2}\right)<2, \\
+			C N^{-r\left(1+\frac{\alpha}{2}\right)}\ln N  &\text{if } r\left(1+\frac{\alpha}{2}\right)=2, \\	
+			C N^{-2}  &\text{if } r\left(1+\frac{\alpha}{2}\right)>2,
+		\end{cases}    \label{Ti3N+2imp}
+%		&\le \begin{cases}
+%			C N^{-r\alpha/2}  &\text{if } r\left(1+\frac{\alpha}{2}\right)\le 2, \\	
+%			C N^{\alpha-2}  &\text{if } r\left(1+\frac{\alpha}{2}\right)>2,
+%		\end{cases} \notag\\	
+%		&\le C N^{r\alpha/2}  i^{-\min \left\{r\frac{\alpha}{2}+2-\alpha, r\alpha\right\} },  
+	\end{align}
+	where we set $k=2N-j$ during the calculation.
+	
+	Finally, \eqref{add4.1}, \eqref{interp} and Corollary~\ref{cor:ubounds} give
+	\begin{align}
+		\left|T_{i,2N}\right| &\le \int_{x_{2N-1}}^{x_{2N}}\frac{|\Pi_hu(y)-u(y)|}{(y-x_i)^{1+\alpha}} \,dy  \notag\\
+		&\le C \int_{x_{2N-1}}^{x_{2N}} \left(\int_{x_{2N-1}}^{x_{2N}} |u'(s)|\,ds\right) \,dy \notag\\
+		&\le C\int_{x_{2N-1}}^{x_{2N}} \left(\int_{x_{2N-1}}^{x_{2N}}(2T-s)^{\frac{\alpha}{2}-1}\right)\,dy  \notag\\
+		&\le C(x_{2N}-x_{2N-1})^{\frac{\alpha}{2}+1}  \le   CN^{-r\left(1+\frac{\alpha}{2}\right)},   \label{Ti2Nimp}
+	\end{align}
+	where we used \eqref{xj}.
+	
+Putting together \eqref{TiN+1imp}--\eqref{Ti2Nimp}, we get (observe that $r\left(1+\frac{\alpha}{2}\right)\ge2$ 
+implies that\\ $r\left(1+\frac{\alpha}{2}\right)> 2-\alpha$)
+\[
+\sum_{j=N+1}^{2N} |T_{i,j}| \le C N^{-\min \left\{2-\alpha, \,r\left(1+\frac{\alpha}{2}\right)\right\}}
+	\le C N^{r\alpha/2}  i^{-\min \left\{r\frac{\alpha}{2}+2-\alpha, \,r(1+\alpha)\right\}}
+\]
+and 	the proof is complete.
+\end{proof}
+
+\begin{lemma}\label{lem4.4imp}[Truncation error bound]
+\tcr{Let $\alpha\in(0,1)$ and $f\in C^\beta(\Omega)$ with $\beta = 2-\alpha+\sigma$, where $\alpha < \sigma < 1$.}
+Let $Lu(x_i)$ and $L_hu(x_i)$ be defined by \eqref{add1.1} and \eqref{Lhu}. Then there exists a constant $C$ such that
+\begin{align*}
+|R_i| & =\left|Lu(x_i) - L_hu(x_i) \right| \\
+	& \leq
+		\begin{cases}
+			C N^{r\alpha/2} i^{-\min\left\{r\frac{\alpha}{2}+2-\alpha, \,r(1+\alpha)\right\}}
+			&\text{ for } i=1,2\dots, N, \\
+			C N^{r\alpha/2}(2N-i)^{-\min\left\{r\frac{\alpha}{2}+2-\alpha, \,r(1+\alpha)\right\}}
+			&\text{ for } i=N+1,N+2\dots, 2N-1.
+		\end{cases}
+	\end{align*}
+\end{lemma}
+\begin{proof}
+For $i=1,2\dots, N$, this result is an immediate consequence of the definition of~$T_{i,j}$ 
+and Lemmas~\ref{lem4.1imp}--\ref{lem4.3imp}.
+	
+	For $i=N+1, N+2,\dots,2N-1$, observe first that the mesh \eqref{xj} is symmetric about $x=T$ (i.e., $x=x_i$ is a mesh point if and only if $x=2T-x_i=x_{2N-i}$ is a mesh point), and the a priori derivative bounds of Corollary~\ref{cor:ubounds} are also symmetric about $x=T$. But the locations of the mesh points and these bounds on derivatives are the only ingredients used in the analysis of the case $i=1,2\dots, N$.
+	Thus one can define $\tilde u(x)=u(2T-x)$, and now the truncation error of $u(x)$ at $x=x_i$ for $i=N+1, N+2,\dots,2N-1$ is exactly the same as the truncation error of $\tilde u(x)$ at $x=x_i$ for $i=N-1, N-2, \dots 1$, which can be handled in exactly the same way as the truncation error analysis of $u(x)$ for $i=1,2,\dots,N-1$ in Lemmas~\ref{lem4.1imp}--\ref{lem4.3imp}. Transforming back via $x\mapsto 2T-x$, we get the desired result for $i=N+1, N+2,\dots,2N-1$.
+\end{proof}
+
+
+%
+%
+\subsection{Convergence analysis}
+We can now prove the global convergence  of our collocation method.
+
+
+\begin{theorem}\label{thm:globalcgce}
+\tcr{Let $\alpha\in(0,1)$ and $f\in C^\beta(\Omega)$ with $\beta = 2-\alpha+\sigma$, where $\alpha < \sigma < 1$.} 
+Let $u_{i}$ be the approximate solution of $u(x_{i})$ computed by the discretization scheme \eqref{add2.5}. 
+ Then
+\[
+\max_{1\leq i \leq 2N-1} |u(x_{i})-u_{i}| \le C N^{-\min\left\{2-\alpha,\,r\alpha/2\right\}}.
+\]
+\end{theorem}
+\begin{proof}
+For $i=1,2,\dots,2N-1$ set $\epsilon_{i} = u(x_{i})-u_{i}$, and set $\epsilon_{0} = \epsilon_{2N} = 0$. 
+Subtracting \eqref{coll2} from \eqref{Lhu}, we get
+	\begin{equation}\label{adnequ31}
+		\sum_{j=1}^{2N-1} a_{i j}\epsilon_j=R_i \ \text{ for }i=1,2,\dots,2N-1.
+	\end{equation}
+	
+Choose $i_0$ such that $| \epsilon_{i_{0}} |  = \max_{1\leq i \leq 2N-1} |\epsilon_{i}|$. 
+Recall from Lemma~\ref{addLemma2.2} that \mbox{$a_{i_0,i_0}>0$} and $a_{i_0,j}<0$ for all $j\ne i_0$. Hence
+\begin{align*}
+|R_{i_{0}}|	&= \left| a_{i_{0},i_{0}} \epsilon_{i_{0}} + \sum_{j=1,j\neq i_{0}}^{2N-1} a_{i_{0},j}\epsilon_{j} \right|
+	\geq a_{i_{0},i_{0}} \left|\epsilon_{i_{0}}\right| - \sum_{j=1,j\neq i_{0}}^{2N-1}  \left| a_{i_{0},j} \right| \left|\epsilon_{j} \right| \\
+	& \geq a_{i_{0},i_{0}} \left|\epsilon_{i_{0}}\right| - \sum_{j=1,j\neq i_{0}}^{2N-1} \left| a_{i_{0},j} \right| \left|\epsilon_{i_{0}} \right|\\
+	&= \sum_{j=1}^{2N-1}{a_{i_{0},j}}  \left|\epsilon_{i_{0}} \right| %\\&
+= \left|\epsilon_{i_{0}} \right| \int_{\mathbb{R}}{\frac{1-\sum_{j=1}^{2N-1}{\phi _j\left( y \right)}}
+		{\left| x_{i_{0}}-y \right|^{1+\alpha}}dy} %\\&
+= S_{i_{0}} \left|\epsilon_{i_{0}} \right|,
+\end{align*}
+where the sum of the entries in the $i$th row of the stiffness matrix $A$ is denoted by 
+\begin{equation}\label{sumA}
+ S_{i}:=\int_{\mathbb{R}}{\frac{1-\sum_{j=1}^{2N-1}{\phi _j\left( y \right)}}
+		{\left| x_{i}-y \right|^{1+\alpha}}dy}. 
+\end{equation}
+One can verify that 
+%\begin{align*}
+%S_{i_{0}} &= \frac{1}{\alpha \left( 1-\alpha \right)}\left[ \frac{\left( x_{i_{0}}-x_0 \right)^{1-\alpha}  
+%				- \left( x_{i_{0}}-x_1 \right)^{1-\alpha}}{h_1}   \right. \\
+%		&\hspace{25mm}  \left. + \frac{\left( x_{2N}-x_{i_{0}} \right) ^{1-\alpha} 
+%			 - \left( x_{{2N}-1}-x_{i_{0}} \right)^{1-\alpha}}{h_{2N}} \right]\\
+%		&\geq  \frac{ x_{i_{0}}^{-\alpha}+\left(2T-x_{i_{0}} \right)^{-\alpha}  }{\alpha},
+%\end{align*}
+\begin{align*}
+S_{i_{0}} &= \frac{1}{\alpha \left( 1-\alpha \right)}\left[ \frac{\left( x_{i_{0}}-x_0 \right)^{1-\alpha}  
+				- \left( x_{i_{0}}-x_1 \right)^{1-\alpha}}{h_1}   \right. \\
+		&\hspace{25mm}  \left. + \frac{\left( x_{2N}-x_{i_{0}} \right) ^{1-\alpha} 
+			 - \left( x_{{2N}-1}-x_{i_{0}} \right)^{1-\alpha}}{h_{2N}} \right]\\
+		&\geq  \frac{ x_{i_{0}}^{-\alpha}+\left(2T-x_{i_{0}} \right)^{-\alpha}  }{\alpha},
+\end{align*}
+by the mean value theorem.
+	
+Assume that  $i_{0}\leq N$ (the case $i_{0}> N$ is similar).
+Then $S_{i_{0}} \geq  x_{i_{0}}^{-\alpha}/\alpha$, so
+\begin{equation}\label{add4.19}
+\max_{1\leq i \leq 2N-1} |\epsilon_{i}| = |\epsilon_{i_{0}}| \leq \frac{|R_{i_{0}}|}{S_{i_{0}}}
+	\leq C x_{i_{0}}^{\alpha}  N^{r\alpha/2} i_{0}^{-\min\left\{r\frac{\alpha}{2}+2-\alpha,\,r(1+\alpha)\right\}},
+\end{equation}
+where we used 	Lemma~\ref{lem4.4imp}.
+	
+If $\min\left\{r\frac{\alpha}{2}+2-\alpha,\,r(1+\alpha)\right\}= r(1+ \alpha)$, then \eqref{add4.19} yields 
+\begin{equation*}
+\max_{1\leq i \leq 2N-1} |\epsilon_{i}| \leq C x_{i_{0}}^{\alpha}  N^{r\alpha/2} i_{0}^{-r(1+\alpha)}
+		= C  (N^{-r}i_{0}^{r})^{\alpha}  N^{r\alpha/2} i_{0}^{-r(1+\alpha) }
+		\leq C  N^{-r\alpha/2}.
+\end{equation*}
+If $\min\left\{r\frac{\alpha}{2}+2-\alpha,\,r(1+\alpha)\right\}= r\frac{\alpha}{2}+2-\alpha $, then \eqref{add4.19} yields
+\begin{equation*}
+\begin{split}
+   \max_{1\leq i \leq 2N-1} |\epsilon_{i}| & \le C (N^{-r}i_{0}^{r})^{\alpha}  N^{r\alpha/2} i_{0}^{-\left(r\frac{\alpha}{2}+2-\alpha\right)} \\
+     & = C N^{-r\alpha/2} i_{0}^{r\frac{\alpha}{2}-(2-\alpha)} 
+\le C N^{-\min\{2-\alpha,r\frac{\alpha}{2}\}}.
+\end{split}
+\end{equation*}
+The proof is now complete.
+\end{proof}
+
+\begin{remark}\label{rem:roptimal}
+Theorem~\ref{thm:globalcgce} implies that the optimal rate of convergence %\\
+ $O(N^{-(2-\alpha)})$ is attained for any $r\ge 2(2-\alpha)/\alpha$.
+\end{remark}
+
+
+\begin{remark}[Weaker regularity on the derivatives of $u$]
+	Suppose that the bound
+	\begin{equation*}
+		\Big|\frac{\partial^{\ell}u}{\partial t^{\tcr{\ell}}}\Big| \leq C [(x-a)(b-x)]^{\frac{\alpha}{2}-\ell}\quad	{\rm for}~~\ell=0,1,2
+	\end{equation*}
+	of Corollary~\ref{cor:ubounds} is replaced by the more general weaker regularity  bound
+	\begin{equation*}%\label{eq5.36}
+		\Big|\frac{\partial^{\ell}u}{\partial t^{\ell}}\Big| \leq C [(x-a)(b-x)]^{\sigma-\ell}\quad	{\rm for}~~\ell=0,1,2
+	\end{equation*}
+	where $\sigma \in (0,\frac{\alpha}{2}]$ is fixed.
+Then an inspection of Section~\ref{sec:localtrunc} shows that the following changes are needed: 
+inequalities \eqref{T11imp}, \eqref{Ti1imp} and  \eqref{Tiiimp} become
+	\begin{equation*}%\label{eq5.37}
+		|T_{1,1}| \leq C N^{r \left(\alpha-\sigma \right)},~~|T_{i,1}| \leq C N^{r \left(\alpha-\sigma \right)} i^{-r \left(1+\alpha\right)} \quad {\rm for}\quad \,i=2,\dots,N,
+\end{equation*}
+and\begin{equation*}
+     |T_{i,i}|\le C N^{r \left(\alpha-\sigma \right)} i^{-r\left(\alpha-\sigma\right)-\left(2-\alpha\right)}.
+   \end{equation*}
+
+In the same way, inequality \eqref{4.7imp} becomes
+\begin{align}%\label{add4.6}
+		\sum_{j=2}^{\lceil i/2 \rceil}{\left| T_{i,j} \right|}
+		&\le \begin{cases}
+			C N^{r \left(\alpha-\sigma \right)} i^{-r(\alpha+1)},  &~~\qquad  {\rm if } \quad r(\sigma+1)<2, \\
+			C N^{r \left(\alpha-\sigma \right)} i^{-r(\alpha+1)} \ln i, &~~\qquad  {\rm if } \quad r(\sigma+1)=2, \\
+			C N^{r \left(\alpha-\sigma \right)} i^{-r(\alpha-\sigma)-2}, &~~\qquad  {\rm if } \quad r(\sigma+1)>2,
+		\end{cases} 
+	\end{align}
+	%\begin{equation*}%\label{eq5.38}
+%		\sum_{j=2}^{\lceil i/2 \rceil}{\left| T_{i,j} \right|} \leq
+%		\left\{
+%		\begin{split}
+%			C N^{r \left(\alpha-\sigma \right)} i^{-r(\alpha+1)},  &~~\qquad  {\rm if } \quad r(\sigma+1)<2, \\
+%			C N^{r \left(\alpha-\sigma \right)} i^{-r(\alpha+1)} \ln i, &~~\qquad  {\rm if } \quad r(\sigma+1)=2, \\
+%			C N^{r \left(\alpha-\sigma \right)} i^{-r(\alpha-\sigma)-2}, &~~\qquad  {\rm if } \quad r(\sigma+1)>2,
+%		\end{split}
+%	\end{equation*}
+while  \eqref{4.8imp} becomes
+	\begin{equation*}%\label{eq5.39}
+		\sum_{\lceil i/2\rceil+1}^{i-1} \left| T_{i,j}\right|
+		\leq C N^{r \left(\alpha-\sigma \right)} i^{-r \left(\alpha-\sigma\right)-\left(2-\alpha\right)}.
+	\end{equation*}
+
+Hence, for $1\leq i \leq N$, Lemma \ref{lem4.1imp} is now
+	\begin{equation*}%\label{eq5.41}
+		\sum_{j=1}^{i}{|T_{i,j}|} 
+\leq C N^{r \left(\alpha-\sigma \right)} i^{-\min \{r \left(\alpha-\sigma\right) + 2-\alpha, r \left(1+\alpha\right) \} }.
+	\end{equation*}
+	
+Similarly, Lemma \ref{lem4.2imp} becomes
+	\begin{equation*}
+		\sum_{j=i+1}^{N} |T_{i,j}| 
+\leq C N^{r \left(\alpha-\sigma \right)} i^{-r(\alpha-\sigma)-(2-\alpha)},~~{\rm for}\quad 1\le i< N .
+	\end{equation*}
+	and  Lemma \ref{lem4.3imp} becomes
+	\begin{equation*}
+		\sum_{j=N+1}^{2N}{|T_{i,j}|} 
+\leq C N^{r \left(\alpha-\sigma \right)} i^{-\min \{r(\alpha-\sigma)+2-\alpha , r(1+\alpha)\} }
+,~~{\rm for}\quad 1\le i\le N .
+	\end{equation*}
+Consequently, Lemma~\ref{lem4.4imp}  is now
+	\begin{align*}
+		|R_i| %& =\left|Lu(x_i) - L_hu(x_i) \right| \\
+		& \leq
+		\begin{cases}
+			CN^{r \left(\alpha-\sigma \right)} i^{-\min \{r(\alpha-\sigma)+2-\alpha , r(1+\alpha)\} }
+			&\text{ for } i=1,2\dots, N, \\
+			CN^{r \left(\alpha-\sigma \right)} (2N-i)^{-\min \{r(\alpha-\sigma)+2-\alpha , r(1+\alpha)\} }
+			&\text{ for } i=N+1,\dots, 2N-1.
+		\end{cases}
+	\end{align*}
+Thus the convergence result of Theorem \ref{thm:globalcgce} is changed to
+	\[\max_{1\leq i \leq 2N-1} |u(x_{i})-u_{i}| \le CN^{-\min\left\{2-\alpha,\,r\sigma\right\}}.\]
+\end{remark}
+
+
+%
+%
+\section{Numerical results}\label{sec:numerical}
+
+We use the collocation method \eqref{add2.5} to solve the  fractional Laplacian  boundary value problem  \eqref{add1.1} in the interval $\Omega=(0,1)$ with $f\equiv1$.
+The exact (Getoor) solution  \cite{Getoor1961,HuangO:14} of this problem (recall Example~\ref{exa:f=1}) is
+\begin{equation}\label{Getoor}
+	u(x)=\frac{\alpha }{2\varGamma \left( 1-\frac{\alpha}{2} \right) \varGamma \left( 1+\frac{\alpha}{2} \right)}\left[ x\left( 1-x \right) \right] ^{\frac{\alpha}{2}}\ \text{ for }x\in\Omega.
+\end{equation}
+
+All the numerical experiments are programmed in Julia 1.8.5.
+It should be noted that multiple-precision floating-point computation is necessary in order to reduce round-off errors when evaluating
+the entries of the stiffness matrix on graded meshes.
+
+
+\subsection{Accuracy of numerical solution}
+In the numerical experiments of this section, we measure the numerical errors by using the maximum nodal error 
+(i.e., the discrete $L^\infty$ norm):
+\[  E^{N} := \max_{0\leq i\leq 2N} | u(x_{i})-u_{i}|. \]
+The rate of convergence of  $E^N$ is computed in the usual way, viz.,  
+\[  	 Rate^N =\log_2 \left( \frac{E^N}{E^{2N}} \right). \]
+
+%	If the analytic solution is unknown, the convergence rate of the numerical results are computed by
+%				\begin{equation*}
+%					{\rm Convergence ~Rate}=\frac{\ln \left(||u^{N/2}-u^{N}||_{\infty}/||u^{N}-u^{2N}||_{\infty}\right)}{\ln 2}.
+%				\end{equation*}
+
+In Tables~\ref{Table6.1}--\ref{Table6.2} we choose a value for the mesh grading parameter~$r$, then display the values of $E^N$ and $Rate^N$ for various $\alpha$ and~$N$. Our chosen values of~$r$ are based on Remark~\ref{rem:roptimal}, which predicts the optimal rate of convergence $O(N^{-(2-\alpha)})$ for any $r\ge 2(2-\alpha)/\alpha$. 
+Tables~\ref{Table6.1}-\ref{Table6.2}   show that the collocation method \eqref{add2.5} has convergence order $\mathcal{O}\left(N^{-\min\left\{2-\alpha,\, r\alpha/2\right\}}\right)$, which agrees exactly with Theorem~\ref{thm:globalcgce}.
+
+\begin{table}[!ht]
+	\centering
+	\caption{$r=1$: maximum nodal errors showing convergence rate $\mathcal{O} \left( h^{\frac{\alpha}{2}} \right)$}
+	\begin{tabular}{|c|c|c|c|c|c|c|}
+		\hline
+		\diagbox{$\alpha$}{2N}       & 32       & 64       & 128      & 256      & 512      & 1024      \\
+		\hline
+		\multirow{2}{*}{0.1} & 2.05E-03 & 1.97E-03 & 1.89E-03 & 1.82E-03 & 1.76E-03 & 1.70E-03  \\
+		\cline{2-7}
+		&          & 0.0613   & 0.0555   & 0.0527   & 0.0513   & 0.0507    \\
+		%\hline
+		%\multirow{2}{*}{0.3} & 1.21E-02 & 1.08E-02 & 9.68E-03 & 8.71E-03 & 7.84E-03 & 7.06E-03  \\
+		%\cline{2-7}
+		%                     &          & 0.1612   & 0.1554   & 0.1527   & 0.1513   & 0.1507    \\
+		\hline
+		\multirow{2}{*}{0.5} & 2.22E-02 & 1.85E-02 & 1.55E-02 & 1.30E-02 & 1.09E-02 & 9.17E-03  \\
+		\cline{2-7}
+		&          & 0.2634   & 0.2565   & 0.2532   & 0.2516   & 0.2508    \\
+		%\hline
+		%\multirow{2}{*}{0.7} & 3.02E-02 & 2.34E-02 & 1.82E-02 & 1.42E-02 & 1.11E-02 & 8.73E-03  \\
+		%\cline{2-7}
+		%                     &          & 0.3703   & 0.3604   & 0.3553   & 0.3527   & 0.3514    \\
+		\hline
+		\multirow{2}{*}{0.9} & 4.33E-02 & 3.01E-02 & 2.16E-02 & 1.56E-02 & 1.13E-02 & 8.24E-03  \\
+		\cline{2-7}
+		&          & 0.5215   & 0.4842   & 0.4696   & 0.4609   & 0.4560    \\
+		\hline
+	\end{tabular}\label{Table6.1}
+\end{table}
+%\begin{table}
+%	\centering
+%	\caption{$r=\frac{(2-\alpha)}{2\alpha}$: maximum errors with convergence order  $\mathcal{O} \left( h^\frac{2-\alpha}{4} \right)$}
+%	\begin{tabular}{|c|c|c|c|c|c|c|}
+%		\hline
+%		\diagbox{$\alpha$}{2N}       & 32       & 64       & 128      & 256      & 512      & 1024      \\
+%		\hline
+%		\multirow{2}{*}{0.1} & 1.56E-03 & 1.12E-03 & 8.09E-04 & 5.82E-04 & 4.19E-04 & 3.01E-04  \\
+%		\cline{2-7}
+%		&          & 0.4722   & 0.4743   & 0.4748   & 0.4749   & 0.4750    \\
+%		%\hline
+%		%\multirow{2}{*}{0.3} & 7.90E-03 & 5.89E-03 & 4.38E-03 & 3.26E-03 & 2.43E-03 & 1.81E-03  \\
+%		%\cline{2-7}
+%		%                     &          & 0.4255   & 0.4252   & 0.4250   & 0.4250   & 0.4250    \\
+%		\hline
+%		\multirow{2}{*}{0.5} & 1.81E-02 & 1.39E-02 & 1.07E-02 & 8.26E-03 & 6.37E-03 & 4.91E-03  \\
+%		\cline{2-7}
+%		&          & 0.3813   & 0.3775   & 0.3760   & 0.3754   & 0.3751    \\
+%		%\hline
+%		%\multirow{2}{*}{0.7} & 3.14E-02 & 2.47E-02 & 1.96E-02 & 1.56E-02 & 1.24E-02 & 9.88E-03  \\
+%		%\cline{2-7}
+%		%                     &          & 0.3474   & 0.3368   & 0.3312   & 0.3283   & 0.3267    \\
+%		\hline
+%		\multirow{2}{*}{0.9} & 5.33E-02 & 4.22E-02 & 3.40E-02 & 2.76E-02 & 2.26E-02 & 1.85E-02  \\
+%		\cline{2-7}
+%		&          & 0.3356   & 0.3141   & 0.3001   & 0.2911   & 0.2854    \\
+%		\hline
+%	\end{tabular}\label{Table6.4}
+%\end{table}
+\begin{table}
+	\centering
+	%\caption{Result for graded mesh with the grading exponent $r=\frac{(2-\alpha)}{\alpha}$ and $\mathcal{O} \left( h^\frac{2-\alpha}{2} \right)$}
+	\caption{$r=\frac{(2-\alpha)}{\alpha}$:  maximum nodal errors showing convergence rate $\mathcal{O} \left( h^\frac{2-\alpha}{2} \right)$}
+	\begin{tabular}{|c|c|c|c|c|c|c|}
+		\hline
+		\diagbox{$\alpha$}{2N}       & 32       & 64       & 128      & 256      & 512      & 1024      \\
+		\hline
+		\multirow{2}{*}{0.1} & 1.12E-03 & 5.81E-04 & 3.01E-04 & 1.56E-04 & 8.07E-05 & 4.18E-05  \\
+		\cline{2-7}
+		&          & 0.9428   & 0.9481   & 0.9495   & 0.9499   & 0.9500    \\
+		%\hline
+		%\multirow{2}{*}{0.3} & 4.27E-03 & 2.37E-03 & 1.32E-03 & 7.30E-04 & 4.05E-04 & 2.25E-04  \\
+		%\cline{2-7}
+		%                     &          & 0.8476   & 0.8493   & 0.8498   & 0.8499   & 0.8500    \\
+		\hline
+		\multirow{2}{*}{0.5} & 9.66E-03 & 5.74E-03 & 3.41E-03 & 2.03E-03 & 1.21E-03 & 7.18E-04  \\
+		\cline{2-7}
+		&          & 0.7500   & 0.7500   & 0.7500   & 0.7500   & 0.7500    \\
+		%\hline
+		%\multirow{2}{*}{0.7} & 1.80E-02 & 1.14E-02 & 7.26E-03 & 4.62E-03 & 2.95E-03 & 1.88E-03  \\
+		%\cline{2-7}
+		%                     &          & 0.6562   & 0.6527   & 0.6511   & 0.6505   & 0.6502    \\
+		\hline
+		\multirow{2}{*}{0.9} & 4.12E-02 & 2.66E-02 & 1.76E-02 & 1.19E-02 & 8.05E-03 & 5.48E-03  \\
+		\cline{2-7}
+		&          & 0.6295   & 0.5933   & 0.5717   & 0.5601   & 0.5552    \\
+		\hline
+	\end{tabular}\label{Table6.3}
+\end{table}
+\begin{table}[!ht]
+	\centering
+	%\caption{Result for graded mesh with the grading exponent $r=\frac{2(2-\alpha)}{\alpha}$ and $\mathcal{O} \left( h^{2-\alpha} \right)$}
+	\caption{$r=\frac{2(2-\alpha)}{\alpha}$:  maximum nodal errors showing convergence rate $\mathcal{O} \left( h^{2-\alpha} \right)$}
+	\begin{tabular}{|c|c|c|c|c|c|c|}
+		\hline
+		\diagbox{$\alpha$}{2N}       & 32       & 64       & 128      & 256      & 512      & 1024      \\
+		\hline
+		\multirow{2}{*}{0.1} & 9.84E-04 & 3.34E-04 & 1.02E-04 & 2.97E-05 & 8.42E-06 & 2.36E-06  \\
+		\cline{2-7}
+		&          & 1.5609   & 1.7050   & 1.7822   & 1.8201   & 1.8385    \\
+		%\hline
+		%\multirow{2}{*}{0.3} & 2.55E-03 & 8.67E-04 & 2.85E-04 & 9.19E-05 & 2.93E-05 & 9.30E-06  \\
+		%\cline{2-7}
+		%                     &          & 1.5586   & 1.6056   & 1.6317   & 1.6473   & 1.6581    \\
+		\hline
+		\multirow{2}{*}{0.5} & 5.54E-03 & 2.08E-03 & 7.65E-04 & 2.77E-04 & 9.99E-05 & 3.58E-05  \\
+		\cline{2-7}
+		&          & 1.4117   & 1.4458   & 1.4635   & 1.4734   & 1.4801    \\
+		%\hline
+		%\multirow{2}{*}{0.7} & 1.40E-02 & 5.88E-03 & 2.43E-03 & 9.96E-04 & 4.07E-04 & 1.66E-04  \\
+		%\cline{2-7}
+		%                     &          & 1.2497   & 1.2746   & 1.2860   & 1.2922   & 1.2956    \\
+		\hline
+		\multirow{2}{*}{0.9} & 5.15E-02 & 2.78E-02 & 1.39E-02 & 6.67E-03 & 3.15E-03 & 1.48E-03  \\
+		\cline{2-7}
+		&          & 0.8873   & 1.0031   & 1.0576   & 1.0815   & 1.0919    \\
+		\hline
+	\end{tabular}
+\end{table}
+
+\begin{table}[!ht]
+\centering
+\caption{$r=\frac{3(2-\alpha)}{\alpha}$:  maximum nodal errors showing convergence rate $\mathcal{O} \left( h^{2-\alpha} \right)$}
+\begin{tabular}{|c|c|c|c|c|c|c|} 
+\hline
+\diagbox{$\alpha$}{2N} & 32       & 64       & 128      & 256      & 512      & 1024      \\ 
+\hline
+\multirow{2}{*}{0.1}                & 1.44E-03 & 4.90E-04 & 1.47E-04 & 4.20E-05 & 1.18E-05 & 3.27E-06  \\ 
+\cline{2-7}
+                                    &          & 1.5523   & 1.7362   & 1.8091   & 1.8346   & 1.8453    \\ 
+\hline
+\multirow{2}{*}{0.5}                & 8.52E-03 & 3.31E-03 & 1.24E-03 & 4.57E-04 & 1.66E-04 & 5.97E-05  \\ 
+\cline{2-7}
+                                    &          & 1.3658   & 1.4111   & 1.4423   & 1.4627   & 1.4757    \\ 
+\hline
+\multirow{2}{*}{0.9}                & 6.36E-02 & 3.60E-02 & 1.84E-02 & 8.97E-03 & 4.27E-03 & 2.01E-03  \\ 
+\cline{2-7}
+                                    &          & 0.8213   & 0.9662   & 1.0381   & 1.0708   & 1.0860    \\
+\hline
+\end{tabular}\label{Table6.2}
+\end{table}
+
+
+
+
+\subsection{Local behaviour of error in computed solution}
+We present some experimental data for the quantities $R_i$ and $S_i$ that appeared in our error analysis, and for the local behaviour of the error in the computed solution, to gain a deeper understanding of the way in which this analysis works. 
+
+In our example the local truncation error $R_i$ is computed from \eqref{trunc}, using \eqref{Getoor} and our numerical solutions. 
+An upper bound for $R_i$ is given in Lemma~\ref{lem4.4imp}.
+Recall from  \eqref{sumA} that 
+\[ S_{i} =\int_{\mathbb{R}}{\frac{1-\sum_{j=1}^{2N-1}{\phi _j\left( y \right)}}
+		{\left| x_{i}-y \right|^{1+\alpha}}dy}=\sum_{j=1}^{2N-1}a_{i,j} =|a_{i,i}|-\sum_{j\neq i}|a_{i,j}|. \]
+%and \tcr{  using Theorem 1 of \cite{Var:75}, it yields }
+%\[||A^{-1}||_\infty<\max_{1\leq i \leq {2N-1}}\frac{1}{ S_i}.\]
+Then 
+\tcr{from \eqref{add4.19}, the global error satisfies the following bound:
+\[
+\max_{1\leq i \leq 2N-1} |\epsilon_{i}| \leq \frac{R_{i_0}}{S_{i_0}}  \leq  \max_{1\leq i \leq {2N-1}}\frac{|R_i|}{S_i}.
+\]
+}
+%\footnote{In fact, $\epsilon=A^{-1}R$ with $\epsilon=(\epsilon_1,\epsilon_2,\ldots, \epsilon_{2N-1})$
+%and $R=(R_1,R_2,\ldots, R_{2N-1})$.
+%We still not clearly recognize the relation of $A^{-1}R$ and $\frac{|R_i|}{S_i}$. }
+
+Figures~\ref{RU} and~\ref{RG} show that the maximum value of the local truncation error $R_i$ is attained  at the boundary layer
+and it is not bounded by any fixed constant as \tcr{$N\rightarrow \infty$}, irrespective of  whether we use a uniform mesh ($r=1$) or a suitably graded mesh 
+($r=2(2-\alpha)/\alpha$). 
+Conversely, the minimum value of $1/S_i$ (which is also attained at the boundary layer) tends to zero  as \tcr{$N\rightarrow \infty$} on both  uniform and  graded meshes; see Figures~\ref{SU} and~\ref{SG}. 
+The net effect is that the nodal error for $\left|R_i\right|/S_i$ and $\epsilon_{i}$ is small at all mesh points including those inside the  boundary layer; 
+see Figures~\ref{RSU} and~\ref{RSG},  and Figures~\ref{EU} and~\ref{EG}. 
+
+Note that on uniform meshes the maximum value of the  global  error occurs at some point inside the  boundary layer (Figure~\ref{EU}), but on a suitably graded meshes, the mesh is able to handle this layer and the maximum error may now occur somewhere far from the boundary (Figure~\ref{EG}). 
+
+
+\begin{figure}[!ht]
+	\centering
+	\begin{minipage}{0.49\linewidth}
+		\centering
+		\includegraphics[width=0.9\linewidth]{fig/U_R.png}
+		\caption{local truncation error: $\left|R_i\right|$ \tcr{with $r=1$}}
+		\label{RU}
+	\end{minipage}
+	\begin{minipage}{0.49\linewidth}
+		\centering
+		\includegraphics[width=0.9\linewidth]{fig/U_S.png}
+		\caption{The value of $1/S_i$ \tcr{with $r=1$}}
+		\label{SU}
+	\end{minipage}
+\qquad%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{minipage}{0.49\linewidth}
+		\centering
+		\includegraphics[width=0.9\linewidth]{fig/U_RS.png}
+		\caption{The value of $\left|R_i\right|/S_i$ \tcr{with $r=1$}}
+		\label{RSU}
+	\end{minipage}
+	\begin{minipage}{0.49\linewidth}
+		\centering
+		\includegraphics[width=0.9\linewidth]{fig/U_ER.png}
+		\caption{error: $\left|\epsilon_{i}=u(x_i)-u_i \right|$ \tcr{with $r=1$}}
+		\label{EU}
+	\end{minipage}
+\end{figure}
+
+
+\begin{figure}[!ht]
+	\centering
+	\begin{minipage}{0.49\linewidth}
+		\centering
+		\includegraphics[width=0.9\linewidth]{fig/G_R.png}
+		\caption{local truncation error: $\left|R_i\right|$ \tcr{with $r=\frac{2(2-\alpha)}{\alpha}$}}
+		\label{RG}
+	\end{minipage}
+	\begin{minipage}{0.49\linewidth}
+		\centering
+		\includegraphics[width=0.9\linewidth]{fig/G_S.png}
+		\caption{The value of $1/S_i$ \tcr{with $r=\frac{2(2-\alpha)}{\alpha}$}}
+		\label{SG}
+	\end{minipage}
+\qquad%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{minipage}{0.49\linewidth}
+		\centering
+		\includegraphics[width=0.9\linewidth]{fig/G_RS.png}
+		\caption{The value of $\left|R_i\right|/S_i$ \tcr{with $r=\frac{2(2-\alpha)}{\alpha}$}}
+		\label{RSG}
+	\end{minipage}
+	\begin{minipage}{0.49\linewidth}
+		\centering
+		\includegraphics[width=0.9\linewidth]{fig/G_ER.png}
+		\caption{error: $\left|\epsilon_{i}=u(x_i)-u_i \right|$ \tcr{with $r=\frac{2(2-\alpha)}{\alpha}$}}
+		\label{EG}
+	\end{minipage}
+\end{figure}
+
+
+
+\section{Conclusion}\label{sec:conclusion}
+In the present paper we used results from~\cite{RosOtonSerra:14} to establish the regularity of the solution of~\eqref{add1.1}, the 1D version of~(IFL).
+Then we constructed and analysed a piecewise-linear collocation method for this problem, using a graded mesh; our theoretical bound on the maximum nodal error is $\mathcal{O}\left(h^{\min\left\{2-\alpha,\,r\alpha/2\right\}}\right)$, where $h$ is the mesh width and $r$ is the mesh grading parameter.
+ Numerical results show that this bound is sharp; moreover, it tells us that one needs grading of $r\ge 2(2-\alpha)/\alpha$ in order to attain the optimal $\mathcal{O}\left(h^{2-\alpha}\right)$ rate of convergence.
+The key step of the error analysis for (IFL) is our careful study of the local truncation error for piecewise linear interpolation; 
+in a future work we shall attempt to use this knowledge to prove second-order convergence for a discretisation of the Riesz (left and right Riemann-Liouville) fractional derivative, which is a closely related problem. 
+
+
+
+\section*{Acknowledgments}
+The work of the first author was supported by the Science Fund for Distinguished Young Scholars of Gansu Province under Grant
+No. 23JRRA1020 and the Fundamental Research Funds for the Central
+Universities under grant lzujbky-2023-06.
+This work was supported by the National Natural Science Foundation of China under Grant Nos. 12225107 and 12071195, and the Innovative Groups of Basic Research in Gansu Province under Grant No. 22JR5RA391.
+The work of Martin Stynes is supported in part by the National Natural Science Foundation of China under grants 12171025 and NSAF-U2230402.\\
+%
+
+
+
+
+% Authors must disclose all relationships or interests that 
+% could have direct or potential influence or impart bias on 
+% the work: 
+%
+% \section*{Conflict of interest}
+%
+% The authors declare that they have no conflict of interest.
+
+
+% BibTeX users please use one of
+%\bibliographystyle{spbasic}      % basic style, author-year citations
+\bibliographystyle{spmpsci}      % mathematics and physical sciences
+%\bibliographystyle{spphys}       % APS-like style for physics
+% name your BibTeX data base
+\bibliography{reference}
+\end{document}
+% end of file template.tex
+

@@ -40,15 +40,15 @@ end
 
 
 
-r = 40//10
 Ω = (0, 1)
 
 
-α = 19 // 10
+α = 1+ 1 // 10000
 α = BigFloat(α)
 
 @show 1 < α < 2
 
+r = 1 # 4/α
 N = 100
 
 
@@ -99,7 +99,7 @@ F = parent(A) * U[1:2N-1]
 
 # plot(x[1:2N-1], F)
 
-# U_s = parent(A) \ ones(2N - 1)
+U_s = parent(A) \ ones(2N - 1)
 # @show plot(x[1:2N-1], U[1:2N-1]-U_s)
 # plot!(x[1:2N-1], U_s)
 
@@ -118,8 +118,7 @@ Si = sum(parent(A), dims=2)
 # R = parent(abs.(F .- 1)) .* (x[1:2N-1] .^ α)
 # println(Ri[l])
 # Ri = maximum(R[1:N])
-# S = maximum( abs.(Si[1:N] .* x[1:N] .* α) )
-
+S = maximum( abs.(Si[1:N] .* x[1:N] .* α) )
 
 
 # plot(trunc_err)
@@ -152,3 +151,15 @@ M = sum(B, dims=2)
 # plot(u_err)
 # plot(R ./ M .* N^2)
 # plot(R[3N÷4:5N÷4] ./ (abs.(1//2 .-x[3N÷4:5N÷4]).+1//N).^(1-α) .* N^2)
+
+
+
+# plot(x[1:2N-1], R .|> abs, legend=false)
+# savefig("Ri1.pdf")
+# ylims!(0, 0.0005)
+# savefig("Ri2.pdf")
+# plot(x[1:2N-1], abs.(U[1:2N-1]-U_s), legend=false)
+# savefig("EN.pdf")
+
+# plot(x[1:2N-1], Si ./ (x[1:2N-1] .^ (-α) +  (1 .- x[1:2N-1]) .^ (-α)), legend=false)
+# plot(  R[1:N] ./ (x[1:N] .^ (-α) .+ (1/2 .-x[1:N] .+ 1/N).^(1-α) ) .* N^2  )
