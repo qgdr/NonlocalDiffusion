@@ -4,5 +4,8 @@
 *.log
 *.out
 *.gz
+*.brf
+*.fls
+*.fdb_latexmk
 **/__pycache__/
 **/media/
